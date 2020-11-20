@@ -32,11 +32,11 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class LoginActivity extends AppCompatActivity {
-    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-    private ArrayList<UserData> userDataArrayList;
-    private TextView txtRegistry;
-    private Button btnLogin;
-    private EditText edtLoginName, edtLoginPass;
+    private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();// liên kết firebase
+    private ArrayList<UserData> userDataArrayList; // khai bao list User
+    private TextView txtRegistry; //link đăng ký tài khoản mới
+    private Button btnLogin; //nút login
+    private EditText edtLoginName, edtLoginPass; // EditText user name, password
     static public Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +52,11 @@ public class LoginActivity extends AppCompatActivity {
 
         userDataArrayList = new ArrayList<>();
 
-        txtRegistry.setOnClickListener(new View.OnClickListener() {
+        txtRegistry.setOnClickListener(new View.OnClickListener() {// click vào link đăng ký tài khoản mới
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Đăng ký tài khoản!",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
+                Toast.makeText(v.getContext(), "Đăng ký tài khoản!",Toast.LENGTH_SHORT).show(); //hiện thông báo chuyển trang
+                Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class); //chuyển sang trang khác
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
             }
@@ -79,13 +79,13 @@ public class LoginActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         edtLoginPass.setText("");
-        userDataArrayList.clear();
+        userDataArrayList.clear();// làm rỗng danh sách User cũ
 
-        databaseReference.child("User").addChildEventListener(new ChildEventListener() {
+        databaseReference.child("User").addChildEventListener(new ChildEventListener() {//lọc dữ liệu trong mục User tên firebase
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 UserData userData = snapshot.getValue(UserData.class);
-                userDataArrayList.add(userData);
+                userDataArrayList.add(userData); //thêm user vào user list
             }
 
             @Override
@@ -109,10 +109,10 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        btnLogin.setOnClickListener(LoginClick);
+        btnLogin.setOnClickListener(LoginClick);//bấm nút login
     }
 
-    public int loginCheck(ArrayList<UserData> userDataArrayList, String sUserName, String sPass){
+    public int loginCheck(ArrayList<UserData> userDataArrayList, String sUserName, String sPass){//kiểm tra user name và password đưa vào
         int iLoginResult = -1;
         for(UserData user : userDataArrayList){
             if(user.getsUserName().equals(sUserName) && user.getsPassword().equals(sPass) && user.getiTinhTrang() == 0){
@@ -122,37 +122,31 @@ public class LoginActivity extends AppCompatActivity {
                 iLoginResult = user.getiTinhTrang();
             }
         }
-        return iLoginResult;
+        return iLoginResult;//kết quả trả về
     }
 
-    View.OnClickListener LoginClick = new View.OnClickListener() {
+    View.OnClickListener LoginClick = new View.OnClickListener() {//tạo sự kiện bấm nút login
         @Override
         public void onClick(View v) {
-            int iLogin = loginCheck(userDataArrayList, edtLoginName.getText().toString(), edtLoginPass.getText().toString());
-            if(edtLoginName.getText().toString().isEmpty()){
-                edtLoginName.setError("Bạn chưa nhập user name!");
+            int iLogin = loginCheck(userDataArrayList, edtLoginName.getText().toString(), edtLoginPass.getText().toString());//kết quả sau khi kiểm tra user name và password
+            if(edtLoginName.getText().toString().isEmpty()){// kiểm tra user name đã được nhập hay chưa
+                edtLoginName.setError("Bạn chưa nhập user name!");//xuất thông báo chưa nhập user name
             }
-            else if(edtLoginPass.getText().toString().isEmpty()){
-                edtLoginPass.setError("Bạn chưa nhập mật khẩu!");
+            else if(edtLoginPass.getText().toString().isEmpty()){// kiểm tra password đã được nhập hay chưa
+                edtLoginPass.setError("Bạn chưa nhập mật khẩu!");//xuất thông báo chưa nhập password
             }
-            else if(iLogin == 0){
-                intent = new Intent(LoginActivity.this, AdminMainActivity.class);
+            else if(iLogin == 0){//nếu kết quả đăng nhập == 0
+                intent = new Intent(LoginActivity.this, AdminMainActivity.class);//chuyển đến trang admin
                 intent.putExtra("UserName", edtLoginName.getText().toString());
                 startActivity(intent);
             }
-            else if(iLogin == 1){
-//                FragmentManager fragmentManager = getSupportFragmentManager();
-//                SettingsFragment settingsFragment = (SettingsFragment) fragmentManager.findFragmentById(R.id.nav_host_fragment);
-//                Bundle bundle = new Bundle();
-//                bundle.putString("UserName", edtLoginName.getText().toString());
+            else if(iLogin == 1){//nếu kết quả đăng nhập == 1
 
-//                settingsFragment.setArguments(bundle);
-
-                intent = new Intent(LoginActivity.this, UserMainActivity.class);
+                intent = new Intent(LoginActivity.this, UserMainActivity.class);//chuyển đến trang user
                 intent.putExtra("UserName", edtLoginName.getText().toString());
                 startActivity(intent);
             }
-            else if(iLogin == -2) {
+            else if(iLogin == -1) {//nếu kết quả đăng nhập == -1 (tài khoản bị khóa)
                 Toast.makeText(v.getContext(), "Tài khoản của bạn đã bị khóa, hãy liên hệ admin!",Toast.LENGTH_SHORT).show();
             }
             else{
