@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OldStuffMarket">
-        <activity android:name=".UserNewPostActivity"></activity>
+        <activity android:name=".UserShopEditActivity"></activity>
+        <activity android:name=".UserNewPostActivity" />
         <activity android:name=".UserShopActivity" />
         <activity android:name=".ShopMainActivity" />
         <activity android:name=".CommissionActivity" />
