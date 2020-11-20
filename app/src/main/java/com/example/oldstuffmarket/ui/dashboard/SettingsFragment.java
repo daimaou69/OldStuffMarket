@@ -31,6 +31,7 @@ import com.example.oldstuffmarket.PasswordChangeActivity;
 import com.example.oldstuffmarket.R;
 import com.example.oldstuffmarket.ShopRegistrationActivity;
 import com.example.oldstuffmarket.UserMainActivity;
+import com.example.oldstuffmarket.UserShopActivity;
 import com.example.oldstuffmarket.UserTransactionHistoryActivity;
 import com.example.oldstuffmarket.UserUploadedPostActivity;
 import com.example.oldstuffmarket.WalletActivity;
@@ -344,7 +345,7 @@ public class SettingsFragment extends Fragment {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                         if(snapshot.getValue(ShopData.class).getShopID().equals(shopID)){
-                            if(snapshot.getValue(ShopData.class).getTinhTrangShop() == 3){
+                            if(snapshot.getValue(ShopData.class).getTinhTrangShop() == -1){
                                 AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
                                 alert.setMessage("Shop bạn đã bị khóa do điểm thành viên <20!").setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     @Override
@@ -354,7 +355,12 @@ public class SettingsFragment extends Fragment {
                                 }).show();
                             }
                             else if(snapshot.getValue(ShopData.class).getTinhTrangShop() == 1){
-                                Toast.makeText(v.getContext(), "Bạn đã tạo shop thành công!", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(v.getContext(), "Bạn đã tạo shop thành công!", Toast.LENGTH_SHORT).show();
+                                intent = new Intent(v.getContext(), UserShopActivity.class);
+                                intent.putExtra("UserName", sUserName);
+                                intent.putExtra("UserID", userID);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                                startActivity(intent);
                             }
                         }
                     }
