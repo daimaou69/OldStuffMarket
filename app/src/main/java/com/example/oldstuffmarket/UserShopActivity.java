@@ -38,7 +38,7 @@ public class UserShopActivity extends AppCompatActivity {
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     private TextView txtUserName, txtNgayThamGia, txtDiaChi, txtLienHe, txtMoTaShop;
     private ListView lstSanPham;
-    private Button btnBack, btnAll, btnDoCu, btnDoMoi, btnPost;
+    private Button btnBack, btnAll, btnDoCu, btnDoMoi, btnPost, btnShopEdit;
     private ImageView imgUser;
     private String userName, userID, shopID;
     private Intent intent;
@@ -62,6 +62,7 @@ public class UserShopActivity extends AppCompatActivity {
         btnDoCu = (Button) findViewById(R.id.btnDoCu);
         btnDoMoi = (Button) findViewById(R.id.btnDoMoi);
         btnPost = (Button) findViewById(R.id.btnPost);
+        btnShopEdit = (Button) findViewById(R.id.btnShopEdit);
         imgUser = (ImageView) findViewById(R.id.imgUser);
 
         sanPhamArrayList = new ArrayList<>();
@@ -71,6 +72,7 @@ public class UserShopActivity extends AppCompatActivity {
         btnAll.setOnClickListener(allClick);
         btnDoCu.setOnClickListener(doCuClick);
         btnDoMoi.setOnClickListener(doMoiClick);
+        btnShopEdit.setOnClickListener(shopEditClick);
 
         lstSanPham.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -209,6 +211,18 @@ public class UserShopActivity extends AppCompatActivity {
             }, delay);
         }
     }
+
+    View.OnClickListener shopEditClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            intent = new Intent(v.getContext(), UserShopEditActivity.class);
+            intent.putExtra("UserName", userName);
+            intent.putExtra("UserID", userID);
+            intent.putExtra("ShopID", shopID);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        }
+    };
 
     View.OnClickListener postClick = new View.OnClickListener() {
         @Override

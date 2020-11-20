@@ -5,10 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ShopRegistrationActivity"
-    android:orientation="vertical"
-    android:background="@mipmap/app_background"
-    android:padding="20dp">
+    tools:context=".UserShopEditActivity"
+    android:padding="10dp"
+    android:background="@mipmap/app_background">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -28,7 +28,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/dang_ky_shop"
+                    android:text="Thông tin shop"
                     android:textSize="30dp"
                     android:textStyle="bold"/>
             </LinearLayout>
@@ -123,10 +123,10 @@
                 android:layout_weight="5"
                 android:gravity="center">
                 <Button
-                    android:id="@+id/btnRegistry"
+                    android:id="@+id/btnUpdate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/registry_btn"
+                    android:text="@string/update"
                     android:layout_marginRight="70dp"/>
                 <Button
                     android:id="@+id/btnBack"
@@ -136,4 +136,5 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
 </LinearLayout>
