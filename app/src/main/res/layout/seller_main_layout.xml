@@ -122,12 +122,24 @@
                 android:textSize="20dp"
                 android:layout_marginBottom="10dp"/>
 
-            <TextView
-                android:id="@+id/txtLienHe"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/so_dt"
-                android:textSize="20dp"/>
+                android:orientation="horizontal"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/txtLienHe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/so_dt"
+                    android:textSize="20dp"
+                    android:layout_marginRight="70dp"/>
+                <Button
+                    android:id="@+id/btnReportUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Report"/>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
