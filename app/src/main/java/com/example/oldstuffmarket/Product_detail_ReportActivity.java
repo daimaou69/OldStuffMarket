@@ -215,17 +215,17 @@ public class Product_detail_ReportActivity extends AppCompatActivity {
                                 @Override
                                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                                     if (snapshot.getValue(SanPham.class).getsID().equals(sanphamID)) {
-                                        sanphamImage = snapshot.getValue(SanPham.class).getsSPImage();
-                                        storageReference.child(sanphamImage + ".png").delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                            }
-                                        }).addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception exception) {
-                                                Toast.makeText(v.getContext(), "Xoa hinh that bai", Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
+//                                        sanphamImage = snapshot.getValue(SanPham.class).getsSPImage();
+//                                        storageReference.child(sanphamImage + ".png").delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                            @Override
+//                                            public void onSuccess(Void aVoid) {
+//                                            }
+//                                        }).addOnFailureListener(new OnFailureListener() {
+//                                            @Override
+//                                            public void onFailure(@NonNull Exception exception) {
+//                                                Toast.makeText(v.getContext(), "Xoa hinh that bai", Toast.LENGTH_SHORT).show();
+//                                            }
+//                                        });
                                         databaseReference.child("SanPham").child(sanphamID).removeValue();
                                     }
                                 }

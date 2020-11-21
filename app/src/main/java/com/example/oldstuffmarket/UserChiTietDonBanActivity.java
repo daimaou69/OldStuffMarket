@@ -11,12 +11,10 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.oldstuffmarket.data_models.OrderData;
-import com.example.oldstuffmarket.data_models.SanPham;
 import com.example.oldstuffmarket.data_models.UserData;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,7 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-public class UserChiTietDonMuaActivity extends AppCompatActivity {
+public class UserChiTietDonBanActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
@@ -43,7 +41,7 @@ public class UserChiTietDonMuaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
-        setContentView(R.layout.user_chi_tiet_don_mua_layout);
+        setContentView(R.layout.user_chi_tiet_don_ban_layout);
 
         txtTenSP = (TextView) findViewById(R.id.txtTenSP);
         txtSoLuongSP = (TextView) findViewById(R.id.txtSoLuongSP);
@@ -59,7 +57,6 @@ public class UserChiTietDonMuaActivity extends AppCompatActivity {
         btnBack = (Button) findViewById(R.id.btnBack);
 
         btnBack.setOnClickListener(backClick);
-
     }
 
     @Override
@@ -74,13 +71,8 @@ public class UserChiTietDonMuaActivity extends AppCompatActivity {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                     if(snapshot.getValue(OrderData.class).getDonHangID().equals(orderID)){
-                        String nguoiBanID = snapshot.getValue(OrderData.class).getNguoiBanID();
-                        if(snapshot.getValue(OrderData.class).getTinhTrang() != -1){
-                            txtTongGiaTriDonHang.setText("Số tiền đã thanh toán: " + String.valueOf(snapshot.getValue(OrderData.class).getGiaTien()) + "vnđ");
-                        }
-                        else{
-                            txtTongGiaTriDonHang.setText("Đơn đã hủy");
-                        }
+                        String nguoiMuaID = snapshot.getValue(OrderData.class).getNguoiMuaID();
+
 
                         if(snapshot.getValue(OrderData.class).getLoaiDonHang() == 1){
                             txtPhuongThucThanhToan.setText("Thanh toán trực tiếp!");
@@ -99,7 +91,7 @@ public class UserChiTietDonMuaActivity extends AppCompatActivity {
                         storageReference.child(snapshot.getValue(OrderData.class).getSanPham().getsSPImage() + ".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                Glide.with(UserChiTietDonMuaActivity.this).load(uri).into(imgSP);
+                                Glide.with(UserChiTietDonBanActivity.this).load(uri).into(imgSP);
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -110,15 +102,21 @@ public class UserChiTietDonMuaActivity extends AppCompatActivity {
 
                         txtGiaSP.setText(Long.valueOf(snapshot.getValue(OrderData.class).getSanPham().getlGiaTien()) + "vnđ");
                         txtTenSP.setText(snapshot.getValue(OrderData.class).getSanPham().getsTenSP());
+                        if(snapshot.getValue(OrderData.class).getTinhTrang() != -1){
+                            txtTongGiaTriDonHang.setText("Số tiền nhận được: " + String.valueOf(snapshot.getValue(OrderData.class).getGiaTien()) + "vnđ");
+                        }
+                        else{
+                            txtTongGiaTriDonHang.setText("Đơn đã hủy");
+                        }
 
                         databaseReference.child("User").addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                                if(snapshot.getValue(UserData.class).getsUserID().equals(nguoiBanID)){
+                                if(snapshot.getValue(UserData.class).getsUserID().equals(nguoiMuaID)){
                                     storageReference.child(snapshot.getValue(UserData.class).getsImage() + ".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                         @Override
                                         public void onSuccess(Uri uri) {
-                                            Glide.with(UserChiTietDonMuaActivity.this).load(uri).into(imgSellerUser);
+                                            Glide.with(UserChiTietDonBanActivity.this).load(uri).into(imgSellerUser);
                                         }
                                     }).addOnFailureListener(new OnFailureListener() {
                                         @Override
@@ -178,11 +176,12 @@ public class UserChiTietDonMuaActivity extends AppCompatActivity {
         }
     }
 
+
     View.OnClickListener backClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             finish();
-            intent = new Intent(v.getContext(), UserTransactionHistoryActivity.class);
+            intent = new Intent(v.getContext(), UserLichSuDonBanActivity.class);
             intent.putExtra("UserName", userName);
             intent.putExtra("UserID", userID);
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
