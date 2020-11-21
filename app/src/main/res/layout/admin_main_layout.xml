@@ -79,14 +79,14 @@
                 android:gravity="center"
                 android:layout_marginBottom="20dp">
                 <Button
-                    android:id="@+id/btnUserList"
+                    android:id="@+id/btnUserReport"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/user_bi_report"
                     android:textAllCaps="false"/>
 
                 <TextView
-                    android:id="@+id/txtUserReprtedNotify"
+                    android:id="@+id/txtUserReportedNotify"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="x"

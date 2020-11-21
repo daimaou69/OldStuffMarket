@@ -22,6 +22,7 @@ import com.example.oldstuffmarket.data_models.ProductReport;
 import com.example.oldstuffmarket.data_models.ShopData;
 import com.example.oldstuffmarket.data_models.UserData;
 import com.example.oldstuffmarket.data_models.UserDepositData;
+import com.example.oldstuffmarket.data_models.UserReport;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
@@ -37,14 +38,15 @@ import java.util.ArrayList;
 public class AdminMainActivity extends AppCompatActivity {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-    private Button btnLogout, btnQuanLyDanhMuc, btnAccountInfo, btnWallet, btnProductReport, btnQuanLyBaiDang, btnUserDepositMoney, btnViGiaoDich, btnPassWordChange, btnShopRegistration, btnCommission;
-    private TextView txtAdminAccountName, txtNotify, txtUserDepositMoneyNotify, txtProductReprtedNotify;
+    private Button btnLogout, btnQuanLyDanhMuc, btnAccountInfo, btnWallet, btnProductReport, btnUserReport, btnQuanLyBaiDang, btnUserDepositMoney, btnViGiaoDich, btnPassWordChange, btnShopRegistration, btnCommission;
+    private TextView txtAdminAccountName, txtNotify, txtUserDepositMoneyNotify, txtProductReprtedNotify, txtUserReportedNotify;
     private ImageView imgAccount;
     private Intent intent = LoginActivity.intent;
     private ArrayList<UserData> userDataArrayList;
     private ArrayList<ShopData> shopDataArrayList;
     private ArrayList<UserDepositData> userDepositDataArrayList;
     private ArrayList<ProductReport> productReportArrayList;
+    private ArrayList<UserReport> userReportArrayList;
     private String sUserName;
 
     @Override
@@ -68,11 +70,14 @@ public class AdminMainActivity extends AppCompatActivity {
         btnCommission = (Button) findViewById(R.id.btnCommission);
         txtProductReprtedNotify = (TextView) findViewById(R.id.txtProductReprtedNotify);
         btnProductReport = (Button) findViewById(R.id.btnProductReport);
+        txtUserReportedNotify = (TextView) findViewById(R.id.txtUserReportedNotify);
+        btnUserReport = (Button) findViewById(R.id.btnUserReport);
 
         userDataArrayList = new ArrayList<>();
         shopDataArrayList = new ArrayList<>();
         userDepositDataArrayList = new ArrayList<>();
         productReportArrayList = new ArrayList<>();
+        userReportArrayList = new ArrayList<>();
 
         btnLogout.setOnClickListener(logoutClick);
         btnAccountInfo.setOnClickListener(accountInfoClick);
@@ -91,6 +96,34 @@ public class AdminMainActivity extends AppCompatActivity {
         userDepositDataArrayList.clear();
         shopDataArrayList.clear();
         productReportArrayList.clear();
+        userReportArrayList.clear();
+
+        databaseReference.child("Report").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                userReportArrayList.add(snapshot.getValue(UserReport.class));
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         databaseReference.child("ProductReport").addChildEventListener(new ChildEventListener() {
             @Override
@@ -229,6 +262,7 @@ public class AdminMainActivity extends AppCompatActivity {
                 txtNotify.setText(String.valueOf(shopDataArrayList.size()));
                 txtUserDepositMoneyNotify.setText(String.valueOf(userDepositDataArrayList.size()));
                 txtProductReprtedNotify.setText(String.valueOf(productReportArrayList.size()));
+                txtUserReportedNotify.setText(String.valueOf(userReportArrayList.size()));
             }
         }, delay);
     }
