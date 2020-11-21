@@ -247,69 +247,86 @@ public class UserOrderConfirmActivity extends AppCompatActivity {
                                                     int newSL = snapshot.getValue(UserData.class).getiSoSPDaBan() + soLuongSP;
                                                     double commission = giaTriDonHang * snapshot.getValue(UserData.class).getiCommission() / 100;
                                                     long newBalance = snapshot.getValue(UserData.class).getlMoney() - (long)commission;
-                                                    if(newBalance < -10000){
+                                                    if(newBalance < 0){
+//                                                        UserData userData = new UserData(snapshot.getValue(UserData.class).getsUserName(),snapshot.getValue(UserData.class).getsShopID(),snapshot.getValue(UserData.class).getsFullName(),
+//                                                                snapshot.getValue(UserData.class).getsSdt(), snapshot.getValue(UserData.class).getsGioiTinh(), snapshot.getValue(UserData.class).getsDiaChi(),
+//                                                                snapshot.getValue(UserData.class).getsPassword(), snapshot.getValue(UserData.class).getsImage(), snapshot.getValue(UserData.class).getsUserID(),
+//                                                                snapshot.getValue(UserData.class).getsNgayThamGia(), snapshot.getValue(UserData.class).getiPermission(), snapshot.getValue(UserData.class).getiCommission(), -1,
+//                                                                newSL, accPoint, snapshot.getValue(UserData.class).getiReport(), newBalance);
+//                                                        databaseReference.child("User").child(snapshot.getValue(UserData.class).getsUserID()).setValue(userData);
+                                                        String reportID = databaseReference.push().getKey();
+                                                        UserReport userReport = new UserReport(reportID, nguoiBanID, "Số dư ví thấp hơn 0: " + newBalance + "vnđ", 0, false);
+                                                        databaseReference.child("Report").child(reportID).setValue(userReport);
                                                         UserData userData = new UserData(snapshot.getValue(UserData.class).getsUserName(),snapshot.getValue(UserData.class).getsShopID(),snapshot.getValue(UserData.class).getsFullName(),
                                                                 snapshot.getValue(UserData.class).getsSdt(), snapshot.getValue(UserData.class).getsGioiTinh(), snapshot.getValue(UserData.class).getsDiaChi(),
                                                                 snapshot.getValue(UserData.class).getsPassword(), snapshot.getValue(UserData.class).getsImage(), snapshot.getValue(UserData.class).getsUserID(),
-                                                                snapshot.getValue(UserData.class).getsNgayThamGia(), snapshot.getValue(UserData.class).getiPermission(), snapshot.getValue(UserData.class).getiCommission(), -1,
-                                                                newSL, accPoint, snapshot.getValue(UserData.class).getiReport(), newBalance);
+                                                                snapshot.getValue(UserData.class).getsNgayThamGia(), snapshot.getValue(UserData.class).getiPermission(), snapshot.getValue(UserData.class).getiCommission(), snapshot.getValue(UserData.class).getiTinhTrang(),
+                                                                newSL, accPoint, snapshot.getValue(UserData.class).getiReport(), snapshot.getValue(UserData.class).getlMoney());
                                                         databaseReference.child("User").child(snapshot.getValue(UserData.class).getsUserID()).setValue(userData);
-                                                        String reportID = databaseReference.push().getKey();
-                                                        UserReport userReport = new UserReport(reportID, nguoiBanID, "Số dư ví thấp hơn -10000vnđ", 0, false);
-                                                        databaseReference.child("Report").child(reportID).setValue(userReport);
+                                                        finish();
+
+                                                        intent = new Intent(v.getContext(), CommentActivity.class);
+                                                        intent.putExtra("ProductID", productID);
+                                                        intent.putExtra("UserID", userID);
+                                                        intent.putExtra("SellerID", nguoiBanID);
+                                                        intent.putExtra("UserName", userName);
+                                                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                                                        startActivity(intent);
                                                     }
                                                     else{
                                                         UserData userData = new UserData(snapshot.getValue(UserData.class).getsUserName(),snapshot.getValue(UserData.class).getsShopID(),snapshot.getValue(UserData.class).getsFullName(),
                                                                 snapshot.getValue(UserData.class).getsSdt(), snapshot.getValue(UserData.class).getsGioiTinh(), snapshot.getValue(UserData.class).getsDiaChi(),
                                                                 snapshot.getValue(UserData.class).getsPassword(), snapshot.getValue(UserData.class).getsImage(), snapshot.getValue(UserData.class).getsUserID(),
                                                                 snapshot.getValue(UserData.class).getsNgayThamGia(), snapshot.getValue(UserData.class).getiPermission(), snapshot.getValue(UserData.class).getiCommission(), snapshot.getValue(UserData.class).getiTinhTrang(),
-                                                                snapshot.getValue(UserData.class).getiSoSPDaBan(), accPoint, snapshot.getValue(UserData.class).getiReport(), newBalance);
+                                                                newSL, accPoint, snapshot.getValue(UserData.class).getiReport(), newBalance);
                                                         databaseReference.child("User").child(snapshot.getValue(UserData.class).getsUserID()).setValue(userData);
-                                                    }
-                                                    databaseReference.child("User").addChildEventListener(new ChildEventListener() {
-                                                        @Override
-                                                        public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                                                            if(snapshot.getValue(UserData.class).getsUserID().equals("-MM3awA6HlZbVWBBUFqY")){
-                                                                long money = snapshot.getValue(UserData.class).getlMoney() + (long)commission;
-                                                                UserData userAdmin = new UserData(snapshot.getValue(UserData.class).getsUserName(),snapshot.getValue(UserData.class).getsShopID(),snapshot.getValue(UserData.class).getsFullName(),
-                                                                        snapshot.getValue(UserData.class).getsSdt(), snapshot.getValue(UserData.class).getsGioiTinh(), snapshot.getValue(UserData.class).getsDiaChi(),
-                                                                        snapshot.getValue(UserData.class).getsPassword(), snapshot.getValue(UserData.class).getsImage(), snapshot.getValue(UserData.class).getsUserID(),
-                                                                        snapshot.getValue(UserData.class).getsNgayThamGia(), snapshot.getValue(UserData.class).getiPermission(), snapshot.getValue(UserData.class).getiCommission(), snapshot.getValue(UserData.class).getiTinhTrang(),
-                                                                        snapshot.getValue(UserData.class).getiSoSPDaBan(), snapshot.getValue(UserData.class).getiAccPoint(), snapshot.getValue(UserData.class).getiReport(), money);
-                                                                databaseReference.child("User").child(snapshot.getValue(UserData.class).getsUserID()).setValue(userAdmin);
 
-                                                                finish();
+                                                        databaseReference.child("User").addChildEventListener(new ChildEventListener() {
+                                                            @Override
+                                                            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                                                if(snapshot.getValue(UserData.class).getsUserID().equals("-MM3awA6HlZbVWBBUFqY")){
+                                                                    long money = snapshot.getValue(UserData.class).getlMoney() + (long)commission;
+                                                                    UserData userAdmin = new UserData(snapshot.getValue(UserData.class).getsUserName(),snapshot.getValue(UserData.class).getsShopID(),snapshot.getValue(UserData.class).getsFullName(),
+                                                                            snapshot.getValue(UserData.class).getsSdt(), snapshot.getValue(UserData.class).getsGioiTinh(), snapshot.getValue(UserData.class).getsDiaChi(),
+                                                                            snapshot.getValue(UserData.class).getsPassword(), snapshot.getValue(UserData.class).getsImage(), snapshot.getValue(UserData.class).getsUserID(),
+                                                                            snapshot.getValue(UserData.class).getsNgayThamGia(), snapshot.getValue(UserData.class).getiPermission(), snapshot.getValue(UserData.class).getiCommission(), snapshot.getValue(UserData.class).getiTinhTrang(),
+                                                                            snapshot.getValue(UserData.class).getiSoSPDaBan(), snapshot.getValue(UserData.class).getiAccPoint(), snapshot.getValue(UserData.class).getiReport(), money);
+                                                                    databaseReference.child("User").child(snapshot.getValue(UserData.class).getsUserID()).setValue(userAdmin);
 
-                                                                intent = new Intent(v.getContext(), CommentActivity.class);
-                                                                intent.putExtra("ProductID", productID);
-                                                                intent.putExtra("UserID", userID);
-                                                                intent.putExtra("SellerID", nguoiBanID);
-                                                                intent.putExtra("UserName", userName);
-                                                                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                                                                startActivity(intent);
+                                                                    finish();
+
+                                                                    intent = new Intent(v.getContext(), CommentActivity.class);
+                                                                    intent.putExtra("ProductID", productID);
+                                                                    intent.putExtra("UserID", userID);
+                                                                    intent.putExtra("SellerID", nguoiBanID);
+                                                                    intent.putExtra("UserName", userName);
+                                                                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                                                                    startActivity(intent);
+                                                                }
                                                             }
-                                                        }
 
-                                                        @Override
-                                                        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                                            @Override
+                                                            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
-                                                        }
+                                                            }
 
-                                                        @Override
-                                                        public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                                                            @Override
+                                                            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
 
-                                                        }
+                                                            }
 
-                                                        @Override
-                                                        public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                                            @Override
+                                                            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
-                                                        }
+                                                            }
 
-                                                        @Override
-                                                        public void onCancelled(@NonNull DatabaseError error) {
+                                                            @Override
+                                                            public void onCancelled(@NonNull DatabaseError error) {
 
-                                                        }
-                                                    });
+                                                            }
+                                                        });
+                                                    }
+
                                                 }
                                             }
 
