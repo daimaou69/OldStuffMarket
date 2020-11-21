@@ -1,8 +1,13 @@
 package com.example.oldstuffmarket;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -11,8 +16,19 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.example.oldstuffmarket.data_models.ProductReport;
+import com.example.oldstuffmarket.data_models.SanPham;
+import com.example.oldstuffmarket.data_models.UserData;
+import com.example.oldstuffmarket.data_models.UserReport;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -43,6 +59,8 @@ public class ReportUserActivity extends AppCompatActivity {
         btnHome = (Button) findViewById(R.id.btnHome);
 
         btnBack.setOnClickListener(backClick);
+        btnHome.setOnClickListener(homeClick);
+        btnReportUser.setOnClickListener(reportUserClick);
     }
 
     @Override
@@ -52,8 +70,110 @@ public class ReportUserActivity extends AppCompatActivity {
         if(getIntent().getExtras() != null) {
             userName = getIntent().getExtras().getString("UserName");
             userID = getIntent().getExtras().getString("UserID");
+            databaseReference.child("User").addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    if (snapshot.getValue(UserData.class).getsUserID().equals(userID)) {
+                        storageReference.child(snapshot.getValue(UserData.class).getsImage() + ".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                Glide.with(ReportUserActivity.this).load(uri).into(imgUser);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                            }
+                        });
+                        txtFullName.setText(snapshot.getValue(UserData.class).getsFullName());
+                        txtDiaChi.setText(snapshot.getValue(UserData.class).getsDiaChi());
+                        txtSDT.setText(snapshot.getValue(UserData.class).getsSdt());
+
+                    }
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+
         }
     }
+
+    View.OnClickListener reportUserClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (edtReport.getText().toString().isEmpty()) {
+                edtReport.setError("Không được để trống!");
+            }
+            else {
+                DialogInterface.OnClickListener dialog = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int which) {
+                        switch (which) {
+                            case DialogInterface.BUTTON_POSITIVE:
+                                databaseReference.child("User").addChildEventListener(new ChildEventListener() {
+                                    @Override
+                                    public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                        if (snapshot.getValue(UserData.class).getsUserID().equals(userID)) {
+                                            String reportID = databaseReference.push().getKey();
+                                            UserReport userReport = new UserReport(reportID, userID, edtReport.getText().toString(), 0,false);
+                                            databaseReference.child("Report").child(reportID).setValue(userReport);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                    }
+
+                                    @Override
+                                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                    }
+
+                                    @Override
+                                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+                                finish();
+                                intent = new Intent(v.getContext(), UserMainActivity.class);
+                                intent.putExtra("UserName", userName);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                                startActivity(intent);
+                                break;
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                return;
+                        }
+                    }
+                };
+                AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+                alert.setMessage("Bạn chắn chắn muốn báo cáo sản phẩm!").setNegativeButton("No", dialog).setPositiveButton("Yes", dialog).show();
+            }
+        }
+    };
 
     View.OnClickListener backClick = new View.OnClickListener() {
         @Override
@@ -62,6 +182,17 @@ public class ReportUserActivity extends AppCompatActivity {
             intent = new Intent(v.getContext(), SellerMainActivity.class);
             intent.putExtra("UserName", userName);
             intent.putExtra("UserID", userID);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        }
+    };
+
+    View.OnClickListener homeClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            finish();
+            intent = new Intent(v.getContext(), UserMainActivity.class);
+            intent.putExtra("UserName", userName);
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         }
