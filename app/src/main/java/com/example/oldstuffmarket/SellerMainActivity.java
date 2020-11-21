@@ -38,7 +38,7 @@ public class SellerMainActivity extends AppCompatActivity {
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     private TextView txtUserName, txtSpDaBan, txtDiemThanhVien, txtNgayThamGia, txtDiaChi, txtLienHe;
     private ListView lstSanPham;
-    private Button btnBack, btnAll, btnDoCu, btnDoMoi;
+    private Button btnBack, btnAll, btnDoCu, btnDoMoi, btnReport;
     private ImageView imgUser;
     private String userName, userID, sanPhamID;
     private Intent intent;
@@ -62,6 +62,7 @@ public class SellerMainActivity extends AppCompatActivity {
         btnAll = (Button) findViewById(R.id.btnAll);
         btnDoCu = (Button) findViewById(R.id.btnDoCu);
         btnDoMoi = (Button) findViewById(R.id.btnDoMoi);
+        btnReport = (Button) findViewById(R.id.btnReportUser);
         imgUser = (ImageView) findViewById(R.id.imgUser);
 
         sanPhamArrayList = new ArrayList<>();
@@ -82,6 +83,7 @@ public class SellerMainActivity extends AppCompatActivity {
         btnAll.setOnClickListener(allClick);
         btnDoCu.setOnClickListener(doCuClick);
         btnDoMoi.setOnClickListener(doMoiClick);
+        btnReport.setOnClickListener(reportUserClick);
     }
 
     @Override
@@ -179,6 +181,18 @@ public class SellerMainActivity extends AppCompatActivity {
             }, delay);
         }
     }
+
+    View.OnClickListener reportUserClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            intent = new Intent(v.getContext(), ReportUserActivity.class);
+            intent.putExtra("UserName", userName);
+            intent.putExtra("UserID", userID);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            finish();
+            startActivity(intent);
+        }
+    };
 
     View.OnClickListener doMoiClick = new View.OnClickListener() {
         @Override

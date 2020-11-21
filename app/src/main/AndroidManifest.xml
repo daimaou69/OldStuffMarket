@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OldStuffMarket">
-        <activity android:name=".UserLichSuDonBanActivity"></activity>
+        <activity android:name=".ReportUserActivity"></activity>
+        <activity android:name=".UserLichSuDonBanActivity" />
         <activity android:name=".Product_detail_ReportActivity" />
         <activity android:name=".adapter.SPbibaocao_Adapter" />
         <activity android:name=".SP_Report_admin_Activity" />
