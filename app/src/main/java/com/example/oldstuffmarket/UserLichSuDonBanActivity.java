@@ -56,7 +56,7 @@ public class UserLichSuDonBanActivity extends AppCompatActivity {
             databaseReference.child("LichSuGiaoDich").addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    if(snapshot.getValue(OrderData.class).getNguoiMuaID().equals(userID)){
+                    if(snapshot.getValue(OrderData.class).getNguoiBanID().equals(userID)){
                         orderDataArrayList.add(snapshot.getValue(OrderData.class));
                     }
                 }
