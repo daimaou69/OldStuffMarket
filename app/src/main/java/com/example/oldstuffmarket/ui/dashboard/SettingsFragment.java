@@ -221,6 +221,7 @@ public class SettingsFragment extends Fragment {
         btnDonMua.setOnClickListener(donMuaClick);
         btnDonBan.setOnClickListener(donBanClick);
         btnLichSuDonHang.setOnClickListener(lichSuDonHang);
+        btnLichSuDonBan.setOnClickListener(lichSuDonBanClick);
         btnUploadPost.setOnClickListener(uploadedPostClick);
 
         Handler handler = new Handler();
@@ -235,6 +236,17 @@ public class SettingsFragment extends Fragment {
 
         return view;
     }
+
+    View.OnClickListener lichSuDonBanClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            intent = new Intent(v.getContext(), UserTransactionHistoryActivity.class);
+            intent.putExtra("UserName", sUserName);
+            intent.putExtra("UserID", userID);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        }
+    };
 
     View.OnClickListener uploadedPostClick = new View.OnClickListener() {
         @Override
