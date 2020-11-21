@@ -93,6 +93,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         imgSP = (ImageView) findViewById(R.id.imgSP);
         imgShop = (ImageView) findViewById(R.id.imgShop);
         gridComment = (GridView) findViewById(R.id.gridComment);
+        btnReport = (Button) findViewById(R.id.btnReport);
 
         shopDataArrayList = new ArrayList<>();
         commentArrayList = new ArrayList<>();
@@ -111,6 +112,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         btnThreeStar.setOnClickListener(threeStarClick);
         btnFourStar.setOnClickListener(fourStarClick);
         btnFiveStar.setOnClickListener(fiveStarClick);
+        btnReport.setOnClickListener(reportClick);
 
     }
 
@@ -359,6 +361,19 @@ public class ProductDetailActivity extends AppCompatActivity {
         }
     }
 
+    View.OnClickListener reportClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            finish();
+            intent = new Intent(ProductDetailActivity.this, Report_SP_Activity.class);
+            intent.putExtra("UserName", sUserName);
+            intent.putExtra("ProductID", sanPhamID);
+            intent.putExtra("NavigateTo", navigateTo);
+            intent.putExtra("UserID", userID);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        }
+    };
 
     View.OnClickListener fiveStarClick = new View.OnClickListener() {
         @Override

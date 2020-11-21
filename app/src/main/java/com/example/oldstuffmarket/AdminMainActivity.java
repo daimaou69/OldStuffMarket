@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.oldstuffmarket.data_models.ProductReport;
 import com.example.oldstuffmarket.data_models.ShopData;
 import com.example.oldstuffmarket.data_models.UserData;
 import com.example.oldstuffmarket.data_models.UserDepositData;
@@ -36,13 +37,14 @@ import java.util.ArrayList;
 public class AdminMainActivity extends AppCompatActivity {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-    private Button btnLogout, btnQuanLyDanhMuc, btnAccountInfo, btnWallet, btnQuanLyBaiDang, btnUserDepositMoney, btnViGiaoDich, btnPassWordChange, btnShopRegistration, btnCommission;
-    private TextView txtAdminAccountName, txtNotify, txtUserDepositMoneyNotify;
+    private Button btnLogout, btnQuanLyDanhMuc, btnAccountInfo, btnWallet, btnProductReport, btnQuanLyBaiDang, btnUserDepositMoney, btnViGiaoDich, btnPassWordChange, btnShopRegistration, btnCommission;
+    private TextView txtAdminAccountName, txtNotify, txtUserDepositMoneyNotify, txtProductReprtedNotify;
     private ImageView imgAccount;
     private Intent intent = LoginActivity.intent;
     private ArrayList<UserData> userDataArrayList;
     private ArrayList<ShopData> shopDataArrayList;
     private ArrayList<UserDepositData> userDepositDataArrayList;
+    private ArrayList<ProductReport> productReportArrayList;
     private String sUserName;
 
     @Override
@@ -64,10 +66,13 @@ public class AdminMainActivity extends AppCompatActivity {
         btnShopRegistration = (Button) findViewById(R.id.btnShopRegistration);
         btnUserDepositMoney = (Button) findViewById(R.id.btnUserDepositMoney);
         btnCommission = (Button) findViewById(R.id.btnCommission);
+        txtProductReprtedNotify = (TextView) findViewById(R.id.txtProductReprtedNotify);
+        btnProductReport = (Button) findViewById(R.id.btnProductReport);
 
         userDataArrayList = new ArrayList<>();
         shopDataArrayList = new ArrayList<>();
         userDepositDataArrayList = new ArrayList<>();
+        productReportArrayList = new ArrayList<>();
 
         btnLogout.setOnClickListener(logoutClick);
         btnAccountInfo.setOnClickListener(accountInfoClick);
@@ -77,6 +82,7 @@ public class AdminMainActivity extends AppCompatActivity {
         btnShopRegistration.setOnClickListener(shopRegistrationClick);
         btnUserDepositMoney.setOnClickListener(depositMoneyClick);
         btnCommission.setOnClickListener(commissionClick);
+        btnProductReport.setOnClickListener(reportSPClick);
     }
 
     @Override
@@ -84,6 +90,35 @@ public class AdminMainActivity extends AppCompatActivity {
         super.onResume();
         userDepositDataArrayList.clear();
         shopDataArrayList.clear();
+        productReportArrayList.clear();
+
+        databaseReference.child("ProductReport").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                productReportArrayList.add(snapshot.getValue(ProductReport.class));
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         databaseReference.child("ShopRegistration").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -193,9 +228,20 @@ public class AdminMainActivity extends AppCompatActivity {
             public void run() {
                 txtNotify.setText(String.valueOf(shopDataArrayList.size()));
                 txtUserDepositMoneyNotify.setText(String.valueOf(userDepositDataArrayList.size()));
+                txtProductReprtedNotify.setText(String.valueOf(productReportArrayList.size()));
             }
         }, delay);
     }
+
+    View.OnClickListener reportSPClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            intent = new Intent(v.getContext(), SP_Report_admin_Activity.class);
+            intent.putExtra("UserName", sUserName);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        }
+    };
 
     View.OnClickListener commissionClick = new View.OnClickListener() {
         @Override
