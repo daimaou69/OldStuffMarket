@@ -154,11 +154,13 @@
                     android:text="@string/phuong_thuc_thanh_toan"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
+
                 <TextView
+                    android:id="@+id/txtPhuongThucThanhToan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/phuong_thuc_thanh_toan"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"

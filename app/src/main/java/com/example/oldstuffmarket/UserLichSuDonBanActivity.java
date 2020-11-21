@@ -49,6 +49,8 @@ public class UserLichSuDonBanActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        orderDataArrayList.clear();
         if(getIntent().getExtras() != null){
             userName = getIntent().getExtras().getString("UserName");
             userID = getIntent().getExtras().getString("UserID");

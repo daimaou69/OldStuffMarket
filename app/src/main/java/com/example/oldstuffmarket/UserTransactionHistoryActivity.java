@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -46,13 +47,24 @@ public class UserTransactionHistoryActivity extends AppCompatActivity {
 
         btnBack.setOnClickListener(backClick);
 
+        lstOrderHistory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                intent = new Intent(view.getContext(), UserChiTietDonMuaActivity.class);
+                intent.putExtra("UserName", userName);
+                intent.putExtra("UserID", userID);
+                intent.putExtra("OrderID", orderDataArrayList.get(position).getDonHangID());
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+            }
+        });
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
+        orderDataArrayList.clear();
         if(getIntent().getExtras() != null){
             userName = getIntent().getExtras().getString("UserName");
             userID = getIntent().getExtras().getString("UserID");
