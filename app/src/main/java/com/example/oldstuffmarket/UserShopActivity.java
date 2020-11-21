@@ -77,12 +77,12 @@ public class UserShopActivity extends AppCompatActivity {
         lstSanPham.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                intent = new Intent(view.getContext(), ProductDetailActivity.class);
-//                intent.putExtra("ProductID", sanPhamArrayList.get(position).getsID());
-//                intent.putExtra("SoLuongSP", sanPhamArrayList.get(position).getiSoLuong());
-//                intent.putExtra("NavigateTo", "Shop");
-//                intent.putExtra("SanPhamID", sanPhamID);
-//                startActivity(intent);
+                intent = new Intent(view.getContext(), UserProductEditActivity.class);
+                intent.putExtra("ProductID", sanPhamArrayList.get(position).getsID());
+                intent.putExtra("UserName", userName);
+                intent.putExtra("UserID", userID);
+                intent.putExtra("NavigateTo", "UserShop");
+                startActivity(intent);
             }
         });
 

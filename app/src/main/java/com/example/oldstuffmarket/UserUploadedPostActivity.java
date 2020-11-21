@@ -53,6 +53,7 @@ public class UserUploadedPostActivity extends AppCompatActivity {
                 intent.putExtra("UserName", userName);
                 intent.putExtra("UserID", userID);
                 intent.putExtra("ProductID", sanPhamArrayList.get(position).getsID());
+                intent.putExtra("NavigateTo", "UserPost");
                 startActivity(intent);
             }
         });

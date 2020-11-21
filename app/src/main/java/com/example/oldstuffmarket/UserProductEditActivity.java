@@ -47,7 +47,7 @@ public class UserProductEditActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-    private String userID, userName, productID;
+    private String userID, userName, productID, navigateTo;
     private Intent intent;
     private Button btnBack, btnUpdate, btnDelete, btnChooseFromGallery, btnOpenCamera;
     private ArrayList<DanhMucData> danhMucDataArrayList = UserMainActivity.danhMucDataArrayList;
@@ -93,6 +93,7 @@ public class UserProductEditActivity extends AppCompatActivity {
             userID = getIntent().getExtras().getString("UserID");
             userName = getIntent().getExtras().getString("UserName");
             productID = getIntent().getExtras().getString("ProductID");
+            navigateTo = getIntent().getExtras().getString("NavigateTo");
 
             databaseReference.child("SanPham").addChildEventListener(new ChildEventListener() {
                 @Override
@@ -309,12 +310,23 @@ public class UserProductEditActivity extends AppCompatActivity {
                                                     Integer.valueOf(edtSoLuongSP.getText().toString()),spnPhanLoai.getSelectedItemPosition());
                                             databaseReference.child("SanPham").child(productID).setValue(sanPham);
 
-                                            finish();
-                                            intent = new Intent(v.getContext(), UserUploadedPostActivity.class);
-                                            intent.putExtra("UserName", userName);
-                                            intent.putExtra("UserID", userID);
-                                            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                                            startActivity(intent);
+
+                                            if(navigateTo.equals("UserPost")){
+                                                finish();
+                                                intent = new Intent(v.getContext(), UserUploadedPostActivity.class);
+                                                intent.putExtra("UserName", userName);
+                                                intent.putExtra("UserID", userID);
+                                                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                                                startActivity(intent);
+                                            }
+                                            else if(navigateTo.equals("UserShop")) {
+                                                finish();
+                                                intent = new Intent(v.getContext(), UserShopActivity.class);
+                                                intent.putExtra("UserName", userName);
+                                                intent.putExtra("UserID", userID);
+                                                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                                                startActivity(intent);
+                                            }
                                         }
                                     }
 
@@ -442,12 +454,22 @@ public class UserProductEditActivity extends AppCompatActivity {
     View.OnClickListener backClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            finish();
-            intent = new Intent(v.getContext(), UserUploadedPostActivity.class);
-            intent.putExtra("UserName", userName);
-            intent.putExtra("UserID", userID);
-            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(intent);
+            if(navigateTo.equals("UserPost")){
+                finish();
+                intent = new Intent(v.getContext(), UserUploadedPostActivity.class);
+                intent.putExtra("UserName", userName);
+                intent.putExtra("UserID", userID);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+            }
+            else if(navigateTo.equals("UserShop")){
+                finish();
+                intent = new Intent(v.getContext(), UserShopActivity.class);
+                intent.putExtra("UserName", userName);
+                intent.putExtra("UserID", userID);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+            }
         }
     };
 
