@@ -170,7 +170,7 @@ public class ReportUserActivity extends AppCompatActivity {
                     }
                 };
                 AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
-                alert.setMessage("Bạn chắn chắn muốn báo cáo sản phẩm!").setNegativeButton("No", dialog).setPositiveButton("Yes", dialog).show();
+                alert.setMessage("Bạn chắn chắn muốn báo cáo User!").setNegativeButton("No", dialog).setPositiveButton("Yes", dialog).show();
             }
         }
     };
