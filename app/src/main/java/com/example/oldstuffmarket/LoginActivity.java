@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -38,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin; //nút login
     private EditText edtLoginName, edtLoginPass; // EditText user name, password
     static public Intent intent;
+    private int iCount = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,8 +86,7 @@ public class LoginActivity extends AppCompatActivity {
         databaseReference.child("User").addChildEventListener(new ChildEventListener() {//lọc dữ liệu trong mục User tên firebase
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                UserData userData = snapshot.getValue(UserData.class);
-                userDataArrayList.add(userData); //thêm user vào user list
+                userDataArrayList.add(snapshot.getValue(UserData.class)); //thêm user vào user list
             }
 
             @Override
@@ -113,12 +114,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public int loginCheck(ArrayList<UserData> userDataArrayList, String sUserName, String sPass){//kiểm tra user name và password đưa vào
-        int iLoginResult = -1;
+        int iLoginResult = -2;
         for(UserData user : userDataArrayList){
             if(user.getsUserName().equals(sUserName) && user.getsPassword().equals(sPass) && user.getiTinhTrang() == 0){
                 iLoginResult = user.getiPermission();
             }
-            else if(user.getsUserName().equals(sUserName) && user.getsPassword().equals(sPass) && user.getiTinhTrang() == -2){
+            else if(user.getsUserName().equals(sUserName) && user.getsPassword().equals(sPass) && user.getiTinhTrang() == -1){
                 iLoginResult = user.getiTinhTrang();
             }
         }
@@ -135,22 +136,74 @@ public class LoginActivity extends AppCompatActivity {
             else if(edtLoginPass.getText().toString().isEmpty()){// kiểm tra password đã được nhập hay chưa
                 edtLoginPass.setError("Bạn chưa nhập mật khẩu!");//xuất thông báo chưa nhập password
             }
-            else if(iLogin == 0){//nếu kết quả đăng nhập == 0
-                intent = new Intent(LoginActivity.this, AdminMainActivity.class);//chuyển đến trang admin
-                intent.putExtra("UserName", edtLoginName.getText().toString());
-                startActivity(intent);
-            }
-            else if(iLogin == 1){//nếu kết quả đăng nhập == 1
+//            else if(iLogin == 0){//nếu kết quả đăng nhập == 0
+//                intent = new Intent(LoginActivity.this, AdminMainActivity.class);//chuyển đến trang admin
+//                intent.putExtra("UserName", edtLoginName.getText().toString());
+//                startActivity(intent);
+//            }
+//            else if(iLogin == 1){//nếu kết quả đăng nhập == 1
+//
+//                intent = new Intent(LoginActivity.this, UserMainActivity.class);//chuyển đến trang user
+//                intent.putExtra("UserName", edtLoginName.getText().toString());
+//                startActivity(intent);
+//            }
+            else {
+                String userName = edtLoginName.getText().toString();
+                String password = edtLoginPass.getText().toString();
+                databaseReference.child("User").addChildEventListener(new ChildEventListener() {//lọc dữ liệu trong mục User tên firebase
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                        if(snapshot.getValue(UserData.class).getsUserName().equals(userName) && snapshot.getValue(UserData.class).getsPassword().equals(password) && snapshot.getValue(UserData.class).getiTinhTrang() == 0){
+                            iCount++;
+                            if(snapshot.getValue(UserData.class).getiPermission() == 0){//nếu kết quả đăng nhập == 0
+                                intent = new Intent(LoginActivity.this, AdminMainActivity.class);//chuyển đến trang admin
+                                intent.putExtra("UserName", edtLoginName.getText().toString());
+                                startActivity(intent);
+                            }
+                            else if(snapshot.getValue(UserData.class).getiPermission() == 1){//nếu kết quả đăng nhập == 1
 
-                intent = new Intent(LoginActivity.this, UserMainActivity.class);//chuyển đến trang user
-                intent.putExtra("UserName", edtLoginName.getText().toString());
-                startActivity(intent);
-            }
-            else if(iLogin == -1) {//nếu kết quả đăng nhập == -1 (tài khoản bị khóa)
-                Toast.makeText(v.getContext(), "Tài khoản của bạn đã bị khóa, hãy liên hệ admin!",Toast.LENGTH_SHORT).show();
-            }
-            else{
-                Toast.makeText(v.getContext(), "Đăng nhập thất bại!",Toast.LENGTH_SHORT).show();
+                                intent = new Intent(LoginActivity.this, UserMainActivity.class);//chuyển đến trang user
+                                intent.putExtra("UserName", edtLoginName.getText().toString());
+                                startActivity(intent);
+                            }
+                        }
+                        else if(snapshot.getValue(UserData.class).getsUserName().equals(userName) && snapshot.getValue(UserData.class).getsPassword().equals(password) && snapshot.getValue(UserData.class).getiTinhTrang() == -1){
+                            iCount++;
+                            Toast.makeText(v.getContext(), "Tài khoản của bạn đã bị khóa, hãy liên hệ admin!",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+                Handler handler = new Handler();
+                int delay = 1500;
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(iCount == 0){
+                            Toast.makeText(v.getContext(), "Đăng nhập thất bại!",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, delay);
             }
         }
     };
