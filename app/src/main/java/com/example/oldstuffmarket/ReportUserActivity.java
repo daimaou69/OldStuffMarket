@@ -40,7 +40,7 @@ public class ReportUserActivity extends AppCompatActivity {
     private TextView txtFullName, txtSDT, txtDiaChi;
     private EditText edtReport;
     private Button btnReportUser, btnHome, btnBack;
-    private String userName, userID;
+    private String userName, userID, productID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +70,7 @@ public class ReportUserActivity extends AppCompatActivity {
         if(getIntent().getExtras() != null) {
             userName = getIntent().getExtras().getString("UserName");
             userID = getIntent().getExtras().getString("UserID");
+            productID = getIntent().getExtras().getString("ProductID");
             databaseReference.child("User").addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -182,6 +183,7 @@ public class ReportUserActivity extends AppCompatActivity {
             intent = new Intent(v.getContext(), SellerMainActivity.class);
             intent.putExtra("UserName", userName);
             intent.putExtra("UserID", userID);
+            intent.putExtra("ProductID", productID);
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         }
