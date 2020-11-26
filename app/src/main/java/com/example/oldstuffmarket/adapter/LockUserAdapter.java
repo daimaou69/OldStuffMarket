@@ -261,6 +261,34 @@ public class LockUserAdapter extends BaseAdapter {
 
                                                         }
                                                     });
+                                                    databaseReference.child("SanPham").addChildEventListener(new ChildEventListener() {
+                                                        @Override
+                                                        public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                                            if (snapshot.getValue(SanPham.class).getsUserID().equals(lockUser.getUserID())) {
+                                                                databaseReference.child("SanPham").child(snapshot.getKey()).removeValue();
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                                        }
+
+                                                        @Override
+                                                        public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                                        }
+
+                                                        @Override
+                                                        public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                                        }
+                                                    });
                                                     break;
                                                 case DialogInterface.BUTTON_NEGATIVE:
                                                     return;
