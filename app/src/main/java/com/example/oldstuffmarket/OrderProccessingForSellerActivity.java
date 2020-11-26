@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -38,7 +39,9 @@ public class OrderProccessingForSellerActivity extends AppCompatActivity {
     private TextView txtTenSP, txtSoLuongSP, txtGiaSP, txtHoTenNguoiMua, txtDiaChi, txtLienHe, txtTongGiaTriDonHang;
     private CheckBox cbProccessing, cbPacking, cbDelivery;
     private Button btnCancelOrder, btnBack;
-    private String userName, userID, donHangID;
+    private String userName, userID, donHangID, nguoiMuaID, nguoiBanID;
+    private int loaiDonHang;
+    private long tongGiaTri;
     private Intent intent;
 
     @Override
@@ -71,6 +74,10 @@ public class OrderProccessingForSellerActivity extends AppCompatActivity {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                     if(snapshot.getValue(OrderData.class).getDonHangID().equals(donHangID)){
+                        nguoiMuaID = snapshot.getValue(OrderData.class).getNguoiMuaID();
+                        nguoiBanID = snapshot.getValue(OrderData.class).getNguoiBanID();
+                        loaiDonHang = snapshot.getValue(OrderData.class).getLoaiDonHang();
+                        tongGiaTri = snapshot.getValue(OrderData.class).getGiaTien();
 
                         storageReference.child(snapshot.getValue(OrderData.class).getSanPham().getsSPImage() + ".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
@@ -415,61 +422,163 @@ public class OrderProccessingForSellerActivity extends AppCompatActivity {
     View.OnClickListener cancelOrderClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            DialogInterface.OnClickListener dialog = new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    switch (which){
-                        case DialogInterface.BUTTON_POSITIVE:
+            if(loaiDonHang == 2){
+                DialogInterface.OnClickListener dialog = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
 
-                            databaseReference.child("DonHang").addChildEventListener(new ChildEventListener() {
-                                @Override
-                                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                                    if(snapshot.getValue(OrderData.class).getDonHangID().equals(donHangID)){
-                                        OrderData orderUpdate = new OrderData(snapshot.getValue(OrderData.class).getDonHangID(), snapshot.getValue(OrderData.class).getNguoiMuaID(),
-                                                snapshot.getValue(OrderData.class).getNguoiBanID(), snapshot.getValue(OrderData.class).getNgayTaoDonHang(), snapshot.getValue(OrderData.class).getSoDienThoai(),
-                                                snapshot.getValue(OrderData.class).getDiaChi(), snapshot.getValue(OrderData.class).getSanPham(), snapshot.getValue(OrderData.class).getLoaiDonHang(), -1, snapshot.getValue(OrderData.class).getGiaTien());
-                                        databaseReference.child(donHangID).setValue(orderUpdate);
-                                        databaseReference.child("DonHang").child(donHangID).removeValue();
-                                        databaseReference.child("LichSuGiaoDich").child(donHangID).setValue(orderUpdate);
-                                        finish();
-                                        intent = new Intent(v.getContext(), DonBanActivity.class);
-                                        intent.putExtra("UserName", userName);
-                                        intent.putExtra("UserID", userID);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                                        startActivity(intent);
+                                databaseReference.child("DonHang").addChildEventListener(new ChildEventListener() {
+                                    @Override
+                                    public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                        if(snapshot.getValue(OrderData.class).getDonHangID().equals(donHangID)){
+                                            OrderData orderUpdate = new OrderData(snapshot.getValue(OrderData.class).getDonHangID(), snapshot.getValue(OrderData.class).getNguoiMuaID(),
+                                                    snapshot.getValue(OrderData.class).getNguoiBanID(), snapshot.getValue(OrderData.class).getNgayTaoDonHang(), snapshot.getValue(OrderData.class).getSoDienThoai(),
+                                                    snapshot.getValue(OrderData.class).getDiaChi(), snapshot.getValue(OrderData.class).getSanPham(), snapshot.getValue(OrderData.class).getLoaiDonHang(), -1, snapshot.getValue(OrderData.class).getGiaTien());
+                                            databaseReference.child("DonHang").child(donHangID).setValue(orderUpdate);
+                                            databaseReference.child("DonHang").child(donHangID).removeValue();
+                                            databaseReference.child("LichSuGiaoDich").child(donHangID).setValue(orderUpdate);
+                                            finish();
+                                            intent = new Intent(v.getContext(), DonBanActivity.class);
+                                            intent.putExtra("UserName", userName);
+                                            intent.putExtra("UserID", userID);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                                            startActivity(intent);
+                                        }
                                     }
-                                }
 
-                                @Override
-                                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                    @Override
+                                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
-                                }
+                                    }
 
-                                @Override
-                                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                                    @Override
+                                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
 
-                                }
+                                    }
 
-                                @Override
-                                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                    @Override
+                                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
-                                }
+                                    }
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
 
-                                }
-                            });
+                                    }
+                                });
 
-                            break;
-                        case DialogInterface.BUTTON_NEGATIVE:
-                            return;
+                                break;
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                return;
+                        }
                     }
-                }
-            };
+                };
 
-            AlertDialog.Builder alert = new AlertDialog.Builder(OrderProccessingForSellerActivity.this);
-            alert.setMessage("Bạn muốn hủy đơn hàng người mua?").setNegativeButton("No", dialog).setPositiveButton("Yes", dialog).show();
+                AlertDialog.Builder alert = new AlertDialog.Builder(OrderProccessingForSellerActivity.this);
+                alert.setMessage("Bạn muốn hủy đơn hàng người mua?").setNegativeButton("No", dialog).setPositiveButton("Yes", dialog).show();
+            }
+            else if(loaiDonHang == 3){
+                DialogInterface.OnClickListener dialog = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
+
+                                databaseReference.child("DonHang").addChildEventListener(new ChildEventListener() {
+                                    @Override
+                                    public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                        if(snapshot.getValue(OrderData.class).getDonHangID().equals(donHangID)){
+                                            OrderData orderUpdate = new OrderData(snapshot.getValue(OrderData.class).getDonHangID(), snapshot.getValue(OrderData.class).getNguoiMuaID(),
+                                                    snapshot.getValue(OrderData.class).getNguoiBanID(), snapshot.getValue(OrderData.class).getNgayTaoDonHang(), snapshot.getValue(OrderData.class).getSoDienThoai(),
+                                                    snapshot.getValue(OrderData.class).getDiaChi(), snapshot.getValue(OrderData.class).getSanPham(), snapshot.getValue(OrderData.class).getLoaiDonHang(), -1, snapshot.getValue(OrderData.class).getGiaTien());
+                                            databaseReference.child("DonHang").child(donHangID).setValue(orderUpdate);
+                                            databaseReference.child("DonHang").child(donHangID).removeValue();
+                                            databaseReference.child("LichSuGiaoDich").child(donHangID).setValue(orderUpdate);
+
+                                            databaseReference.child("User").addChildEventListener(new ChildEventListener() {
+                                                @Override
+                                                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                                    if(snapshot.getValue(UserData.class).getsUserID().equals(nguoiBanID)){
+                                                        long newBalance = snapshot.getValue(UserData.class).getlMoney() - tongGiaTri;
+                                                        databaseReference.child("User").child(snapshot.getKey()).child("lMoney").setValue(newBalance);
+                                                    }
+                                                    else if(snapshot.getValue(UserData.class).getsUserID().equals(nguoiMuaID)){
+                                                        long newBalance = snapshot.getValue(UserData.class).getlMoney() + tongGiaTri;
+                                                        databaseReference.child("User").child(snapshot.getKey()).child("lMoney").setValue(newBalance);
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                                }
+
+                                                @Override
+                                                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                                }
+
+                                                @Override
+                                                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                }
+                                            });
+
+                                            Handler handler = new Handler();
+                                            int delay = 1500;
+
+                                            handler.postDelayed(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    finish();
+                                                    intent = new Intent(v.getContext(), DonBanActivity.class);
+                                                    intent.putExtra("UserName", userName);
+                                                    intent.putExtra("UserID", userID);
+                                                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                                                    startActivity(intent);
+                                                }
+                                            }, delay);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                    }
+
+                                    @Override
+                                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                    }
+
+                                    @Override
+                                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+
+                                break;
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                return;
+                        }
+                    }
+                };
+
+                AlertDialog.Builder alert = new AlertDialog.Builder(OrderProccessingForSellerActivity.this);
+                alert.setMessage("Đây là đơn hàng đã thanh toán trước và tiền của bạn sẽ được hoàn lại cho người mua, bạn xác nhận hủy?").setNegativeButton("No", dialog).setPositiveButton("Yes", dialog).show();
+            }
         }
     };
 
