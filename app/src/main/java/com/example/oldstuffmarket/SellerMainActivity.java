@@ -189,6 +189,7 @@ public class SellerMainActivity extends AppCompatActivity {
             intent.putExtra("UserName", userName);
             intent.putExtra("UserID", userID);
             intent.putExtra("ProductID", sanPhamID);
+            intent.putExtra("NavigateTo", "Seller");
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             finish();
             startActivity(intent);

@@ -40,7 +40,7 @@ public class ReportUserActivity extends AppCompatActivity {
     private TextView txtFullName, txtSDT, txtDiaChi;
     private EditText edtReport;
     private Button btnReportUser, btnHome, btnBack;
-    private String userName, userID, productID;
+    private String userName, userID, productID, navigateTo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +71,7 @@ public class ReportUserActivity extends AppCompatActivity {
             userName = getIntent().getExtras().getString("UserName");
             userID = getIntent().getExtras().getString("UserID");
             productID = getIntent().getExtras().getString("ProductID");
+            navigateTo = getIntent().getExtras().getString("NavigateTo");
             databaseReference.child("User").addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -179,13 +180,24 @@ public class ReportUserActivity extends AppCompatActivity {
     View.OnClickListener backClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            finish();
-            intent = new Intent(v.getContext(), SellerMainActivity.class);
-            intent.putExtra("UserName", userName);
-            intent.putExtra("UserID", userID);
-            intent.putExtra("ProductID", productID);
-            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(intent);
+            if(navigateTo.equals("Seller")){
+                finish();
+                intent = new Intent(v.getContext(), SellerMainActivity.class);
+                intent.putExtra("UserName", userName);
+                intent.putExtra("UserID", userID);
+                intent.putExtra("ProductID", productID);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+            }
+            else if(navigateTo.equals("Shop")){
+                finish();
+                intent = new Intent(v.getContext(), ShopMainActivity.class);
+                intent.putExtra("UserName", userName);
+                intent.putExtra("UserID", userID);
+                intent.putExtra("ProductID", productID);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+            }
         }
     };
 
