@@ -3,6 +3,8 @@ package com.example.oldstuffmarket.ui.home;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.TabWidget;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,8 +41,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment{
 
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private EditText edtFind;
@@ -47,6 +52,7 @@ public class HomeFragment extends Fragment {
     private ArrayList<DanhMucData> danhMucDataArrayList;
     private ArrayList<SanPham> sanPhamArrayList;
     private Intent intent;
+    private Button btnGiaTang, btnGiaGiam, btnDoCu, btnDoMoi;
 //    private HomeViewModel homeViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -65,6 +71,10 @@ public class HomeFragment extends Fragment {
         edtFind = (EditText) view.findViewById(R.id.edtFind);
         gridDanhMuc = (GridView) view.findViewById(R.id.gridDanhMuc);
         gridSP = (GridView) view.findViewById(R.id.gridSP);
+        btnGiaTang = (Button) view.findViewById(R.id.btnGiaTang);
+        btnGiaGiam = (Button) view.findViewById(R.id.btnGiaGiam);
+        btnDoCu = (Button) view.findViewById(R.id.btnDoCu);
+        btnDoMoi = (Button) view.findViewById(R.id.btnDoMoi);
 
         danhMucDataArrayList = new ArrayList<>();
         DanhMucData danhMucData = new DanhMucData("AllID","Tất cả","danh_muc_khac");
@@ -207,20 +217,18 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        edtFind.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        edtFind.addTextChangedListener(new TextWatcher() {
             @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH ||
-                        actionId == EditorInfo.IME_ACTION_DONE ||
-                        event != null &&
-                                event.getAction() == KeyEvent.ACTION_DOWN &&
-                                event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                    if (event == null || !event.isShiftPressed()) {
-                        // the user is done typing.
-                        if(!edtFind.getText().toString().isEmpty()){
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(!s.toString().isEmpty()){
                             ArrayList<SanPham> findSP = new ArrayList<>();
                             for(SanPham sanPham : sanPhamArrayList){
-                                if(sanPham.getsTenSP().contains(edtFind.getText().toString()) || sanPham.getsDanhMuc().contains(edtFind.getText().toString())){
+                                if(sanPham.getsTenSP().toLowerCase().contains(s.toString()) || sanPham.getsTenSP().contains(s.toString()) || sanPham.getsDanhMuc().contains(s.toString())){
                                     findSP.add(sanPham);
                                 }
                             }
@@ -228,7 +236,7 @@ public class HomeFragment extends Fragment {
                             final int delay = 1000; //milliseconds
                             handler.postDelayed(new Runnable(){
                                 public void run(){
-                                    SanPhamAdapter sanPhamAdapter = new SanPhamAdapter(v.getContext(), R.layout.san_pham_adapter_layout, findSP);
+                                    SanPhamAdapter sanPhamAdapter = new SanPhamAdapter(view.getContext(), R.layout.san_pham_adapter_layout, findSP);
                                     gridSP.setAdapter(sanPhamAdapter);
 //                handler.postDelayed(this, delay);
                                 }
@@ -267,20 +275,118 @@ public class HomeFragment extends Fragment {
                             final int delay = 1000; //milliseconds
                             handler.postDelayed(new Runnable(){
                                 public void run(){
-                                    sanPhamLoad(v);
+                                    sanPhamLoad(view);
 //                handler.postDelayed(this, delay);
                                 }
                             }, delay);
                         }
-                        return true; // consume.
-                    }
-                }
-                return false;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
 
+        btnGiaTang.setOnClickListener(giaTangClick);
+        btnGiaGiam.setOnClickListener(giaGiamClick);
+        btnDoCu.setOnClickListener(doCuClick);
+        btnDoMoi.setOnClickListener(doMoiClick);
+
         return view;
     }
+
+    View.OnClickListener doMoiClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Collections.sort(sanPhamArrayList, new Comparator<SanPham>() {
+                @Override
+                public int compare(SanPham sp1, SanPham sp2) {
+                    if(sp1.getiTinhTrang() == sp2.getiTinhTrang()){
+                        return 0;
+                    }
+                    else if(sp1.getiTinhTrang() > sp2.getiTinhTrang()){
+                        return 1;
+                    }
+                    else{
+                        return -1;
+                    }
+                }
+            });
+
+            SanPhamAdapter sanPhamAdapter = new SanPhamAdapter(v.getContext(), R.layout.san_pham_adapter_layout, sanPhamArrayList);
+            gridSP.setAdapter(sanPhamAdapter);
+        }
+    };
+
+    View.OnClickListener doCuClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Collections.sort(sanPhamArrayList, new Comparator<SanPham>() {
+                @Override
+                public int compare(SanPham sp1, SanPham sp2) {
+                    if(sp1.getiTinhTrang() == sp2.getiTinhTrang()){
+                        return 0;
+                    }
+                    else if(sp1.getiTinhTrang() < sp2.getiTinhTrang()){
+                        return 1;
+                    }
+                    else{
+                        return -1;
+                    }
+                }
+            });
+
+            SanPhamAdapter sanPhamAdapter = new SanPhamAdapter(v.getContext(), R.layout.san_pham_adapter_layout, sanPhamArrayList);
+            gridSP.setAdapter(sanPhamAdapter);
+        }
+    };
+
+    View.OnClickListener giaGiamClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Collections.sort(sanPhamArrayList, new Comparator<SanPham>() {
+                @Override
+                public int compare(SanPham sp1, SanPham sp2) {
+                    if(sp1.getlGiaTien() == sp2.getlGiaTien()){
+                        return 0;
+                    }
+                    else if(sp1.getlGiaTien() < sp2.getlGiaTien()){
+                        return 1;
+                    }
+                    else{
+                        return -1;
+                    }
+                }
+            });
+
+            SanPhamAdapter sanPhamAdapter = new SanPhamAdapter(v.getContext(), R.layout.san_pham_adapter_layout, sanPhamArrayList);
+            gridSP.setAdapter(sanPhamAdapter);
+        }
+    };
+
+    View.OnClickListener giaTangClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Collections.sort(sanPhamArrayList, new Comparator<SanPham>() {
+                @Override
+                public int compare(SanPham sp1, SanPham sp2) {
+                    if(sp1.getlGiaTien() == sp2.getlGiaTien()){
+                        return 0;
+                    }
+                    else if(sp1.getlGiaTien() > sp2.getlGiaTien()){
+                        return 1;
+                    }
+                    else{
+                        return -1;
+                    }
+                }
+            });
+
+            SanPhamAdapter sanPhamAdapter = new SanPhamAdapter(v.getContext(), R.layout.san_pham_adapter_layout, sanPhamArrayList);
+            gridSP.setAdapter(sanPhamAdapter);
+        }
+    };
 
 
     public void danhMucLoad(View view){

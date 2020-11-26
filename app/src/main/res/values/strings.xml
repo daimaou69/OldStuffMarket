@@ -28,6 +28,10 @@
     <string name="user_new_password">Mật khẩu mới*</string>
     <string name="registry_confirm_pass">Xác nhận mật khẩu</string>
     <string name="find">Tìm kiếm</string>
+    <string name="sap_xep_gia_tang_dan">Giá tăng</string>
+    <string name="sap_xep_gia_giam_dan">Giá giảm</string>
+    <string name="sap_xep_do_cu">Đồ cũ</string>
+    <string name="sap_xep_do_moi">Đồ mới</string>
 
     //Account Info
     <string name="account_info">Thông tin tài khoản</string>
