@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.oldstuffmarket.adapter.DanhMucAdapter;
 import com.example.oldstuffmarket.data_models.DanhMucData;
+import com.example.oldstuffmarket.data_models.SanPham;
 import com.example.oldstuffmarket.data_models.UserData;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -251,7 +252,6 @@ public class QuanLyDanhMucActivity extends AppCompatActivity {
 //                                                    Toast.makeText(AccountInfoActivity.this, "Xoa hinh that bai", Toast.LENGTH_SHORT).show();
                                     }
                                 });
-
                                 sDanhMucIMG = databaseReference.push().getKey();
 
                                 final StorageReference mountainsRef = storageReference.child(sDanhMucIMG + ".png");
@@ -278,15 +278,40 @@ public class QuanLyDanhMucActivity extends AppCompatActivity {
 
                                 DanhMucData danhMucData = new DanhMucData(sDanhMucID, edtTenDanhMuc.getText().toString(), sDanhMucIMG);
                                 databaseReference.child("DanhMuc").child(sDanhMucID).setValue(danhMucData);
+                                databaseReference.child("SanPham").addChildEventListener(new ChildEventListener() {
+                                    @Override
+                                    public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                        if (snapshot.getValue(SanPham.class).getsDanhMuc().equals(sTenDanhMuc)) {
+                                            String tenDanhMuc = edtTenDanhMuc.getText().toString();
+                                            databaseReference.child("SanPham").child(snapshot.getKey()).child("sDanhMuc").setValue(tenDanhMuc);
+                                            edtTenDanhMuc.setText("");
+                                            imgDanhMuc.setImageResource(R.mipmap.no_image_icon);
+                                        }
+                                    }
 
+                                    @Override
+                                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
+                                    }
 
-                                edtTenDanhMuc.setText("");
-                                imgDanhMuc.setImageResource(R.mipmap.no_image_icon);
+                                    @Override
+                                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                    }
+
+                                    @Override
+                                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
                                 return;
-
                         }
                     }
                 };

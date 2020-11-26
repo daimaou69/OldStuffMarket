@@ -1,6 +1,8 @@
 package com.example.oldstuffmarket.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +17,18 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 
 import com.bumptech.glide.Glide;
 import com.example.oldstuffmarket.BuildConfig;
+import com.example.oldstuffmarket.DanhSachUserActivity;
 import com.example.oldstuffmarket.R;
+import com.example.oldstuffmarket.SP_Report_admin_Activity;
+import com.example.oldstuffmarket.data_models.Comment;
 import com.example.oldstuffmarket.data_models.LockUser;
+import com.example.oldstuffmarket.data_models.ProductReport;
+import com.example.oldstuffmarket.data_models.SanPham;
+import com.example.oldstuffmarket.data_models.ShopData;
 import com.example.oldstuffmarket.data_models.UserData;
 import com.example.oldstuffmarket.data_models.UserReport;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -85,6 +94,7 @@ public class LockUserAdapter extends BaseAdapter {
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+        View finalConvertView = convertView;
         databaseReference.child("User").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -108,103 +118,185 @@ public class LockUserAdapter extends BaseAdapter {
                         public void onCheckedChanged(RadioGroup radioGroup, int i) {
                             switch (i) {
                                 case R.id.radActive:
-                                    databaseReference.child("LockUser").addChildEventListener(new ChildEventListener() {
+                                    DialogInterface.OnClickListener dialog = new DialogInterface.OnClickListener() {
                                         @Override
-                                        public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                                            if (snapshot.getValue(LockUser.class).getUserID().equals(userID)) {
-                                                databaseReference.child("LockUser").child(snapshot.getKey()).removeValue();
-                                                databaseReference.child("User").child(sID).child("iTinhTrang").setValue(0);
+                                        public void onClick(DialogInterface dialogInterface, int which) {
+                                            switch (which) {
+                                                case DialogInterface.BUTTON_POSITIVE:
+                                                    databaseReference.child("LockUser").addChildEventListener(new ChildEventListener() {
+                                                        @Override
+                                                        public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                                            if (snapshot.getValue(LockUser.class).getUserID().equals(userID)) {
+                                                                databaseReference.child("LockUser").child(snapshot.getKey()).removeValue();
+                                                                databaseReference.child("User").child(sID).child("iTinhTrang").setValue(0);
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                                        }
+
+                                                        @Override
+                                                        public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                                        }
+
+                                                        @Override
+                                                        public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                                        }
+                                                    });
+                                                    break;
+                                                case DialogInterface.BUTTON_NEGATIVE:
+                                                    return;
                                             }
                                         }
-
-                                        @Override
-                                        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                                        }
-
-                                        @Override
-                                        public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-                                        }
-
-                                        @Override
-                                        public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
-
-                                        }
-                                    });
+                                    };
+                                    AlertDialog.Builder alert = new AlertDialog.Builder(finalConvertView.getContext());
+                                    alert.setMessage("Bạn chắn chắn muốn Active User!").setNegativeButton("No", dialog).setPositiveButton("Yes", dialog).show();
                                     break;
                                 case R.id.radRemove:
-                                    databaseReference.child("LockUser").addChildEventListener(new ChildEventListener() {
+                                    DialogInterface.OnClickListener dialoga = new DialogInterface.OnClickListener() {
                                         @Override
-                                        public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                                            if (snapshot.getValue(LockUser.class).getUserID().equals(userID)) {
-                                                databaseReference.child("LockUser").child(snapshot.getKey()).removeValue();
+                                        public void onClick(DialogInterface dialogInterface, int which) {
+                                            switch (which) {
+                                                case DialogInterface.BUTTON_POSITIVE:
+                                                    databaseReference.child("LockUser").addChildEventListener(new ChildEventListener() {
+                                                        @Override
+                                                        public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                                            if (snapshot.getValue(LockUser.class).getUserID().equals(userID)) {
+                                                                databaseReference.child("LockUser").child(snapshot.getKey()).removeValue();
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                                        }
+
+                                                        @Override
+                                                        public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                                        }
+
+                                                        @Override
+                                                        public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                                        }
+                                                    });
+                                                    databaseReference.child("User").addChildEventListener(new ChildEventListener() {
+                                                        @Override
+                                                        public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                                            if (snapshot.getValue(UserData.class).getsUserID().equals(userID)) {
+                                                                databaseReference.child("User").child(snapshot.getKey()).removeValue();
+                                                                UserData userData = new UserData(snapshot.getValue(UserData.class).getsUserName(), snapshot.getValue(UserData.class).getsShopID(),
+                                                                        snapshot.getValue(UserData.class).getsFullName(), snapshot.getValue(UserData.class).getsSdt(),
+                                                                        snapshot.getValue(UserData.class).getsGioiTinh(), snapshot.getValue(UserData.class).getsDiaChi(),
+                                                                        snapshot.getValue(UserData.class).getsPassword(), snapshot.getValue(UserData.class).getsImage(),
+                                                                        snapshot.getValue(UserData.class).getsUserID(), snapshot.getValue(UserData.class).getsNgayThamGia(),
+                                                                        snapshot.getValue(UserData.class).getiPermission(), snapshot.getValue(UserData.class).getiCommission(),
+                                                                        snapshot.getValue(UserData.class).getiTinhTrang(), snapshot.getValue(UserData.class).getiSoSPDaBan(),
+                                                                        snapshot.getValue(UserData.class).getiAccPoint(), snapshot.getValue(UserData.class).getiReport(),
+                                                                        snapshot.getValue(UserData.class).getlMoney());
+                                                                databaseReference.child("BlackList").child(userID).setValue(userData);
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                                        }
+
+                                                        @Override
+                                                        public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                                        }
+
+                                                        @Override
+                                                        public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                                        }
+                                                    });
+                                                    databaseReference.child("Shop").addChildEventListener(new ChildEventListener() {
+                                                        @Override
+                                                        public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                                            if (snapshot.getValue(ShopData.class).getUserID().equals(userID)) {
+                                                                databaseReference.child("Shop").child(snapshot.getKey()).removeValue();
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                                        }
+
+                                                        @Override
+                                                        public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                                        }
+
+                                                        @Override
+                                                        public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                                        }
+                                                    });
+                                                    databaseReference.child("SanPham").addChildEventListener(new ChildEventListener() {
+                                                        @Override
+                                                        public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                                            if (snapshot.getValue(SanPham.class).getsUserID().equals(lockUser.getUserID())) {
+                                                                databaseReference.child("SanPham").child(snapshot.getKey()).removeValue();
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                                        }
+
+                                                        @Override
+                                                        public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                                        }
+
+                                                        @Override
+                                                        public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                                        }
+                                                    });
+                                                    break;
+                                                case DialogInterface.BUTTON_NEGATIVE:
+                                                    return;
                                             }
                                         }
-
-                                        @Override
-                                        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                                        }
-
-                                        @Override
-                                        public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-                                        }
-
-                                        @Override
-                                        public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
-
-                                        }
-                                    });
-                                    databaseReference.child("User").addChildEventListener(new ChildEventListener() {
-                                        @Override
-                                        public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                                            if (snapshot.getValue(UserData.class).getsUserID().equals(userID)) {
-                                                databaseReference.child("User").child(snapshot.getKey()).removeValue();
-                                                UserData userData = new UserData(snapshot.getValue(UserData.class).getsUserName(), snapshot.getValue(UserData.class).getsShopID(),
-                                                        snapshot.getValue(UserData.class).getsFullName(), snapshot.getValue(UserData.class).getsSdt(),
-                                                        snapshot.getValue(UserData.class).getsGioiTinh(), snapshot.getValue(UserData.class).getsDiaChi(),
-                                                        snapshot.getValue(UserData.class).getsPassword(), snapshot.getValue(UserData.class).getsImage(),
-                                                        snapshot.getValue(UserData.class).getsUserID(), snapshot.getValue(UserData.class).getsNgayThamGia(),
-                                                        snapshot.getValue(UserData.class).getiPermission(), snapshot.getValue(UserData.class).getiCommission(),
-                                                        snapshot.getValue(UserData.class).getiTinhTrang(), snapshot.getValue(UserData.class).getiSoSPDaBan(),
-                                                        snapshot.getValue(UserData.class).getiAccPoint(), snapshot.getValue(UserData.class).getiReport(),
-                                                        snapshot.getValue(UserData.class).getlMoney());
-                                                databaseReference.child("BlackList").child(userID).setValue(userData);
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                                        }
-
-                                        @Override
-                                        public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-                                        }
-
-                                        @Override
-                                        public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
-
-                                        }
-                                    });
+                                    };
+                                    AlertDialog.Builder alertt = new AlertDialog.Builder(finalConvertView.getContext());
+                                    alertt.setMessage("Bạn chắn chắn muốn Remove User!").setNegativeButton("No", dialoga).setPositiveButton("Yes", dialoga).show();
                                     break;
                             }
                         }

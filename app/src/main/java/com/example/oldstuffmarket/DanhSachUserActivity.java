@@ -13,6 +13,7 @@ import android.widget.GridView;
 
 import com.example.oldstuffmarket.adapter.LockUserAdapter;
 import com.example.oldstuffmarket.adapter.Userbibaocao_Adapter;
+import com.example.oldstuffmarket.data_models.DanhMucData;
 import com.example.oldstuffmarket.data_models.LockUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -25,7 +26,7 @@ import java.util.ArrayList;
 public class DanhSachUserActivity extends AppCompatActivity {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private GridView gridUser;
-    private Button btnBack;
+    private Button btnBack, btnRefresh;
     private Intent intent;
     private String userName;
     private ArrayList<LockUser> lockUserArrayList;
@@ -38,10 +39,12 @@ public class DanhSachUserActivity extends AppCompatActivity {
 
         gridUser = (GridView) findViewById(R.id.gridUser);
         btnBack = (Button) findViewById(R.id.btnBack);
+        btnRefresh = (Button) findViewById(R.id.btnRefresh);
 
         lockUserArrayList = new ArrayList<>();
 
         btnBack.setOnClickListener(backClick);
+        btnRefresh.setOnClickListener(clearClick);
     }
 
     @Override
@@ -86,6 +89,49 @@ public class DanhSachUserActivity extends AppCompatActivity {
             }, delay);
         }
     }
+
+    View.OnClickListener clearClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            lockUserArrayList.clear();
+
+            databaseReference.child("LockUser").addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    lockUserArrayList.add(snapshot.getValue(LockUser.class));
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+            final Handler handler = new Handler();
+            final int delay = 500; //milliseconds
+            handler.postDelayed(new Runnable(){
+                public void run(){
+                    userLoad();
+//                handler.postDelayed(this, delay);
+                }
+            }, delay);
+        }
+    };
 
     View.OnClickListener backClick = new View.OnClickListener() {
         @Override

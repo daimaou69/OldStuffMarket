@@ -40,7 +40,8 @@ public class RegistrationActivity extends AppCompatActivity {
     private String UserName = "", FullName = "", SDT = "", DiaChi = "", Pass = "", PassConfirm = "", Gender = "";//các biến lưu thông tin như user name, full name,...
     private int iPermission = 1;//permission của user mặc định là 1
     private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-    private ArrayList<UserData> userList; //khai báo danh sách user
+    private ArrayList<UserData> userList;//khai báo danh sách user
+    private ArrayList<UserData> blackList;
     private static final String USERNAME_PATTERN = "^[a-z0-9]{3,8}$";//kiểm tra user name nhập vào
     private Pattern pattern;
     private int userCommission;// hoa hồng của user
@@ -62,12 +63,26 @@ public class RegistrationActivity extends AppCompatActivity {
         btnRegistry = findViewById(R.id.btnRegistry);
 
         userList = new ArrayList<UserData>();//tạo mới user list
+        blackList = new ArrayList<UserData>();
 
         mDatabase.child("User").addValueEventListener(new ValueEventListener() {// lọc dữ liệu trong mục User
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     userList.add(dataSnapshot.getValue(UserData.class));// thêm dữ liệu vào user list
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        mDatabase.child("BlackList").addValueEventListener(new ValueEventListener() {// lọc dữ liệu trong mục User
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    blackList.add(dataSnapshot.getValue(UserData.class));// thêm dữ liệu vào user list
                 }
             }
 
@@ -146,6 +161,24 @@ public class RegistrationActivity extends AppCompatActivity {
         return true;
     }
 
+    public boolean blackListSdtCheck(ArrayList<UserData> blackList, String sSDT){// kiểm tra sdt có tồn tại trên csdl hay chưa
+        for(UserData user : blackList){
+            if(user.getsSdt().equals(sSDT)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean blackListNameCheck(ArrayList<UserData> blackList, String sUserName){// kiểm tra user name có tồn tại trên csdl hay chưa
+        for(UserData user : blackList){
+            if(user.getsUserName().equals(sUserName)){
+                return false;
+            }
+        }
+        return true;
+    }
+
     View.OnClickListener OnClick = new View.OnClickListener() {// tạo sự kiện click cho nút đăng ký
         @Override
         public void onClick(View v) {
@@ -177,6 +210,15 @@ public class RegistrationActivity extends AppCompatActivity {
                     }
                 }).show();
             }
+            else if (blackListNameCheck(blackList, UserName) == false) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+                alert.setMessage("Username đã tồn tại trong danh sách đen!").setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).show();
+            }
             else if(FullName.isEmpty()){//kiểm tra họ tên có nhập hay chưa
                 edtFullName.setError("Bạn chưa nhập họ tên!");
             }
@@ -189,6 +231,15 @@ public class RegistrationActivity extends AppCompatActivity {
             else if(sdtCheck(userList,edtSDT.getText().toString()) == false){//kiểm tra SDT đã tồn tại chưa
                 AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
                 alert.setMessage("Số điện thoại đã tồn tại trong hệ thống!").setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).show();
+            }
+            else if (blackListSdtCheck(blackList, edtSDT.getText().toString()) == false) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+                alert.setMessage("Số điện thoại đã tồn tại trong danh sách đen!").setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
