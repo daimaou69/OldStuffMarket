@@ -436,9 +436,8 @@ public class OrderProccessingForSellerActivity extends AppCompatActivity {
                                             OrderData orderUpdate = new OrderData(snapshot.getValue(OrderData.class).getDonHangID(), snapshot.getValue(OrderData.class).getNguoiMuaID(),
                                                     snapshot.getValue(OrderData.class).getNguoiBanID(), snapshot.getValue(OrderData.class).getNgayTaoDonHang(), snapshot.getValue(OrderData.class).getSoDienThoai(),
                                                     snapshot.getValue(OrderData.class).getDiaChi(), snapshot.getValue(OrderData.class).getSanPham(), snapshot.getValue(OrderData.class).getLoaiDonHang(), -1, snapshot.getValue(OrderData.class).getGiaTien());
-                                            databaseReference.child("DonHang").child(donHangID).setValue(orderUpdate);
-                                            databaseReference.child("DonHang").child(donHangID).removeValue();
                                             databaseReference.child("LichSuGiaoDich").child(donHangID).setValue(orderUpdate);
+                                            databaseReference.child("DonHang").child(donHangID).removeValue();
                                             finish();
                                             intent = new Intent(v.getContext(), DonBanActivity.class);
                                             intent.putExtra("UserName", userName);
@@ -493,9 +492,8 @@ public class OrderProccessingForSellerActivity extends AppCompatActivity {
                                             OrderData orderUpdate = new OrderData(snapshot.getValue(OrderData.class).getDonHangID(), snapshot.getValue(OrderData.class).getNguoiMuaID(),
                                                     snapshot.getValue(OrderData.class).getNguoiBanID(), snapshot.getValue(OrderData.class).getNgayTaoDonHang(), snapshot.getValue(OrderData.class).getSoDienThoai(),
                                                     snapshot.getValue(OrderData.class).getDiaChi(), snapshot.getValue(OrderData.class).getSanPham(), snapshot.getValue(OrderData.class).getLoaiDonHang(), -1, snapshot.getValue(OrderData.class).getGiaTien());
-                                            databaseReference.child("DonHang").child(donHangID).setValue(orderUpdate);
-                                            databaseReference.child("DonHang").child(donHangID).removeValue();
                                             databaseReference.child("LichSuGiaoDich").child(donHangID).setValue(orderUpdate);
+                                            databaseReference.child("DonHang").child(donHangID).removeValue();
 
                                             databaseReference.child("User").addChildEventListener(new ChildEventListener() {
                                                 @Override
