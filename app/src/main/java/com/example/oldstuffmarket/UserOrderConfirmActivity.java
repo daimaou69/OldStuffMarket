@@ -284,7 +284,7 @@ public class UserOrderConfirmActivity extends AppCompatActivity {
                                                         databaseReference.child("User").addChildEventListener(new ChildEventListener() {
                                                             @Override
                                                             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                                                                if(snapshot.getValue(UserData.class).getsUserID().equals("-MM3awA6HlZbVWBBUFqY")){
+                                                                if(snapshot.getValue(UserData.class).getsUserName().equals("admin")){
                                                                     long money = snapshot.getValue(UserData.class).getlMoney() + (long)commission;
                                                                     UserData userAdmin = new UserData(snapshot.getValue(UserData.class).getsUserName(),snapshot.getValue(UserData.class).getsShopID(),snapshot.getValue(UserData.class).getsFullName(),
                                                                             snapshot.getValue(UserData.class).getsSdt(), snapshot.getValue(UserData.class).getsGioiTinh(), snapshot.getValue(UserData.class).getsDiaChi(),
