@@ -186,7 +186,7 @@ public class UserMainActivity extends AppCompatActivity{
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    if(snapshot.getValue(UserData.class).getiAccPoint() < 20){
+                                    if(snapshot.getValue(UserData.class).getiAccPoint() <= 0){
                                         databaseReference.child("Shop").addChildEventListener(new ChildEventListener() {
                                             @Override
                                             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {

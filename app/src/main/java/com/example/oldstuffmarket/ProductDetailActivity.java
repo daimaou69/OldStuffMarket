@@ -272,7 +272,43 @@ public class ProductDetailActivity extends AppCompatActivity {
                                                 Toast.makeText(ProductDetailActivity.this, "Hinh anh khong ton tai!", Toast.LENGTH_SHORT).show();
                                             }
                                         });
-                                        txtTenShop.setText(snapshot.getValue(ShopData.class).getShopName());
+                                        String shopName = snapshot.getValue(ShopData.class).getShopName();
+                                        txtTenShop.setText(shopName);
+                                        databaseReference.child("User").addChildEventListener(new ChildEventListener() {
+                                            @Override
+                                            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                                if(snapshot.getValue(UserData.class).getsUserID().equals(sanPhamUserID)){
+                                                    if(snapshot.getValue(UserData.class).getiTinhTrang() != 0){
+                                                        btnBuy.setEnabled(false);
+                                                        btnXemTrang.setEnabled(false);
+                                                        btnReport.setEnabled(false);
+                                                        btnDecs.setEnabled(false);
+                                                        btnInc.setEnabled(false);
+                                                        txtTenShop.setText(shopName + "(Người bán đang bị khóa)");
+                                                    }
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                            }
+
+                                            @Override
+                                            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                            }
+
+                                            @Override
+                                            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
                                     }
                                 }
 
