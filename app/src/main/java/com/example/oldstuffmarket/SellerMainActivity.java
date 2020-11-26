@@ -188,6 +188,7 @@ public class SellerMainActivity extends AppCompatActivity {
             intent = new Intent(v.getContext(), ReportUserActivity.class);
             intent.putExtra("UserName", userName);
             intent.putExtra("UserID", userID);
+            intent.putExtra("ProductID", sanPhamID);
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             finish();
             startActivity(intent);

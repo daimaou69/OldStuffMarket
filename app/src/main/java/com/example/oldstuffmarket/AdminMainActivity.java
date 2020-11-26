@@ -38,7 +38,7 @@ import java.util.ArrayList;
 public class AdminMainActivity extends AppCompatActivity {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-    private Button btnLogout, btnQuanLyDanhMuc, btnAccountInfo, btnWallet, btnProductReport, btnUserReport, btnQuanLyBaiDang, btnUserDepositMoney, btnViGiaoDich, btnPassWordChange, btnShopRegistration, btnCommission;
+    private Button btnLogout, btnQuanLyDanhMuc, btnAccountInfo, btnWallet, btnProductReport, btnUserReport, btnUserReported,btnQuanLyBaiDang, btnUserDepositMoney, btnViGiaoDich, btnPassWordChange, btnShopRegistration, btnCommission;
     private TextView txtAdminAccountName, txtNotify, txtUserDepositMoneyNotify, txtProductReprtedNotify, txtUserReportedNotify;
     private ImageView imgAccount;
     private Intent intent = LoginActivity.intent;
@@ -72,6 +72,7 @@ public class AdminMainActivity extends AppCompatActivity {
         btnProductReport = (Button) findViewById(R.id.btnProductReport);
         txtUserReportedNotify = (TextView) findViewById(R.id.txtUserReportedNotify);
         btnUserReport = (Button) findViewById(R.id.btnUserReport);
+        btnUserReported = (Button) findViewById(R.id.btnUserReported);
 
         userDataArrayList = new ArrayList<>();
         shopDataArrayList = new ArrayList<>();
@@ -88,6 +89,8 @@ public class AdminMainActivity extends AppCompatActivity {
         btnUserDepositMoney.setOnClickListener(depositMoneyClick);
         btnCommission.setOnClickListener(commissionClick);
         btnProductReport.setOnClickListener(reportSPClick);
+        btnUserReport.setOnClickListener(reportUserClick);
+        btnUserReported.setOnClickListener(dsUserClick);
     }
 
     @Override
@@ -266,6 +269,26 @@ public class AdminMainActivity extends AppCompatActivity {
             }
         }, delay);
     }
+
+    View.OnClickListener dsUserClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            intent = new Intent(v.getContext(), DanhSachUserActivity.class);
+            intent.putExtra("UserName", sUserName);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        }
+    };
+
+    View.OnClickListener reportUserClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            intent = new Intent(v.getContext(), Report_User_Admin_Activity.class);
+            intent.putExtra("UserName", sUserName);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        }
+    };
 
     View.OnClickListener reportSPClick = new View.OnClickListener() {
         @Override
