@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.oldstuffmarket.adapter.DanhMucAdapter;
 import com.example.oldstuffmarket.data_models.DanhMucData;
+import com.example.oldstuffmarket.data_models.SanPham;
 import com.example.oldstuffmarket.data_models.UserData;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -251,7 +252,6 @@ public class QuanLyDanhMucActivity extends AppCompatActivity {
 //                                                    Toast.makeText(AccountInfoActivity.this, "Xoa hinh that bai", Toast.LENGTH_SHORT).show();
                                     }
                                 });
-
                                 sDanhMucIMG = databaseReference.push().getKey();
 
                                 final StorageReference mountainsRef = storageReference.child(sDanhMucIMG + ".png");
@@ -279,14 +279,11 @@ public class QuanLyDanhMucActivity extends AppCompatActivity {
                                 DanhMucData danhMucData = new DanhMucData(sDanhMucID, edtTenDanhMuc.getText().toString(), sDanhMucIMG);
                                 databaseReference.child("DanhMuc").child(sDanhMucID).setValue(danhMucData);
 
-
-
                                 edtTenDanhMuc.setText("");
                                 imgDanhMuc.setImageResource(R.mipmap.no_image_icon);
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
                                 return;
-
                         }
                     }
                 };
