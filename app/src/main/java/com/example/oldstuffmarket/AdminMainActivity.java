@@ -38,7 +38,7 @@ import java.util.ArrayList;
 public class AdminMainActivity extends AppCompatActivity {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-    private Button btnLogout, btnQuanLyDanhMuc, btnAccountInfo, btnWallet, btnProductReport, btnUserReport, btnUserReported,btnQuanLyBaiDang, btnUserDepositMoney, btnViGiaoDich, btnPassWordChange, btnShopRegistration, btnCommission;
+    private Button btnLogout, btnQuanLyDanhMuc, btnAccountInfo, btnWallet, btnProductReport, btnUserReport, btnUserReported, btnUserDepositMoney, btnEmployeeManagement, btnPassWordChange, btnShopRegistration, btnCommission, btnAddEmployee;
     private TextView txtAdminAccountName, txtNotify, txtUserDepositMoneyNotify, txtProductReprtedNotify, txtUserReportedNotify;
     private ImageView imgAccount;
     private Intent intent = LoginActivity.intent;
@@ -73,6 +73,8 @@ public class AdminMainActivity extends AppCompatActivity {
         txtUserReportedNotify = (TextView) findViewById(R.id.txtUserReportedNotify);
         btnUserReport = (Button) findViewById(R.id.btnUserReport);
         btnUserReported = (Button) findViewById(R.id.btnUserReported);
+        btnAddEmployee = (Button) findViewById(R.id.btnAddEmployee);
+        btnEmployeeManagement = (Button) findViewById(R.id.btnEmployeeManagement);
 
         userDataArrayList = new ArrayList<>();
         shopDataArrayList = new ArrayList<>();
@@ -83,7 +85,6 @@ public class AdminMainActivity extends AppCompatActivity {
         btnLogout.setOnClickListener(logoutClick);
         btnAccountInfo.setOnClickListener(accountInfoClick);
         btnPassWordChange.setOnClickListener(passwordChangeClick);
-        btnWallet.setOnClickListener(walletClick);
         btnQuanLyDanhMuc.setOnClickListener(danhMucClick);
         btnShopRegistration.setOnClickListener(shopRegistrationClick);
         btnUserDepositMoney.setOnClickListener(depositMoneyClick);
@@ -91,6 +92,7 @@ public class AdminMainActivity extends AppCompatActivity {
         btnProductReport.setOnClickListener(reportSPClick);
         btnUserReport.setOnClickListener(reportUserClick);
         btnUserReported.setOnClickListener(dsUserClick);
+        btnAddEmployee.setOnClickListener(addEmployeeClick);
     }
 
     @Override
@@ -220,7 +222,18 @@ public class AdminMainActivity extends AppCompatActivity {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                     if(snapshot.getValue(UserData.class).getsUserName().equals(sUserName)){
-                        txtAdminAccountName.setText(snapshot.getValue(UserData.class).getsUserName() + " - " + snapshot.getValue(UserData.class).getsFullName());
+                        if(snapshot.getValue(UserData.class).getiPermission() == 2){
+                            btnAddEmployee.setVisibility(View.GONE);
+                            btnEmployeeManagement.setVisibility(View.GONE);
+                            btnCommission.setVisibility(View.GONE);
+                            btnQuanLyDanhMuc.setVisibility(View.GONE);
+                            btnWallet.setVisibility(View.GONE);
+                            btnUserDepositMoney.setVisibility(View.GONE);
+                            txtAdminAccountName.setText("Employee - " + snapshot.getValue(UserData.class).getsFullName());
+                        }
+                        else{
+                            txtAdminAccountName.setText("Admin - " + snapshot.getValue(UserData.class).getsFullName());
+                        }
                         btnWallet.setText("Ví tài khoản: " + String.valueOf(snapshot.getValue(UserData.class).getlMoney()) + "vnđ");
                         if(!snapshot.getValue(UserData.class).getsImage().isEmpty()){
                             final Handler handler = new Handler();
@@ -257,18 +270,42 @@ public class AdminMainActivity extends AppCompatActivity {
             });
         }
 
+
+
         Handler handler = new Handler();
         int delay = 1000;
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                txtNotify.setText(String.valueOf(shopDataArrayList.size()));
-                txtUserDepositMoneyNotify.setText(String.valueOf(userDepositDataArrayList.size()));
-                txtProductReprtedNotify.setText(String.valueOf(productReportArrayList.size()));
-                txtUserReportedNotify.setText(String.valueOf(userReportArrayList.size()));
+                if(shopDataArrayList.size() != 0){
+                    txtNotify.setVisibility(View.VISIBLE);
+                    txtNotify.setText(String.valueOf(shopDataArrayList.size()));
+                }
+                if(userDepositDataArrayList.size() != 0){
+                    txtUserDepositMoneyNotify.setVisibility(View.VISIBLE);
+                    txtUserDepositMoneyNotify.setText(String.valueOf(userDepositDataArrayList.size()));
+                }
+                if(productReportArrayList.size() != 0){
+                    txtProductReprtedNotify.setVisibility(View.VISIBLE);
+                    txtProductReprtedNotify.setText(String.valueOf(productReportArrayList.size()));
+                }
+                if(userReportArrayList.size() != 0){
+                    txtUserReportedNotify.setVisibility(View.VISIBLE);
+                    txtUserReportedNotify.setText(String.valueOf(userReportArrayList.size()));
+                }
             }
         }, delay);
     }
+
+    View.OnClickListener addEmployeeClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            intent = new Intent(v.getContext(), AddEmployeeActivity.class);
+            intent.putExtra("UserName", sUserName);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        }
+    };
 
     View.OnClickListener dsUserClick = new View.OnClickListener() {
         @Override
@@ -354,16 +391,6 @@ public class AdminMainActivity extends AppCompatActivity {
             }
         });
     }
-
-    View.OnClickListener walletClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            intent = new Intent(v.getContext(), WalletActivity.class);
-            intent.putExtra("UserName", sUserName);
-            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(intent);
-        }
-    };
 
     View.OnClickListener passwordChangeClick = new View.OnClickListener() {
         @Override

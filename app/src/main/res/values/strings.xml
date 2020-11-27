@@ -85,6 +85,8 @@
     <string name="completed">Completed</string>
     <string name="huy_don">Hủy đơn</string>
     <string name="dang_ky_employee">Đăng ký nhân viên</string>
+    <string name="add_employee">Thêm nhân viên</string>
+    <string name="employee_management">Quản lí nhân viên</string>
 
     //Wallet
     <string name="nap_tien">Nạp tiền</string>

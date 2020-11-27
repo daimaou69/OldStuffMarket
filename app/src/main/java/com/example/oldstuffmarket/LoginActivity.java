@@ -155,7 +155,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                         if(snapshot.getValue(UserData.class).getsUserName().equals(userName) && snapshot.getValue(UserData.class).getsPassword().equals(password) && snapshot.getValue(UserData.class).getiTinhTrang() == 0){
                             iCount++;
-                            if(snapshot.getValue(UserData.class).getiPermission() == 0){//nếu kết quả đăng nhập == 0
+                            if(snapshot.getValue(UserData.class).getiPermission() == 0 || snapshot.getValue(UserData.class).getiPermission() == 2){//nếu kết quả đăng nhập == 0
                                 intent = new Intent(LoginActivity.this, AdminMainActivity.class);//chuyển đến trang admin
                                 intent.putExtra("UserName", edtLoginName.getText().toString());
                                 startActivity(intent);

@@ -262,12 +262,27 @@ public class RegistrationActivity extends AppCompatActivity {
                 edtPassConfirm.setError("Mật khâu xác nhận không chính xác!");
             }
             else{
-                Toast.makeText(RegistrationActivity.this, "Tạo tài khoản thành công!", Toast.LENGTH_SHORT).show();// thông báo tạo tài khoản thành công
-                UserData user = new UserData();
-                CreateUser(UserName, FullName, SDT, Gender, DiaChi, Pass, iPermission);//chạy hàm tạo mới user và đưa user vào firebase
-                Intent intent = new Intent(RegistrationActivity.this,LoginActivity.class);// quay trở lại trang đăng nhập
-                finish();// đóng trang
-                startActivity(intent);
+                DialogInterface.OnClickListener dialog = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                Toast.makeText(RegistrationActivity.this, "Tạo tài khoản thành công!", Toast.LENGTH_SHORT).show();// thông báo tạo tài khoản thành công
+                                UserData user = new UserData();
+                                CreateUser(UserName, FullName, SDT, Gender, DiaChi, Pass, iPermission);//chạy hàm tạo mới user và đưa user vào firebase
+                                Intent intent = new Intent(RegistrationActivity.this,LoginActivity.class);// quay trở lại trang đăng nhập
+                                finish();// đóng trang
+                                startActivity(intent);
+                                break;
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                return;
+                        }
+                    }
+                };
+
+                AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+                alert.setMessage("Xác nhận đúng thông tin đăng ký tài khoản?").setNegativeButton("No", dialog).setPositiveButton("Yes", dialog).show();
+
             }
         }
     };
