@@ -85,6 +85,8 @@ public class UserOrderConfirmActivity extends AppCompatActivity {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                     if(snapshot.getValue(OrderData.class).getDonHangID().equals(donHangID)){
+                        nguoiBanID = snapshot.getValue(OrderData.class).getNguoiBanID();
+                        nguoiMuaID = snapshot.getValue(OrderData.class).getNguoiMuaID();
                         loaiDonHang = snapshot.getValue(OrderData.class).getLoaiDonHang();
                         tongGiaTri = snapshot.getValue(OrderData.class).getGiaTien();
                         productID = snapshot.getValue(OrderData.class).getSanPham().getsID();
@@ -119,7 +121,6 @@ public class UserOrderConfirmActivity extends AppCompatActivity {
                         if(snapshot.getValue(OrderData.class).getLoaiDonHang() == 1){
                             txtPhuongThucThanhToan.setText("Thanh toán trực tiếp!");
 
-                            nguoiBanID = snapshot.getValue(OrderData.class).getNguoiBanID();
                             databaseReference.child("User").addChildEventListener(new ChildEventListener() {
                                 @Override
                                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -165,7 +166,6 @@ public class UserOrderConfirmActivity extends AppCompatActivity {
                             }
                             txtDiaChi.setText("Địa chỉ giao hàng: ");
                             txtNameLabel.setText("Họ tên người mua: ");
-                            nguoiMuaID = snapshot.getValue(OrderData.class).getNguoiMuaID();
                             databaseReference.child("User").addChildEventListener(new ChildEventListener() {
                                 @Override
                                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
