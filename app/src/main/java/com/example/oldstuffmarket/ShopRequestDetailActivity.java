@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.oldstuffmarket.data_models.Commission;
 import com.example.oldstuffmarket.data_models.ShopData;
 import com.example.oldstuffmarket.data_models.UserData;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -37,6 +38,7 @@ public class ShopRequestDetailActivity extends AppCompatActivity {
     private TextView txtTenShop, txtMoTaShop;
     private Button btnAccept, btnDeny, btnBack;
     private Intent intent;
+    private int commission;
     private String shopID, userID, userName, shopImage;
 
     @Override
@@ -61,6 +63,35 @@ public class ShopRequestDetailActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        databaseReference.child("Commission").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                if(snapshot.getValue(Commission.class).getId().equals("-MKyZZdaQ3ucidlxPkUV")){
+                    commission = snapshot.getValue(Commission.class).getShopCommission();
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         if(getIntent().getExtras() != null){
             shopID = getIntent().getExtras().getString("ShopID");
@@ -159,7 +190,7 @@ public class ShopRequestDetailActivity extends AppCompatActivity {
                                             UserData userData = new UserData(snapshot.getValue(UserData.class).getsUserName(),snapshot.getValue(UserData.class).getsShopID(),snapshot.getValue(UserData.class).getsFullName(),
                                                     snapshot.getValue(UserData.class).getsSdt(), snapshot.getValue(UserData.class).getsGioiTinh(), snapshot.getValue(UserData.class).getsDiaChi(),
                                                     snapshot.getValue(UserData.class).getsPassword(), snapshot.getValue(UserData.class).getsImage(), snapshot.getValue(UserData.class).getsUserID(),
-                                                    snapshot.getValue(UserData.class).getsNgayThamGia(), snapshot.getValue(UserData.class).getiPermission(), 2, snapshot.getValue(UserData.class).getiTinhTrang(),
+                                                    snapshot.getValue(UserData.class).getsNgayThamGia(), snapshot.getValue(UserData.class).getiPermission(), commission, snapshot.getValue(UserData.class).getiTinhTrang(),
                                                     snapshot.getValue(UserData.class).getiSoSPDaBan(), snapshot.getValue(UserData.class).getiAccPoint(), snapshot.getValue(UserData.class).getiReport(), snapshot.getValue(UserData.class).getlMoney());
 
                                             databaseReference.child("User").child(userID).setValue(userData);
