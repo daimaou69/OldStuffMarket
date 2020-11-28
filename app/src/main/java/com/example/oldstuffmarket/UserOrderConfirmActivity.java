@@ -42,7 +42,7 @@ public class UserOrderConfirmActivity extends AppCompatActivity {
     private Button btnAccept, btnRefuse, btnBack;
     private Intent intent;
     private String userName, userID, donHangID, nguoiBanID, nguoiMuaID, productID;
-    private int loaiDonHang;
+    private int loaiDonHang, sellerCommission;
     private long tongGiaTri;
 
     @Override
@@ -125,6 +125,7 @@ public class UserOrderConfirmActivity extends AppCompatActivity {
                                 @Override
                                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                                     if(snapshot.getValue(UserData.class).getsUserID().equals(nguoiBanID)){
+                                        sellerCommission = snapshot.getValue(UserData.class).getiCommission();
                                         edtUserName.setText(snapshot.getValue(UserData.class).getsFullName());
                                         edtDiaChi.setText(snapshot.getValue(UserData.class).getsDiaChi());
                                         edtLienHe.setText(snapshot.getValue(UserData.class).getsSdt());
@@ -237,7 +238,7 @@ public class UserOrderConfirmActivity extends AppCompatActivity {
                                     if(snapshot.getValue(OrderData.class).getDonHangID().equals(donHangID)){
                                         OrderData orderData = new OrderData(snapshot.getValue(OrderData.class).getDonHangID(), snapshot.getValue(OrderData.class).getNguoiMuaID(), snapshot.getValue(OrderData.class).getNguoiBanID(),
                                                 snapshot.getValue(OrderData.class).getNgayTaoDonHang(), snapshot.getValue(OrderData.class).getSoDienThoai(), snapshot.getValue(OrderData.class).getDiaChi(),
-                                                snapshot.getValue(OrderData.class).getSanPham(), snapshot.getValue(OrderData.class).getLoaiDonHang(), 4, snapshot.getValue(OrderData.class).getGiaTien());
+                                                snapshot.getValue(OrderData.class).getSanPham(), snapshot.getValue(OrderData.class).getLoaiDonHang(), 4, sellerCommission, snapshot.getValue(OrderData.class).getGiaTien());
                                         databaseReference.child("LichSuGiaoDich").child(snapshot.getValue(OrderData.class).getDonHangID()).setValue(orderData);
                                         databaseReference.child("DonHang").child(snapshot.getValue(OrderData.class).getDonHangID()).removeValue();
                                         nguoiBanID = snapshot.getValue(OrderData.class).getNguoiBanID();
@@ -439,7 +440,7 @@ public class UserOrderConfirmActivity extends AppCompatActivity {
 
                                             OrderData orderData = new OrderData(snapshot.getValue(OrderData.class).getDonHangID(), snapshot.getValue(OrderData.class).getNguoiMuaID(), snapshot.getValue(OrderData.class).getNguoiBanID(),
                                                     snapshot.getValue(OrderData.class).getNgayTaoDonHang(), snapshot.getValue(OrderData.class).getSoDienThoai(), snapshot.getValue(OrderData.class).getDiaChi(),
-                                                    snapshot.getValue(OrderData.class).getSanPham(), snapshot.getValue(OrderData.class).getLoaiDonHang(), -1, snapshot.getValue(OrderData.class).getGiaTien());
+                                                    snapshot.getValue(OrderData.class).getSanPham(), snapshot.getValue(OrderData.class).getLoaiDonHang(), -1, sellerCommission, snapshot.getValue(OrderData.class).getGiaTien());
                                             databaseReference.child("LichSuGiaoDich").child(snapshot.getValue(OrderData.class).getDonHangID()).setValue(orderData);
                                             databaseReference.child("DonHang").child(snapshot.getValue(OrderData.class).getDonHangID()).removeValue();
 
@@ -532,7 +533,7 @@ public class UserOrderConfirmActivity extends AppCompatActivity {
 
                                             OrderData orderData = new OrderData(snapshot.getValue(OrderData.class).getDonHangID(), snapshot.getValue(OrderData.class).getNguoiMuaID(), snapshot.getValue(OrderData.class).getNguoiBanID(),
                                                     snapshot.getValue(OrderData.class).getNgayTaoDonHang(), snapshot.getValue(OrderData.class).getSoDienThoai(), snapshot.getValue(OrderData.class).getDiaChi(),
-                                                    snapshot.getValue(OrderData.class).getSanPham(), snapshot.getValue(OrderData.class).getLoaiDonHang(), -1, snapshot.getValue(OrderData.class).getGiaTien());
+                                                    snapshot.getValue(OrderData.class).getSanPham(), snapshot.getValue(OrderData.class).getLoaiDonHang(), -1, sellerCommission, snapshot.getValue(OrderData.class).getGiaTien());
                                             databaseReference.child("LichSuGiaoDich").child(snapshot.getValue(OrderData.class).getDonHangID()).setValue(orderData);
                                             databaseReference.child("DonHang").child(snapshot.getValue(OrderData.class).getDonHangID()).removeValue();
 

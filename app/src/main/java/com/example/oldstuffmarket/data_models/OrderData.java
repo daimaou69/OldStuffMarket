@@ -5,13 +5,13 @@ import java.util.Date;
 public class OrderData {
     private String donHangID, nguoiMuaID, nguoiBanID, ngayTaoDonHang, soDienThoai, diaChi;
     private SanPham sanPham;
-    private int loaiDonHang, tinhTrang;
+    private int loaiDonHang, tinhTrang, sellerCommission;
     private long giaTien;
 
     public OrderData() {
     }
 
-    public OrderData(String donHangID, String nguoiMuaID, String nguoiBanID, String ngayTaoDonHang, String soDienThoai, String diaChi, SanPham sanPham, int loaiDonHang, int tinhTrang, long giaTien) {
+    public OrderData(String donHangID, String nguoiMuaID, String nguoiBanID, String ngayTaoDonHang, String soDienThoai, String diaChi, SanPham sanPham, int loaiDonHang, int tinhTrang, int sellerCommission, long giaTien) {
         this.donHangID = donHangID;
         this.nguoiMuaID = nguoiMuaID;
         this.nguoiBanID = nguoiBanID;
@@ -21,7 +21,16 @@ public class OrderData {
         this.sanPham = sanPham;
         this.loaiDonHang = loaiDonHang;
         this.tinhTrang = tinhTrang;
+        this.sellerCommission = sellerCommission;
         this.giaTien = giaTien;
+    }
+
+    public int getSellerCommission() {
+        return sellerCommission;
+    }
+
+    public void setSellerCommission(int sellerCommission) {
+        this.sellerCommission = sellerCommission;
     }
 
     public String getDonHangID() {
