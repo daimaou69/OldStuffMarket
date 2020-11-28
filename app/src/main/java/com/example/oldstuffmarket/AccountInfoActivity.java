@@ -348,7 +348,7 @@ public class AccountInfoActivity extends AppCompatActivity {
                         finish();
                         startActivity(intent);
                     }
-                    else if(snapshot.getValue(UserData.class).getsUserName().equals(sUserName) && snapshot.getValue(UserData.class).getiPermission() == 0){
+                    else if(snapshot.getValue(UserData.class).getsUserName().equals(sUserName) && snapshot.getValue(UserData.class).getiPermission() == 0 || snapshot.getValue(UserData.class).getiPermission() == 2){
                         Intent intent = new Intent(v.getContext(), AdminMainActivity.class);
                         intent.putExtra("UserName", sUserName);
                         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
