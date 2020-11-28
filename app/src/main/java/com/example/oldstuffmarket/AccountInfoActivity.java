@@ -278,7 +278,7 @@ public class AccountInfoActivity extends AppCompatActivity {
                                                 startActivity(intent);
                                                 Toast.makeText(AccountInfoActivity.this, "Cập nhật thông tin thành công!", Toast.LENGTH_SHORT).show();
                                             }
-                                            else if(snapshot.getValue(UserData.class).getiPermission() == 0){
+                                            else if(snapshot.getValue(UserData.class).getiPermission() == 0 || snapshot.getValue(UserData.class).getiPermission() == 2){
                                                 intent = new Intent(AccountInfoActivity.this, AdminMainActivity.class);
                                                 intent.putExtra("UserName",sUserName);
                                                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
