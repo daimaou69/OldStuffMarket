@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OldStuffMarket">
-        <activity android:name=".ThongKeActivity"></activity>
+        <activity android:name=".GiaoDichActivity"></activity>
+        <activity android:name=".Employee_AdminActivity" />
+        <activity android:name=".ThongKeActivity" />
         <activity android:name=".AddEmployeeActivity" />
         <activity android:name=".DanhSachUserActivity" />
         <activity android:name=".UserDetailReportActivity" />
