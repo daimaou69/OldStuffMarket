@@ -23,7 +23,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/don_mua"
+                android:text="Quản lý nhân viên"
                 android:textSize="30sp"/>
         </LinearLayout>
         <LinearLayout
@@ -33,7 +33,7 @@
             android:gravity="center">
 
             <GridView
-                android:id="@+id/gridDonMua"
+                android:id="@+id/gridEmployee"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="10dp"/>

@@ -195,9 +195,36 @@ public class QuanLyDanhMucActivity extends AppCompatActivity {
                                         Toast.makeText(QuanLyDanhMucActivity.this, "Xóa danh mục thành công!", Toast.LENGTH_SHORT).show();
                                     }
                                 });
+                                databaseReference.child("SanPham").addChildEventListener(new ChildEventListener() {
+                                    @Override
+                                    public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                        if (snapshot.getValue(SanPham.class).getsDanhMuc().equals(sTenDanhMuc)) {
+                                            databaseReference.child("SanPham").child(snapshot.getKey()).removeValue();
+                                            edtTenDanhMuc.setText("");
+                                            imgDanhMuc.setImageResource(R.mipmap.no_image_icon);
+                                        }
+                                    }
 
-                                edtTenDanhMuc.setText("");
-                                imgDanhMuc.setImageResource(R.mipmap.no_image_icon);
+                                    @Override
+                                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                    }
+
+                                    @Override
+                                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                    }
+
+                                    @Override
+                                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
                                 return;
