@@ -105,8 +105,6 @@ public class ThongKeAdapter extends BaseAdapter {
                     viewHolder.txtDiemThanhVien.setText("Điểm thành viên: " + String.valueOf(snapshot.getValue(UserData.class).getiAccPoint()));
                 }
                 else {
-                    viewHolder.txtSanPhamDaBan.setText("Số sản phẩm đã bán: " + String.valueOf(snapshot.getValue(UserData.class).getiSoSPDaBan()));
-                    viewHolder.txtDiemThanhVien.setText("Điểm thành viên: " + String.valueOf(snapshot.getValue(UserData.class).getiAccPoint()));
                     databaseReference.child("Shop").addChildEventListener(new ChildEventListener() {
                         @Override
                         public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -122,6 +120,35 @@ public class ThongKeAdapter extends BaseAdapter {
                                     }
                                 });
                                 viewHolder.txtUserName.setText("Tên Shop: " + snapshot.getValue(ShopData.class).getShopName());
+                                databaseReference.child("User").addChildEventListener(new ChildEventListener() {
+                                    @Override
+                                    public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                        if (snapshot.getValue(UserData.class).getsUserID().equals(userData.getsUserID())) {
+                                            viewHolder.txtSanPhamDaBan.setText("Số sản phẩm đã bán: " + String.valueOf(snapshot.getValue(UserData.class).getiSoSPDaBan()));
+                                            viewHolder.txtDiemThanhVien.setText("Điểm thành viên: " + String.valueOf(snapshot.getValue(UserData.class).getiAccPoint()));
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                    }
+
+                                    @Override
+                                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                    }
+
+                                    @Override
+                                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
                             }
                         }
 
