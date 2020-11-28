@@ -38,7 +38,7 @@ import java.util.ArrayList;
 public class AdminMainActivity extends AppCompatActivity {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-    private Button btnLogout, btnQuanLyDanhMuc, btnAccountInfo, btnWallet, btnProductReport, btnUserReport, btnUserReported, btnUserDepositMoney, btnEmployeeManagement, btnPassWordChange, btnShopRegistration, btnCommission, btnAddEmployee;
+    private Button btnLogout, btnQuanLyDanhMuc, btnAccountInfo, btnWallet, btnProductReport, btnUserReport, btnUserReported, btnUserDepositMoney, btnEmployeeManagement, btnPassWordChange, btnShopRegistration, btnCommission, btnAddEmployee, btnThongKe;
     private TextView txtAdminAccountName, txtNotify, txtUserDepositMoneyNotify, txtProductReprtedNotify, txtUserReportedNotify;
     private ImageView imgAccount;
     private Intent intent = LoginActivity.intent;
@@ -75,6 +75,7 @@ public class AdminMainActivity extends AppCompatActivity {
         btnUserReported = (Button) findViewById(R.id.btnUserReported);
         btnAddEmployee = (Button) findViewById(R.id.btnAddEmployee);
         btnEmployeeManagement = (Button) findViewById(R.id.btnEmployeeManagement);
+        btnThongKe = (Button) findViewById(R.id.btnThongKe);
 
         userDataArrayList = new ArrayList<>();
         shopDataArrayList = new ArrayList<>();
@@ -93,6 +94,8 @@ public class AdminMainActivity extends AppCompatActivity {
         btnUserReport.setOnClickListener(reportUserClick);
         btnUserReported.setOnClickListener(dsUserClick);
         btnAddEmployee.setOnClickListener(addEmployeeClick);
+        btnEmployeeManagement.setOnClickListener(employeeManagerClick);
+        btnThongKe.setOnClickListener(thongKeClick);
     }
 
     @Override
@@ -296,6 +299,26 @@ public class AdminMainActivity extends AppCompatActivity {
             }
         }, delay);
     }
+
+    View.OnClickListener thongKeClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            intent = new Intent(v.getContext(), ThongKeActivity.class);
+            intent.putExtra("UserName", sUserName);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        }
+    };
+
+    View.OnClickListener employeeManagerClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            intent = new Intent(v.getContext(), Employee_AdminActivity.class);
+            intent.putExtra("UserName", sUserName);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        }
+    };
 
     View.OnClickListener addEmployeeClick = new View.OnClickListener() {
         @Override

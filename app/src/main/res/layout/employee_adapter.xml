@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="15dp">
+    android:padding="5dp">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -11,11 +11,12 @@
         android:layout_height="match_parent"
         android:gravity="center">
         <ImageView
-            android:id="@+id/imgUser"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@mipmap/no_image_icon"/>
+            android:id="@+id/imgEmployee"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:src="@mipmap/no_image_icon" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_weight="7"
@@ -29,10 +30,10 @@
             android:gravity="center_vertical">
 
             <TextView
-                android:id="@+id/txtUserName"
+                android:id="@+id/txtTen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tên User:"
+                android:text="FullName: "
                 android:textSize="17sp"/>
         </LinearLayout>
         <LinearLayout
@@ -43,41 +44,16 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="2"
+                android:layout_weight="4"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/txtSanPhamDaBan"
+                    android:id="@+id/txtSDT"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/diem_thanh_vien"
-                    android:textSize="13sp"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/txtDiemThanhVien"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/sp_da_ban"
-                    android:textSize="13sp"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/txtDoanhThu"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Doanh thu: "
-                    android:textSize="13sp"/>
+                    android:text="SDT: "
+                    android:textSize="17sp"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
 </LinearLayout>
