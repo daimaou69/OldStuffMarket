@@ -15,6 +15,7 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.example.oldstuffmarket.adapter.ThongKeAdapter;
+import com.example.oldstuffmarket.data_models.OrderData;
 import com.example.oldstuffmarket.data_models.UserData;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -36,6 +37,7 @@ public class ThongKeActivity extends AppCompatActivity {
     private TextView txtDoanhThu;
     private ArrayList<UserData> userDataArrayList;
     private ThongKeAdapter thongKeAdapter;
+    private long tong, commission;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +99,37 @@ public class ThongKeActivity extends AppCompatActivity {
 
                 }
             });
+            databaseReference.child("LichSuGiaoDich").addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    if (snapshot.getValue(OrderData.class).getTinhTrang() == 4) {
+                        commission = snapshot.getValue(OrderData.class).getGiaTien() * snapshot.getValue(OrderData.class).getSellerCommission() / 100;
+                        tong = tong + commission;
+                        txtDoanhThu.setText(String.valueOf(tong) + "VNĐ");
+                    }
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
             final Handler handler = new Handler();
             final int delay = 500; //milliseconds
             handler.postDelayed(new Runnable(){

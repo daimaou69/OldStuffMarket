@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.example.oldstuffmarket.adapter.GiaoDichAdapter;
 import com.example.oldstuffmarket.data_models.OrderData;
@@ -28,8 +29,10 @@ public class GiaoDichActivity extends AppCompatActivity {
     private Button btnBack;
     private GridView gridDonHang;
     private String userName, userID;
+    private TextView txtDoanhThu;
     private ArrayList<OrderData> orderDataArrayList;
     private GiaoDichAdapter giaoDichAdapter;
+    private long commission, tong;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,7 @@ public class GiaoDichActivity extends AppCompatActivity {
 
         btnBack = (Button) findViewById(R.id.btnBack);
         gridDonHang = (GridView) findViewById(R.id.gridDonHang);
+        txtDoanhThu = (TextView) findViewById(R.id.txtDoanhThu);
 
         orderDataArrayList = new ArrayList<>();
 
@@ -58,6 +62,11 @@ public class GiaoDichActivity extends AppCompatActivity {
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                     if (snapshot.getValue(OrderData.class).getNguoiBanID().equals(userID)) {
                         orderDataArrayList.add(snapshot.getValue(OrderData.class));
+                        if (snapshot.getValue(OrderData.class).getTinhTrang() == 4) {
+                            commission = snapshot.getValue(OrderData.class).getGiaTien() * snapshot.getValue(OrderData.class).getSellerCommission() /100;
+                            tong += commission;
+                            txtDoanhThu.setText(String.valueOf(tong) + "VNĐ");
+                        }
                     }
                 }
 

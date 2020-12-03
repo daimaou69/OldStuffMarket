@@ -51,8 +51,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/diem_thanh_vien"
-                    android:textSize="13sp"/>
+                    android:textSize="12dp"/>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_weight="2"
@@ -63,21 +64,29 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/sp_da_ban"
-                    android:textSize="13sp"/>
+                    android:textSize="12dp"/>
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/txtDoanhThu"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Doanh thu: "
-                    android:textSize="13sp"/>
-            </LinearLayout>
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Doanh thu: "
+                android:textSize="13sp"/>
+
+            <TextView
+                android:id="@+id/txtDoanhThu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 VNĐ"
+                android:textSize="13sp"/>
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>
