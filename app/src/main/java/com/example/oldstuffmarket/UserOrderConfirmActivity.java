@@ -175,6 +175,9 @@ public class UserOrderConfirmActivity extends AppCompatActivity {
                                         edtDiaChi.setText(diaChi);
                                         edtLienHe.setText(lienHe);
                                     }
+                                    if(snapshot.getValue(UserData.class).getsUserID().equals(nguoiBanID)){
+                                        sellerCommission = snapshot.getValue(UserData.class).getiCommission();
+                                    }
                                 }
 
                                 @Override
