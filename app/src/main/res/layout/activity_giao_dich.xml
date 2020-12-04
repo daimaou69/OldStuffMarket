@@ -41,9 +41,30 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:layout_height="0dp"
             android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Doanh thu: "
+                    android:textSize="20dp"/>
+                <TextView
+                    android:id="@+id/txtDoanhThu"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12345"
+                    android:textSize="20dp"
+                    android:textColor="@color/red"/>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"

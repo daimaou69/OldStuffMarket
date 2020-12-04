@@ -35,6 +35,7 @@ public class ThongKeAdapter extends BaseAdapter {
     private int layout;
     private ArrayList<UserData> userDataArrayList;
     private long tong;
+    private long commission;
 
     public ThongKeAdapter(Context context, int layout, ArrayList<UserData> userDataArrayList) {
         this.context = context;
@@ -86,65 +87,71 @@ public class ThongKeAdapter extends BaseAdapter {
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-        databaseReference.child("User").addChildEventListener(new ChildEventListener() {
+
+        if (userData.getsShopID().isEmpty()) {
+            storageReference.child(userData.getsImage() + ".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Glide.with(context).load(uri).into(viewHolder.imgUser);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                }
+            });
+            viewHolder.txtUserName.setText("Tên User: " + userData.getsUserName() + " - " + userData.getsFullName());
+            viewHolder.txtSanPhamDaBan.setText("Số sản phẩm đã bán: " + String.valueOf(userData.getiSoSPDaBan()));
+            viewHolder.txtDiemThanhVien.setText("Điểm thành viên: " + String.valueOf(userData.getiAccPoint()));
+        }
+        else {
+            databaseReference.child("Shop").addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    if (snapshot.getValue(ShopData.class).getUserID().equals(userData.getsUserID())) {
+                        storageReference.child(snapshot.getValue(ShopData.class).getShopImage() + ".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                Glide.with(context).load(uri).into(viewHolder.imgUser);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                            }
+                        });
+                        viewHolder.txtUserName.setText("Tên Shop: " + snapshot.getValue(ShopData.class).getShopName());
+                        viewHolder.txtSanPhamDaBan.setText("Số sản phẩm đã bán: " + String.valueOf(userData.getiSoSPDaBan()));
+                        viewHolder.txtDiemThanhVien.setText("Điểm thành viên: " + String.valueOf(userData.getiAccPoint()));
+                    }
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+        databaseReference.child("LichSuGiaoDich").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                if(snapshot.getValue(UserData.class).getsUserID().equals(userData.getsUserID()) && snapshot.getValue(UserData.class).getsShopID().isEmpty()){
-                    storageReference.child(snapshot.getValue(UserData.class).getsImage() + ".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            Glide.with(context).load(uri).into(viewHolder.imgUser);
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                        }
-                    });
-                    viewHolder.txtUserName.setText("Tên User: " + snapshot.getValue(UserData.class).getsUserName() + " - " + snapshot.getValue(UserData.class).getsFullName());
-                    viewHolder.txtSanPhamDaBan.setText("Số sản phẩm đã bán: " + String.valueOf(snapshot.getValue(UserData.class).getiSoSPDaBan()));
-                    viewHolder.txtDiemThanhVien.setText("Điểm thành viên: " + String.valueOf(snapshot.getValue(UserData.class).getiAccPoint()));
-                }
-                else {
-                    viewHolder.txtSanPhamDaBan.setText("Số sản phẩm đã bán: " + String.valueOf(snapshot.getValue(UserData.class).getiSoSPDaBan()));
-                    viewHolder.txtDiemThanhVien.setText("Điểm thành viên: " + String.valueOf(snapshot.getValue(UserData.class).getiAccPoint()));
-                    databaseReference.child("Shop").addChildEventListener(new ChildEventListener() {
-                        @Override
-                        public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                            if (snapshot.getValue(ShopData.class).getUserID().equals(userData.getsUserID())) {
-                                storageReference.child(snapshot.getValue(ShopData.class).getShopImage() + ".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    @Override
-                                    public void onSuccess(Uri uri) {
-                                        Glide.with(context).load(uri).into(viewHolder.imgUser);
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                    }
-                                });
-                                viewHolder.txtUserName.setText("Tên Shop: " + snapshot.getValue(ShopData.class).getShopName());
-                            }
-                        }
-
-                        @Override
-                        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                        }
-
-                        @Override
-                        public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-                        }
-
-                        @Override
-                        public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
+                if (snapshot.getValue(OrderData.class).getNguoiBanID().equals(userData.getsUserID()) && snapshot.getValue(OrderData.class).getTinhTrang() == 4) {
+                    commission = snapshot.getValue(OrderData.class).getGiaTien() * snapshot.getValue(OrderData.class).getSellerCommission() / 100;
+                    tong += commission;
+                    viewHolder.txtDoanhThu.setText(String.valueOf(tong) + "VNĐ");
                 }
             }
 
@@ -168,35 +175,6 @@ public class ThongKeAdapter extends BaseAdapter {
 
             }
         });
-//        databaseReference.child("LichSuGiaoDich").addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//                if (snapshot.getValue(OrderData.class).getNguoiBanID().equals(userData.getsUserID()) && snapshot.getValue(OrderData.class).getTinhTrang() == 4) {
-//                    tong += snapshot.getValue(OrderData.class).getGiaTien();
-//                    viewHolder.txtDoanhThu.setText("Doanh thu: " + tong + "VNĐ");
-//                }
-//            }
-//
-//            @Override
-//            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
         return convertView;
     }
 }
