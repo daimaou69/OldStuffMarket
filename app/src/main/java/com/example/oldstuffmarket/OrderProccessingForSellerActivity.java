@@ -36,7 +36,7 @@ public class OrderProccessingForSellerActivity extends AppCompatActivity {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     private ImageView imgSP;
-    private TextView txtTenSP, txtSoLuongSP, txtGiaSP, txtHoTenNguoiMua, txtDiaChi, txtLienHe, txtTongGiaTriDonHang;
+    private TextView txtTenSP, txtSoLuongSP, txtGiaSP, txtHoTenNguoiMua, txtDiaChi, txtLienHe, txtTongGiaTriDonHang, txtShipperLabel, txtShipperName, txtShipperPhone;
     private CheckBox cbProccessing, cbPacking, cbDelivery;
     private Button btnCancelOrder, btnBack;
     private String userName, userID, donHangID, nguoiMuaID, nguoiBanID;
@@ -59,6 +59,9 @@ public class OrderProccessingForSellerActivity extends AppCompatActivity {
         txtDiaChi = (TextView) findViewById(R.id.txtDiaChi);
         txtLienHe = (TextView) findViewById(R.id.txtLienHe);
         txtTongGiaTriDonHang = (TextView) findViewById(R.id.txtTongGiaTriDonHang);
+        txtShipperLabel = (TextView) findViewById(R.id.txtShipperLabel);
+        txtShipperPhone = (TextView) findViewById(R.id.txtShipperPhone);
+        txtShipperName = (TextView) findViewById(R.id.txtShipperName);
         cbProccessing = (CheckBox) findViewById(R.id.cbProccessing);
         cbPacking = (CheckBox) findViewById(R.id.cbPacking);
         cbDelivery = (CheckBox) findViewById(R.id.cbDelivery);
@@ -90,6 +93,42 @@ public class OrderProccessingForSellerActivity extends AppCompatActivity {
 //                Toast.makeText(context, "Hinh anh khong ton tai!", Toast.LENGTH_SHORT).show();
                             }
                         });
+
+                        if(!snapshot.getValue(OrderData.class).getShipperID().isEmpty()){
+                            txtShipperLabel.setVisibility(View.VISIBLE);
+                            String shipperID = snapshot.getValue(OrderData.class).getShipperID();
+                            txtShipperName.setVisibility(View.VISIBLE);
+                            txtShipperPhone.setVisibility(View.VISIBLE);
+                            databaseReference.child("User").addChildEventListener(new ChildEventListener() {
+                                @Override
+                                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                    if(snapshot.getValue(UserData.class).getsUserID().equals(shipperID)){
+                                        txtShipperName.setText("Họ tên người giao: " + snapshot.getValue(UserData.class).getsFullName());
+                                        txtShipperPhone.setText("Số điện thoại: " + snapshot.getValue(UserData.class).getsSdt());
+                                    }
+                                }
+
+                                @Override
+                                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                }
+
+                                @Override
+                                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                }
+
+                                @Override
+                                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        }
 
                         if(snapshot.getValue(OrderData.class).getSanPham().getiTinhTrang() == 0){
                             txtTenSP.setText(snapshot.getValue(OrderData.class).getSanPham().getsTenSP() + " - New");
@@ -296,7 +335,7 @@ public class OrderProccessingForSellerActivity extends AppCompatActivity {
 
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
-                                cbProccessing.setChecked(false);
+                                cbDelivery.setChecked(false);
                                 return;
                         }
                     }
@@ -352,7 +391,7 @@ public class OrderProccessingForSellerActivity extends AppCompatActivity {
 
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
-                                cbProccessing.setChecked(false);
+                                cbPacking.setChecked(false);
                                 return;
                         }
                     }
