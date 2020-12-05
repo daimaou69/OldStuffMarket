@@ -13,14 +13,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.oldstuffmarket.data_models.TaiKhoanNH;
 import com.example.oldstuffmarket.data_models.UserData;
 import com.example.oldstuffmarket.ui.wallet.ChuyenTienFragment;
 import com.example.oldstuffmarket.ui.wallet.RutTienFragment;
-import com.example.oldstuffmarket.ui.wallet.WalletFragment;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -95,25 +92,6 @@ public class WalletActivity extends AppCompatActivity {
 
                     }
                 });
-            }
-        });
-
-        btnNapTien.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                WalletFragment walletFragment = new WalletFragment();
-
-                Bundle bundle = new Bundle();
-
-                bundle.putString("UserName", sUserName);
-                bundle.putString("SoTK", sSoTK);
-
-                walletFragment.setArguments(bundle);
-
-                fragmentTransaction.replace(R.id.napTienLayout, walletFragment);
-                fragmentTransaction.commit();
             }
         });
 

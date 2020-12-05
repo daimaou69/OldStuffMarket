@@ -36,7 +36,6 @@ public class WalletUserFragment extends Fragment {
     private String sUserName, userID;
     private Intent intent;
     private ArrayList<UserData> userDataArrayList = WalletActivity.userDataArrayList;
-    private ArrayList<TaiKhoanNH> taiKhoanNHArrayList = WalletActivity.taiKhoanNHArrayList;
 
     @Nullable
     @Override
