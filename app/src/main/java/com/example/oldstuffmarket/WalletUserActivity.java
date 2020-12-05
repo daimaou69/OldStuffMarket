@@ -166,7 +166,7 @@ public class WalletUserActivity extends AppCompatActivity {
             databaseReference.child("UserDepositRequest").addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    if(snapshot.getValue(UserDepositData.class).getTinhTrang() == 0){
+                    if(snapshot.getValue(UserDepositData.class).getUserID().equals(userID) && snapshot.getValue(UserDepositData.class).getTinhTrang() == 0){
                         userDepositPending.add(snapshot.getValue(UserDepositData.class));
                     }
                 }

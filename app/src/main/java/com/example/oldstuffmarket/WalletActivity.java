@@ -37,7 +37,6 @@ public class WalletActivity extends AppCompatActivity {
     private TextView txtSoDu;
     private double dMoney;
     public static ArrayList<UserData> userDataArrayList;
-    public static ArrayList<TaiKhoanNH> taiKhoanNHArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -199,39 +198,11 @@ public class WalletActivity extends AppCompatActivity {
         super.onResume();
 
         userDataArrayList = new ArrayList<>();
-        taiKhoanNHArrayList = new ArrayList<>();
 
         databaseReference.child("User").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 userDataArrayList.add(snapshot.getValue(UserData.class));
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        databaseReference.child("TaiKhoanNH").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                taiKhoanNHArrayList.add(snapshot.getValue(TaiKhoanNH.class));
             }
 
             @Override
