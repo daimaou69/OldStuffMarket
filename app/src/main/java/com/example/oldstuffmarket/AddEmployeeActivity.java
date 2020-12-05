@@ -34,8 +34,8 @@ public class AddEmployeeActivity extends AppCompatActivity {
     private EditText edtUserName, edtFullName, edtSDT, edtDiaChi;// các trường nhập thông tin tài khoản
     private Spinner spnGender;//Spinner giới tính user
     private Button btnRegistry, btnBack;//nút đăng ký
+    private Spinner spnLoaiNhanVien;
     private String UserName = "", FullName = "", SDT = "", DiaChi = "", Gender = "";//các biến lưu thông tin như user name, full name,...
-    private int iPermission = 2;//permission của user mặc định là 2
     private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     private ArrayList<UserData> userList;//khai báo danh sách user
     private ArrayList<UserData> blackList;
@@ -56,6 +56,7 @@ public class AddEmployeeActivity extends AppCompatActivity {
         edtFullName = findViewById(R.id.edtFullName);
         edtSDT = findViewById(R.id.edtSDT);
         edtDiaChi = findViewById(R.id.edtDiaChi);
+        spnLoaiNhanVien = findViewById(R.id.spnLoaiNhanVien);
         btnRegistry = findViewById(R.id.btnRegistry);
         btnBack = findViewById(R.id.btnBack);
 
@@ -224,30 +225,52 @@ public class AddEmployeeActivity extends AppCompatActivity {
                 edtDiaChi.setError("Bạn chưa nhập địa chỉ!");
             }
             else{
-
-                DialogInterface.OnClickListener dialog = new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which){
-                            case DialogInterface.BUTTON_POSITIVE:
-                                UserData user = new UserData();
-                                CreateUser(UserName, FullName, SDT, Gender, DiaChi, UserName, iPermission);//chạy hàm tạo mới user và đưa user vào firebase
-                                Toast.makeText(AddEmployeeActivity.this, "Thêm nhân viên thành công!", Toast.LENGTH_SHORT).show();// thông báo tạo tài khoản thành công
-                                edtDiaChi.setText("");
-                                edtSDT.setText("");
-                                edtFullName.setText("");
-                                edtUserName.setText("");
-                                break;
-                            case DialogInterface.BUTTON_NEGATIVE:
-                                return;
+                if(spnLoaiNhanVien.getSelectedItemPosition() == 0){
+                    DialogInterface.OnClickListener dialog = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which){
+                                case DialogInterface.BUTTON_POSITIVE:
+                                    UserData user = new UserData();
+                                    CreateUser(UserName, FullName, SDT, Gender, DiaChi, UserName, 2);//chạy hàm tạo mới user và đưa user vào firebase
+                                    Toast.makeText(AddEmployeeActivity.this, "Thêm nhân viên thành công!", Toast.LENGTH_SHORT).show();// thông báo tạo tài khoản thành công
+                                    edtDiaChi.setText("");
+                                    edtSDT.setText("");
+                                    edtFullName.setText("");
+                                    edtUserName.setText("");
+                                    break;
+                                case DialogInterface.BUTTON_NEGATIVE:
+                                    return;
+                            }
                         }
-                    }
-                };
+                    };
 
-                AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
-                alert.setMessage("Xác nhận đúng thông tin và thêm nhân viên?").setNegativeButton("No", dialog).setPositiveButton("Yes", dialog).show();
+                    AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+                    alert.setMessage("Bạn muốn thêm nhân viên quản lí?").setNegativeButton("No", dialog).setPositiveButton("Yes", dialog).show();
+                }
+                else if(spnLoaiNhanVien.getSelectedItemPosition() == 1){
+                    DialogInterface.OnClickListener dialog = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which){
+                                case DialogInterface.BUTTON_POSITIVE:
+                                    UserData user = new UserData();
+                                    CreateUser(UserName, FullName, SDT, Gender, DiaChi, UserName, 3);//chạy hàm tạo mới user và đưa user vào firebase
+                                    Toast.makeText(AddEmployeeActivity.this, "Thêm nhân viên thành công!", Toast.LENGTH_SHORT).show();// thông báo tạo tài khoản thành công
+                                    edtDiaChi.setText("");
+                                    edtSDT.setText("");
+                                    edtFullName.setText("");
+                                    edtUserName.setText("");
+                                    break;
+                                case DialogInterface.BUTTON_NEGATIVE:
+                                    return;
+                            }
+                        }
+                    };
 
-
+                    AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+                    alert.setMessage("Bạn muốn thêm nhân viên giao hàng?").setNegativeButton("No", dialog).setPositiveButton("Yes", dialog).show();
+                }
             }
         }
     };
