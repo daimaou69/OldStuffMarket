@@ -31,10 +31,10 @@
             android:orientation="vertical"
             android:gravity="center">
             <TextView
-                android:id="@+id/txtAdminAccountName"
+                android:id="@+id/txtShipperAccountName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/admin_tittle"
+                android:text="Shipper"
                 android:gravity="center"
                 android:textStyle="bold"
                 android:textSize="20dp"/>

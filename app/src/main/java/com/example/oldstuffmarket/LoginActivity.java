@@ -166,6 +166,12 @@ public class LoginActivity extends AppCompatActivity {
                                 intent.putExtra("UserName", edtLoginName.getText().toString());
                                 startActivity(intent);
                             }
+                            else if(snapshot.getValue(UserData.class).getiPermission() == 3){//nếu kết quả đăng nhập == 1
+
+                                intent = new Intent(LoginActivity.this, ShipperMainActivity.class);//chuyển đến trang user
+                                intent.putExtra("UserName", edtLoginName.getText().toString());
+                                startActivity(intent);
+                            }
                         }
                         else if(snapshot.getValue(UserData.class).getsUserName().equals(userName) && snapshot.getValue(UserData.class).getsPassword().equals(password) && snapshot.getValue(UserData.class).getiTinhTrang() == -1){
                             iCount++;

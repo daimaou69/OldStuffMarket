@@ -284,6 +284,13 @@ public class AccountInfoActivity extends AppCompatActivity {
                                                 startActivity(intent);
                                                 Toast.makeText(AccountInfoActivity.this, "Cập nhật thông tin thành công!", Toast.LENGTH_SHORT).show();
                                             }
+                                            else if(snapshot.getValue(UserData.class).getiPermission() == 3){
+                                                intent = new Intent(AccountInfoActivity.this, ShipperMainActivity.class);
+                                                intent.putExtra("UserName",sUserName);
+                                                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                                                startActivity(intent);
+                                                Toast.makeText(AccountInfoActivity.this, "Cập nhật thông tin thành công!", Toast.LENGTH_SHORT).show();
+                                            }
 
                                         }
                                     }
@@ -349,6 +356,13 @@ public class AccountInfoActivity extends AppCompatActivity {
                         Intent intent = new Intent(v.getContext(), AdminMainActivity.class);
                         intent.putExtra("UserName", sUserName);
                         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        startActivity(intent);
+                    }
+                    else if(snapshot.getValue(UserData.class).getsUserName().equals(sUserName) && snapshot.getValue(UserData.class).getiPermission() == 3){
+                        Intent intent = new Intent(v.getContext(), ShipperMainActivity.class);
+                        intent.putExtra("UserName", sUserName);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        finish();
                         startActivity(intent);
                     }
                 }
