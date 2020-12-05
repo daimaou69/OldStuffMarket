@@ -252,7 +252,7 @@ public class ThanhToanActivity extends AppCompatActivity {
                                                     long tongGiaTriDonHang = snapshot.getValue(SanPham.class).getlGiaTien() * soLuongSP;
                                                     DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                                                     Date date = new Date();
-                                                    OrderData orderData = new OrderData(donHangID, userID, nguoiBanID, dateFormat.format(date), edtLienHe.getText().toString(), edtDiaChi.getText().toString(), sanPhamOrder, 2, 0, 0, tongGiaTriDonHang);
+                                                    OrderData orderData = new OrderData(donHangID, userID, nguoiBanID, dateFormat.format(date), edtLienHe.getText().toString(), edtDiaChi.getText().toString(), sanPhamOrder, 2, 0, 0, tongGiaTriDonHang, "");
                                                     databaseReference.child("DonHang").child(donHangID).setValue(orderData);
                                                     finish();
                                                     intent = new Intent(v.getContext(), UserMainActivity.class);
@@ -324,7 +324,7 @@ public class ThanhToanActivity extends AppCompatActivity {
                                                         long tongGiaTriDonHang = snapshot.getValue(SanPham.class).getlGiaTien() * soLuongSP;
                                                         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                                                         Date date = new Date();
-                                                        OrderData orderData = new OrderData(donHangID, userID, nguoiBanID, dateFormat.format(date), edtLienHe.getText().toString(), edtDiaChi.getText().toString(), sanPhamOrder, 3, 0, 0, tongGiaTriDonHang);
+                                                        OrderData orderData = new OrderData(donHangID, userID, nguoiBanID, dateFormat.format(date), edtLienHe.getText().toString(), edtDiaChi.getText().toString(), sanPhamOrder, 3, 0, 0, tongGiaTriDonHang, "");
                                                         databaseReference.child("DonHang").child(donHangID).setValue(orderData);
                                                         finish();
                                                         intent = new Intent(v.getContext(), UserMainActivity.class);
