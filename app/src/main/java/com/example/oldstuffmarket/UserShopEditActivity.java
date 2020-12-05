@@ -47,8 +47,8 @@ public class UserShopEditActivity extends AppCompatActivity {
     private EditText edtTenShop, edtMoTaShop;
     private String userName, userID, shopID;
     private Intent intent;
-    private int PICK_IMAGE = 123, galleryChoose = 0;
-    private int CAMERA_IMAGE = 123, cameraChoose = 0;
+    private int PICK_IMAGE = 123;
+    private int CAMERA_IMAGE = 123;
     private ArrayList<ShopData> shopDataArrayList;
 
     @Override
@@ -66,19 +66,6 @@ public class UserShopEditActivity extends AppCompatActivity {
         edtTenShop = (EditText) findViewById(R.id.edtTenShop);
         edtMoTaShop = (EditText) findViewById(R.id.edtMoTaShop);
 
-
-        shopDataArrayList = new ArrayList<>();
-
-        btnBack.setOnClickListener(backClick);
-        btnChooseFromGallery.setOnClickListener(chooseImageClick);
-        btnOpenCamera.setOnClickListener(openCameraClick);
-        btnUpdate.setOnClickListener(updateClick);
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         if(getIntent().getExtras() != null){
             userName = getIntent().getExtras().getString("UserName");
             userID = getIntent().getExtras().getString("UserID");
@@ -132,6 +119,21 @@ public class UserShopEditActivity extends AppCompatActivity {
                 }
             });
         }
+
+
+        shopDataArrayList = new ArrayList<>();
+
+        btnBack.setOnClickListener(backClick);
+        btnChooseFromGallery.setOnClickListener(chooseImageClick);
+        btnOpenCamera.setOnClickListener(openCameraClick);
+        btnUpdate.setOnClickListener(updateClick);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 
     View.OnClickListener updateClick = new View.OnClickListener() {
@@ -270,7 +272,6 @@ public class UserShopEditActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             PICK_IMAGE = 1;
-            galleryChoose++;
             Intent gallery = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
             startActivityForResult(gallery, PICK_IMAGE);
         }
@@ -280,7 +281,6 @@ public class UserShopEditActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             CAMERA_IMAGE = 2;
-            cameraChoose++;
             Intent camera = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(camera, CAMERA_IMAGE);
         }
