@@ -92,6 +92,8 @@
         <item>Nhân viên quản lí</item>
         <item>Shipper</item>
     </string-array>
+    <string name="danh_sach_don_hang">Danh sách đơn hàng</string>
+    <string name="cac_don_dang_giao">Các đơn đang giao</string>
 
     //Wallet
     <string name="nap_tien">Nạp tiền</string>

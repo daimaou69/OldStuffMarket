@@ -225,7 +225,11 @@ public class WalletUserActivity extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    txtUserDepositMoneyNotify.setText(String.valueOf(userDepositPending.size()));
+                    if(userDepositPending.size() != 0){
+                        txtUserDepositMoneyNotify.setVisibility(View.VISIBLE);
+                        txtUserDepositMoneyNotify.setText(String.valueOf(userDepositPending.size()));
+                    }
+
                 }
             }, delay);
         }

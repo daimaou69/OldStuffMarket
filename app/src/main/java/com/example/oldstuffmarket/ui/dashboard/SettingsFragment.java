@@ -230,8 +230,15 @@ public class SettingsFragment extends Fragment {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                txtDonMuaNotify.setText(String.valueOf(donMuaArrayList.size()));
-                txtDonBanNotify.setText(String.valueOf(donBanArrayList.size()));
+                if(donMuaArrayList.size() != 0){
+                    txtDonMuaNotify.setVisibility(View.VISIBLE);
+                    txtDonMuaNotify.setText(String.valueOf(donMuaArrayList.size()));
+                }
+                if(donBanArrayList.size() != 0){
+                    txtDonBanNotify.setVisibility(View.VISIBLE);
+                    txtDonBanNotify.setText(String.valueOf(donBanArrayList.size()));
+                }
+
             }
         }, delay);
 

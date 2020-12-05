@@ -127,6 +127,7 @@
                     android:textColor="#FFF"
                     android:textSize="16sp"
                     android:textStyle="bold"
+                    android:visibility="gone"
                     android:background="@drawable/shop_request_notification"/>
             </LinearLayout>
             <Button
@@ -157,6 +158,7 @@
                     android:textColor="#FFF"
                     android:textSize="16sp"
                     android:textStyle="bold"
+                    android:visibility="gone"
                     android:background="@drawable/shop_request_notification"/>
             </LinearLayout>
             <Button
