@@ -56,6 +56,7 @@ public class ShipperMainActivity extends AppCompatActivity {
         btnLogout.setOnClickListener(logoutClick);
         btnAccountInfo.setOnClickListener(accountInfoClick);
         btnPassWordChange.setOnClickListener(passwordChangeClick);
+        btnDanhSachDonHang.setOnClickListener(donDaDongGoiClick);
 
     }
 
@@ -107,6 +108,15 @@ public class ShipperMainActivity extends AppCompatActivity {
             });
         }
     }
+
+    View.OnClickListener donDaDongGoiClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            intent = new Intent(v.getContext(), ShipperDonDaDongGoiActivity.class);
+            intent.putExtra("UserName", sUserName);
+            startActivity(intent);
+        }
+    };
 
     View.OnClickListener passwordChangeClick = new View.OnClickListener() {
         @Override

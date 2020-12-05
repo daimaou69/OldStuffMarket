@@ -58,10 +58,10 @@ import java.util.ArrayList;
 public class SettingsFragment extends Fragment {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private SettingsViewModel dashboardViewModel;
-    private Button btnLogout, btnUploadPost, btnShop, btnWallet, btnLichSuDonHang, btnLichSuDonBan, btnAccountInfo, btnDonMua, btnDonBan, btnPassWordChange;
+    private Button btnLogout, btnUploadPost, btnShop, btnWallet, btnLichSuDonHang, btnLichSuDonBan, btnAccountInfo, btnDonMua, btnDonBan, btnPassWordChange, btnDanhGiaSP;
     private ImageView imgAccount;
     private Intent intent;
-    private TextView txtAccountName, txtSpDaBan, txtDiemThanhVien, txtDonMuaNotify, txtDonBanNotify;
+    private TextView txtAccountName, txtSpDaBan, txtDiemThanhVien, txtDonMuaNotify, txtDonBanNotify, txtDanhGiaSP;
     private String sUserName = UserMainActivity.sUserName, userID;
     private ArrayList<UserData> userDataArrayList = UserMainActivity.userDataArrayList;
     private ArrayList<ShopData> shopDataArrayList;
@@ -83,6 +83,7 @@ public class SettingsFragment extends Fragment {
 //                textView.setText(s);
 //            }
 //        });
+
         btnLogout = (Button) view.findViewById(R.id.btnLogout);
         btnAccountInfo = (Button) view.findViewById(R.id.btnAccountInfo);
         btnShop = (Button) view.findViewById(R.id.btnShop);
@@ -93,6 +94,8 @@ public class SettingsFragment extends Fragment {
         btnDonMua = (Button) view.findViewById(R.id.btnDonMua);
         btnDonBan = (Button) view.findViewById(R.id.btnDonBan);
         btnPassWordChange = (Button) view.findViewById(R.id.btnPassWordChange);
+        btnDanhGiaSP = (Button) view.findViewById(R.id.btnDanhGiaSP);
+        txtDanhGiaSP = (TextView) view.findViewById(R.id.txtDanhGiaSP);
         txtAccountName = (TextView) view.findViewById(R.id.txtAccountName);
         txtSpDaBan = (TextView) view.findViewById(R.id.txtSpDaBan);
         txtDiemThanhVien = (TextView) view.findViewById(R.id.txtDiemThanhVien);

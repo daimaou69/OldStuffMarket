@@ -62,6 +62,7 @@
     <string name="current_commission">Commission:</string>
     <string name="don_mua">Đơn mua</string>
     <string name="don_ban">Đơn bán</string>
+    <string name="danh_gia_sp">Đánh giá sản phẩm</string>
 
     //Admin
     <string name="admin_tittle">Admin</string>
