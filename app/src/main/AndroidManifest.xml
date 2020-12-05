@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OldStuffMarket">
-        <activity android:name=".ShipperMainActivity"></activity>
+        <activity android:name=".UserCodEWalletOrderActivity"></activity>
+        <activity android:name=".ShipperMainActivity" />
         <activity android:name=".Employee_Detail_Activity" />
         <activity android:name=".GiaoDichActivity" />
         <activity android:name=".Employee_AdminActivity" />

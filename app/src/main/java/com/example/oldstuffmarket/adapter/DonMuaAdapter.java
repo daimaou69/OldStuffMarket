@@ -94,23 +94,26 @@ public class DonMuaAdapter extends BaseAdapter {
         viewHolder.txtGiaSP.setText("Tổng tiền: " + String.valueOf(orderData.getGiaTien()) + "vnđ");
 
         if(orderData.getTinhTrang() == 0){
-            viewHolder.txtTinhTrang.setText("Pending");
+            viewHolder.txtTinhTrang.setText("Chờ xác nhận");
         }
         else if(orderData.getTinhTrang() == 1){
-            viewHolder.txtTinhTrang.setText("Processing");
+            viewHolder.txtTinhTrang.setText("Đang đóng gói");
         }
         else if(orderData.getTinhTrang() == 2){
-            viewHolder.txtTinhTrang.setText("Packing");
+            viewHolder.txtTinhTrang.setText("Đóng gói hoàn tất");
         }
         else if(orderData.getTinhTrang() == 3){
-            viewHolder.txtTinhTrang.setText("Delivering");
+            viewHolder.txtTinhTrang.setText("Chờ vận chuyển");
+        }
+        else if(orderData.getTinhTrang() == 5){
+            viewHolder.txtTinhTrang.setText("Đang vận chuyển");
         }
         else if(orderData.getTinhTrang() == 4){
-            viewHolder.txtTinhTrang.setText("Completed");
+            viewHolder.txtTinhTrang.setText("Hoàn thành");
             viewHolder.txtTinhTrang.setTextColor(Color.GREEN);
         }
         else if(orderData.getTinhTrang() == -1){
-            viewHolder.txtTinhTrang.setText("Cancel");
+            viewHolder.txtTinhTrang.setText("Hủy");
             viewHolder.txtTinhTrang.setTextColor(Color.RED);
         }
 

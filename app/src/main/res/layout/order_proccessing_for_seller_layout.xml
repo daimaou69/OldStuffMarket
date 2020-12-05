@@ -108,6 +108,36 @@
                 android:orientation="vertical"
                 android:layout_marginBottom="10dp">
                 <TextView
+                    android:id="@+id/txtShipperLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nhan_vien_giao_hang"
+                    android:visibility="gone"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="5dp"/>
+                <TextView
+                    android:id="@+id/txtShipperName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:visibility="gone"
+                    android:text="Họ tên: "
+                    android:textSize="17sp"/>
+                <TextView
+                    android:id="@+id/txtShipperPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:text="Liên hệ:"
+                    android:textSize="17sp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="10dp">
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/quy_trinh_xu_li"
