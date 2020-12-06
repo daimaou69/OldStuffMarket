@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -35,16 +36,20 @@ public class UserDetailReportActivity extends AppCompatActivity {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     private Intent intent;
-    private ImageView imgUser;
-    private TextView txtFullName, txtSDT, txtDiaChi, txtDate, txtReport;
-    private Button btnLock, btnHome, btnBack, btnHuy;
-    private String userName, reportID, userID;
+    private ImageView imgUser, imgUser1;
+    private TextView txtFullName, txtSDT, txtDiaChi, txtDate, txtReport, txtFullName1, txtSDT1, txtDiaChi1, txtDate1;
+    private Button btnLock, btnBack, btnLock1, btnHistory1, btnHistory;
+    private String userName, reportID, userID, sUserID;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_user_detail_report);
 
+        imgUser1 = (ImageView) findViewById(R.id.imgUser1);
         imgUser = (ImageView) findViewById(R.id.imgUser);
         txtFullName = (TextView) findViewById(R.id.txtFullName);
         txtSDT = (TextView) findViewById(R.id.txtSDT);
@@ -52,14 +57,20 @@ public class UserDetailReportActivity extends AppCompatActivity {
         txtDate = (TextView) findViewById(R.id.txtDate);
         txtReport = (TextView) findViewById(R.id.txtReport);
         btnBack = (Button) findViewById(R.id.btnBack);
-        btnHome = (Button) findViewById(R.id.btnHome);
         btnLock = (Button) findViewById(R.id.btnLock);
-        btnHuy = (Button) findViewById(R.id.btnHuy);
+        txtFullName1 = (TextView) findViewById(R.id.txtFullName1);
+        txtSDT1 = (TextView) findViewById(R.id.txtSDT1);
+        txtDiaChi1 = (TextView) findViewById(R.id.txtDiaChi1);
+        txtDate1 = (TextView) findViewById(R.id.txtDate1);
+        btnLock1 = (Button) findViewById(R.id.btnLock1);
+        btnHistory1 = (Button) findViewById(R.id.btnHistory1);
+        btnHistory = (Button) findViewById(R.id.btnHistory);
 
-        btnHome.setOnClickListener(homeClick);
         btnBack.setOnClickListener(backClick);
-        btnHuy.setOnClickListener(huyClick);
         btnLock.setOnClickListener(lockClick);
+        btnLock1.setOnClickListener(lockClick1);
+        btnHistory.setOnClickListener(historyUserbibaoCaoClick);
+        btnHistory1.setOnClickListener(historyUserbaoCaoClick);
     }
 
     @Override
@@ -70,6 +81,7 @@ public class UserDetailReportActivity extends AppCompatActivity {
             userName = getIntent().getExtras().getString("UserName");
             reportID = getIntent().getExtras().getString("ReportID");
             userID = getIntent().getExtras().getString("UserID");
+            sUserID = getIntent().getExtras().getString("sUserID");
             databaseReference.child("Report").addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -93,6 +105,23 @@ public class UserDetailReportActivity extends AppCompatActivity {
                                     txtSDT.setText(snapshot.getValue(UserData.class).getsSdt());
                                     txtDiaChi.setText(snapshot.getValue(UserData.class).getsDiaChi());
                                     txtDate.setText(snapshot.getValue(UserData.class).getsNgayThamGia());
+                                }
+                                if (snapshot.getValue(UserData.class).getsUserID().equals(sUserID)) {
+                                    storageReference.child(snapshot.getValue(UserData.class).getsImage() + ".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                            Glide.with(UserDetailReportActivity.this).load(uri).into(imgUser1);
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(UserDetailReportActivity.this, "Hinh anh khong ton tai!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                    txtFullName1.setText(snapshot.getValue(UserData.class).getsFullName());
+                                    txtSDT1.setText(snapshot.getValue(UserData.class).getsSdt());
+                                    txtDiaChi1.setText(snapshot.getValue(UserData.class).getsDiaChi());
+                                    txtDate1.setText(snapshot.getValue(UserData.class).getsNgayThamGia());
                                 }
                             }
 
@@ -143,6 +172,115 @@ public class UserDetailReportActivity extends AppCompatActivity {
         }
     }
 
+    View.OnClickListener historyUserbaoCaoClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(v.getContext(), HistoryUserbaocaoActivity.class);
+            intent.putExtra("UserName", userName);
+            intent.putExtra("sUserID", sUserID);
+            intent.putExtra("ReportID", reportID);
+            intent.putExtra("UserID", userID);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            finish();
+            startActivity(intent);
+        }
+    };
+    View.OnClickListener historyUserbibaoCaoClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(v.getContext(), HistoryUser_bibaocaoActivity.class);
+            intent.putExtra("UserName", userName);
+            intent.putExtra("UserID", userID);
+            intent.putExtra("ReportID", reportID);
+            intent.putExtra("sUserID", sUserID);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            finish();
+            startActivity(intent);
+        }
+    };
+    View.OnClickListener lockClick1 = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            DialogInterface.OnClickListener dialogClick = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case DialogInterface.BUTTON_POSITIVE:
+                            databaseReference.child("Report").addChildEventListener(new ChildEventListener() {
+                                @Override
+                                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                    if (snapshot.getValue(UserReport.class).getUserCreateReportID().equals(sUserID)) {
+                                        databaseReference.child("Report").child(snapshot.getKey()).removeValue();
+
+                                        databaseReference.child("User").addChildEventListener(new ChildEventListener() {
+                                            @Override
+                                            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                                if (snapshot.getValue(UserData.class).getsUserID().equals(sUserID)) {
+                                                    String lockID = databaseReference.push().getKey();
+                                                    LockUser lockUser = new LockUser(lockID, sUserID);
+                                                    databaseReference.child("LockUser").child(lockID).setValue(lockUser);
+                                                    databaseReference.child("User").child(snapshot.getKey()).child("iTinhTrang").setValue(-1);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                            }
+
+                                            @Override
+                                            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                            }
+
+                                            @Override
+                                            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
+                                    }
+                                }
+
+                                @Override
+                                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                }
+
+                                @Override
+                                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                }
+
+                                @Override
+                                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                            intent = new Intent(v.getContext(), Report_User_Admin_Activity.class);
+                            intent.putExtra("UserName", userName);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                            finish();
+                            startActivity(intent);
+                            break;
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            return;
+                    }
+                }
+            };
+            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+            builder.setMessage("Bạn muốn chắc chắn muốn khóa User báo cáo?").setNegativeButton("No",dialogClick).setPositiveButton("Yes",dialogClick).show();
+        }
+    };
     View.OnClickListener lockClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -156,7 +294,7 @@ public class UserDetailReportActivity extends AppCompatActivity {
                                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                                     if (snapshot.getValue(UserReport.class).getObjectReportID().equals(userID)) {
                                         databaseReference.child("Report").child(snapshot.getKey()).removeValue();
-                                        
+
                                         databaseReference.child("User").addChildEventListener(new ChildEventListener() {
                                             @Override
                                             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -223,68 +361,7 @@ public class UserDetailReportActivity extends AppCompatActivity {
                 }
             };
             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-            builder.setMessage("Bạn muốn hủy yêu cầu báo cáo?").setNegativeButton("No",dialogClick).setPositiveButton("Yes",dialogClick).show();
-        }
-    };
-    View.OnClickListener huyClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            DialogInterface.OnClickListener dialogClick = new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    switch (which) {
-                        case DialogInterface.BUTTON_POSITIVE:
-                            databaseReference.child("Report").addChildEventListener(new ChildEventListener() {
-                                @Override
-                                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                                    if (snapshot.getValue(UserReport.class).getObjectReportID().equals(userID)) {
-                                        databaseReference.child("Report").child(snapshot.getKey()).removeValue();
-                                    }
-                                }
-
-                                @Override
-                                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                                }
-
-                                @Override
-                                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-                                }
-
-                                @Override
-                                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
-                            intent = new Intent(v.getContext(), Report_User_Admin_Activity.class);
-                            intent.putExtra("UserName", userName);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                            finish();
-                            startActivity(intent);
-                            break;
-                        case DialogInterface.BUTTON_NEGATIVE:
-                            return;
-                    }
-                }
-            };
-            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-            builder.setMessage("Bạn muốn hủy yêu cầu báo cáo?").setNegativeButton("No",dialogClick).setPositiveButton("Yes",dialogClick).show();
-        }
-    };
-    View.OnClickListener homeClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(v.getContext(), AdminMainActivity.class);
-            intent.putExtra("UserName", userName);
-            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            finish();
-            startActivity(intent);
+            builder.setMessage("Bạn muốn chắc chắn muốn khóa User bị báo cáo?").setNegativeButton("No",dialogClick).setPositiveButton("Yes",dialogClick).show();
         }
     };
     View.OnClickListener backClick = new View.OnClickListener() {
