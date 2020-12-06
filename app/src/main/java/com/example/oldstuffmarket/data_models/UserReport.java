@@ -1,19 +1,28 @@
 package com.example.oldstuffmarket.data_models;
 
 public class UserReport {
-    private String reportID, objectReportID, reportDescription;
+    private String reportID, objectReportID, userCreateReportID, reportDescription;
     private int loaiReport;
     private boolean tinhTrangXem;
 
     public UserReport() {
     }
 
-    public UserReport(String reportID, String objectReportID, String reportDescription, int loaiReport, boolean tinhTrangXem) {
+    public UserReport(String reportID, String objectReportID, String userCreateReportID, String reportDescription, int loaiReport, boolean tinhTrangXem) {
         this.reportID = reportID;
         this.objectReportID = objectReportID;
+        this.userCreateReportID = userCreateReportID;
         this.reportDescription = reportDescription;
         this.loaiReport = loaiReport;
         this.tinhTrangXem = tinhTrangXem;
+    }
+
+    public String getUserCreateReportID() {
+        return userCreateReportID;
+    }
+
+    public void setUserCreateReportID(String userCreateReportID) {
+        this.userCreateReportID = userCreateReportID;
     }
 
     public String getReportID() {
