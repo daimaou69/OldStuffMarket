@@ -166,7 +166,7 @@ public class WalletUserActivity extends AppCompatActivity {
             databaseReference.child("UserDepositRequest").addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    if(snapshot.getValue(UserDepositData.class).getTinhTrang() == 0){
+                    if(snapshot.getValue(UserDepositData.class).getUserID().equals(userID) && snapshot.getValue(UserDepositData.class).getTinhTrang() == 0){
                         userDepositPending.add(snapshot.getValue(UserDepositData.class));
                     }
                 }
@@ -225,7 +225,11 @@ public class WalletUserActivity extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    txtUserDepositMoneyNotify.setText(String.valueOf(userDepositPending.size()));
+                    if(userDepositPending.size() != 0){
+                        txtUserDepositMoneyNotify.setVisibility(View.VISIBLE);
+                        txtUserDepositMoneyNotify.setText(String.valueOf(userDepositPending.size()));
+                    }
+
                 }
             }, delay);
         }

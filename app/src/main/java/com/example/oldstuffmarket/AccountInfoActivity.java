@@ -128,7 +128,7 @@ public class AccountInfoActivity extends AppCompatActivity {
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(AccountInfoActivity.this, "Hinh anh khong ton tai!", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(AccountInfoActivity.this, "Hinh anh khong ton tai!", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
@@ -274,7 +274,6 @@ public class AccountInfoActivity extends AppCompatActivity {
                                                 intent = new Intent(AccountInfoActivity.this, UserMainActivity.class);
                                                 intent.putExtra("UserName",sUserName);
                                                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                                                finish();
                                                 startActivity(intent);
                                                 Toast.makeText(AccountInfoActivity.this, "Cập nhật thông tin thành công!", Toast.LENGTH_SHORT).show();
                                             }
@@ -282,7 +281,13 @@ public class AccountInfoActivity extends AppCompatActivity {
                                                 intent = new Intent(AccountInfoActivity.this, AdminMainActivity.class);
                                                 intent.putExtra("UserName",sUserName);
                                                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                                                finish();
+                                                startActivity(intent);
+                                                Toast.makeText(AccountInfoActivity.this, "Cập nhật thông tin thành công!", Toast.LENGTH_SHORT).show();
+                                            }
+                                            else if(snapshot.getValue(UserData.class).getiPermission() == 3){
+                                                intent = new Intent(AccountInfoActivity.this, ShipperMainActivity.class);
+                                                intent.putExtra("UserName",sUserName);
+                                                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                                                 startActivity(intent);
                                                 Toast.makeText(AccountInfoActivity.this, "Cập nhật thông tin thành công!", Toast.LENGTH_SHORT).show();
                                             }
@@ -345,11 +350,16 @@ public class AccountInfoActivity extends AppCompatActivity {
                         Intent intent = new Intent(v.getContext(), UserMainActivity.class);
                         intent.putExtra("UserName", sUserName);
                         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                        finish();
                         startActivity(intent);
                     }
-                    else if(snapshot.getValue(UserData.class).getsUserName().equals(sUserName) && snapshot.getValue(UserData.class).getiPermission() == 0 || snapshot.getValue(UserData.class).getiPermission() == 2){
+                    else if(snapshot.getValue(UserData.class).getsUserName().equals(sUserName) && snapshot.getValue(UserData.class).getiPermission() == 0 || snapshot.getValue(UserData.class).getsUserName().equals(sUserName) && snapshot.getValue(UserData.class).getiPermission() == 2){
                         Intent intent = new Intent(v.getContext(), AdminMainActivity.class);
+                        intent.putExtra("UserName", sUserName);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        startActivity(intent);
+                    }
+                    else if(snapshot.getValue(UserData.class).getsUserName().equals(sUserName) && snapshot.getValue(UserData.class).getiPermission() == 3){
+                        Intent intent = new Intent(v.getContext(), ShipperMainActivity.class);
                         intent.putExtra("UserName", sUserName);
                         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         finish();

@@ -97,7 +97,7 @@ public class OrderThanhToanTrucTiepActivity extends AppCompatActivity {
                         }
 
                         txtSoLuongSP.setText("Số lượng: " + String.valueOf(snapshot.getValue(OrderData.class).getSanPham().getiSoLuong()) + " x ");
-                        txtTongGiaTriDonHang.setText(String.valueOf(snapshot.getValue(OrderData.class).getGiaTien()) + "vnđ");
+                        txtTongGiaTriDonHang.setText("Tổng tiền: " + String.valueOf(snapshot.getValue(OrderData.class).getGiaTien()) + "vnđ");
                         txtPhuongThucThanhToan.setText("Thanh toán trực tiếp!");
                         String nguoiMuaID = snapshot.getValue(OrderData.class).getNguoiMuaID();
                         databaseReference.child("User").addChildEventListener(new ChildEventListener() {

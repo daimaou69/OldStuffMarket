@@ -7,11 +7,12 @@ public class OrderData {
     private SanPham sanPham;
     private int loaiDonHang, tinhTrang, sellerCommission;
     private long giaTien;
+    private String shipperID;
 
     public OrderData() {
     }
 
-    public OrderData(String donHangID, String nguoiMuaID, String nguoiBanID, String ngayTaoDonHang, String soDienThoai, String diaChi, SanPham sanPham, int loaiDonHang, int tinhTrang, int sellerCommission, long giaTien) {
+    public OrderData(String donHangID, String nguoiMuaID, String nguoiBanID, String ngayTaoDonHang, String soDienThoai, String diaChi, SanPham sanPham, int loaiDonHang, int tinhTrang, int sellerCommission, long giaTien, String shipperID) {
         this.donHangID = donHangID;
         this.nguoiMuaID = nguoiMuaID;
         this.nguoiBanID = nguoiBanID;
@@ -23,6 +24,15 @@ public class OrderData {
         this.tinhTrang = tinhTrang;
         this.sellerCommission = sellerCommission;
         this.giaTien = giaTien;
+        this.shipperID = shipperID;
+    }
+
+    public String getShipperID() {
+        return shipperID;
+    }
+
+    public void setShipperID(String shipperID) {
+        this.shipperID = shipperID;
     }
 
     public int getSellerCommission() {

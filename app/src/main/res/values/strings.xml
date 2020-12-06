@@ -62,6 +62,7 @@
     <string name="current_commission">Commission:</string>
     <string name="don_mua">Đơn mua</string>
     <string name="don_ban">Đơn bán</string>
+    <string name="danh_gia_sp">Đánh giá sản phẩm</string>
 
     //Admin
     <string name="admin_tittle">Admin</string>
@@ -87,6 +88,14 @@
     <string name="dang_ky_employee">Đăng ký nhân viên</string>
     <string name="add_employee">Thêm nhân viên</string>
     <string name="employee_management">Quản lí nhân viên</string>
+    <string name="loai_nhan_vien">Loại nhân viên:</string>
+    <string-array name="spn_loai_nv">
+        <item>Nhân viên quản lí</item>
+        <item>Shipper</item>
+    </string-array>
+    <string name="danh_sach_don_hang">Danh sách đơn hàng</string>
+    <string name="cac_don_dang_giao">Các đơn đang giao</string>
+    <string name="nhan_vien_giao_hang">Nhân viên giao hàng:</string>
 
     //Wallet
     <string name="nap_tien">Nạp tiền</string>

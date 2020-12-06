@@ -263,7 +263,7 @@ public class UserProductEditActivity extends AppCompatActivity {
                                                     snapshot.getValue(OrderData.class).getSanPham().getiSoLuong(),snapshot.getValue(OrderData.class).getSanPham().getiTinhTrang());
                                             OrderData orderData = new OrderData(snapshot.getValue(OrderData.class).getDonHangID(), snapshot.getValue(OrderData.class).getNguoiMuaID(), snapshot.getValue(OrderData.class).getNguoiBanID(),
                                                     snapshot.getValue(OrderData.class).getNgayTaoDonHang(), snapshot.getValue(OrderData.class).getSoDienThoai(), snapshot.getValue(OrderData.class).getDiaChi(),
-                                                    sanPham, snapshot.getValue(OrderData.class).getLoaiDonHang(), snapshot.getValue(OrderData.class).getTinhTrang(), snapshot.getValue(OrderData.class).getSellerCommission(), snapshot.getValue(OrderData.class).getGiaTien());
+                                                    sanPham, snapshot.getValue(OrderData.class).getLoaiDonHang(), snapshot.getValue(OrderData.class).getTinhTrang(), snapshot.getValue(OrderData.class).getSellerCommission(), snapshot.getValue(OrderData.class).getGiaTien(), snapshot.getValue(OrderData.class).getShipperID());
                                             databaseReference.child("DonHang").child(snapshot.getValue(OrderData.class).getDonHangID()).setValue(orderData);
                                         }
                                     }

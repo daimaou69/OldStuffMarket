@@ -219,7 +219,7 @@ public class AdminMainActivity extends AppCompatActivity {
 
             sUserName = getIntent().getExtras().getString("UserName");
 
-            txtAdminAccountName.setText(String.valueOf(userDataArrayList.size()));
+//            txtAdminAccountName.setText(String.valueOf(userDataArrayList.size()));
 
             databaseReference.child("User").addChildEventListener(new ChildEventListener() {
                 @Override
@@ -240,7 +240,7 @@ public class AdminMainActivity extends AppCompatActivity {
                         btnWallet.setText("Ví tài khoản: " + String.valueOf(snapshot.getValue(UserData.class).getlMoney()) + "vnđ");
                         if(!snapshot.getValue(UserData.class).getsImage().isEmpty()){
                             final Handler handler = new Handler();
-                            final int delay = 900; //milliseconds
+                            final int delay = 1200; //milliseconds
                             handler.postDelayed(new Runnable(){
                                 public void run(){
                                     imageLoad(snapshot.getValue(UserData.class).getsImage());
@@ -410,7 +410,7 @@ public class AdminMainActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(AdminMainActivity.this, "Hinh anh khong ton tai!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(AdminMainActivity.this, "Hinh anh khong ton tai!", Toast.LENGTH_SHORT).show();
             }
         });
     }

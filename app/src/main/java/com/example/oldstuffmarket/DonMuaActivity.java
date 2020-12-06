@@ -49,11 +49,20 @@ public class DonMuaActivity extends AppCompatActivity {
         gridDonMua.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                intent = new Intent(view.getContext(), UserOrderConfirmActivity.class);
-                intent.putExtra("UserID", userID);
-                intent.putExtra("UserName", userName);
-                intent.putExtra("DonHangID", orderDataArrayList.get(position).getDonHangID());
-                startActivity(intent);
+                if(orderDataArrayList.get(position).getLoaiDonHang() == 1){
+                    intent = new Intent(view.getContext(), UserOrderConfirmActivity.class);
+                    intent.putExtra("UserID", userID);
+                    intent.putExtra("UserName", userName);
+                    intent.putExtra("DonHangID", orderDataArrayList.get(position).getDonHangID());
+                    startActivity(intent);
+                }
+                else{
+                    intent = new Intent(view.getContext(), UserCodEWalletOrderActivity.class);
+                    intent.putExtra("UserID", userID);
+                    intent.putExtra("UserName", userName);
+                    intent.putExtra("DonHangID", orderDataArrayList.get(position).getDonHangID());
+                    startActivity(intent);
+                }
             }
         });
     }

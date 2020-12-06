@@ -13,14 +13,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.oldstuffmarket.data_models.TaiKhoanNH;
 import com.example.oldstuffmarket.data_models.UserData;
 import com.example.oldstuffmarket.ui.wallet.ChuyenTienFragment;
 import com.example.oldstuffmarket.ui.wallet.RutTienFragment;
-import com.example.oldstuffmarket.ui.wallet.WalletFragment;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,7 +34,6 @@ public class WalletActivity extends AppCompatActivity {
     private TextView txtSoDu;
     private double dMoney;
     public static ArrayList<UserData> userDataArrayList;
-    public static ArrayList<TaiKhoanNH> taiKhoanNHArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,25 +92,6 @@ public class WalletActivity extends AppCompatActivity {
 
                     }
                 });
-            }
-        });
-
-        btnNapTien.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                WalletFragment walletFragment = new WalletFragment();
-
-                Bundle bundle = new Bundle();
-
-                bundle.putString("UserName", sUserName);
-                bundle.putString("SoTK", sSoTK);
-
-                walletFragment.setArguments(bundle);
-
-                fragmentTransaction.replace(R.id.napTienLayout, walletFragment);
-                fragmentTransaction.commit();
             }
         });
 
@@ -199,39 +176,11 @@ public class WalletActivity extends AppCompatActivity {
         super.onResume();
 
         userDataArrayList = new ArrayList<>();
-        taiKhoanNHArrayList = new ArrayList<>();
 
         databaseReference.child("User").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 userDataArrayList.add(snapshot.getValue(UserData.class));
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        databaseReference.child("TaiKhoanNH").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                taiKhoanNHArrayList.add(snapshot.getValue(TaiKhoanNH.class));
             }
 
             @Override
