@@ -146,7 +146,7 @@ public class OrderProccessingForSellerActivity extends AppCompatActivity {
                         databaseReference.child("User").addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                                if(snapshot.getValue(UserData.class).getsUserID().equals(userID)){
+                                if(snapshot.getValue(UserData.class).getsUserID().equals(nguoiMuaID)){
                                     txtHoTenNguoiMua.setText(snapshot.getValue(UserData.class).getsFullName());
 
                                 }
