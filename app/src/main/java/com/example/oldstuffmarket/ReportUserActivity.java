@@ -40,6 +40,7 @@ public class ReportUserActivity extends AppCompatActivity {
     private TextView txtFullName, txtSDT, txtDiaChi;
     private EditText edtReport;
     private Button btnReportUser, btnHome, btnBack;
+    private String sUserID = UserMainActivity.sUserID;
     private String userName, userID, productID, navigateTo;
 
     @Override
@@ -135,7 +136,7 @@ public class ReportUserActivity extends AppCompatActivity {
                                     public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                                         if (snapshot.getValue(UserData.class).getsUserID().equals(userID)) {
                                             String reportID = databaseReference.push().getKey();
-                                            UserReport userReport = new UserReport(reportID, userID, "", edtReport.getText().toString(), 0,false);
+                                            UserReport userReport = new UserReport(reportID, userID, sUserID, edtReport.getText().toString(), 0,false);
                                             databaseReference.child("Report").child(reportID).setValue(userReport);
                                         }
                                     }
