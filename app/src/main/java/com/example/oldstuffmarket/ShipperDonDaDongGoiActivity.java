@@ -29,7 +29,7 @@ public class ShipperDonDaDongGoiActivity extends AppCompatActivity {
     private Button btnBack;
     private GridView gridDonDaDongGoi;
     private Intent intent;
-    private String userName;
+    private String userName, userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,12 @@ public class ShipperDonDaDongGoiActivity extends AppCompatActivity {
         gridDonDaDongGoi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                intent = new Intent(view.getContext(), ShipperDetailDonDaDongGoiActivity.class);
+                intent.putExtra("UserName", userName);
+                intent.putExtra("UserID", userID);
+                intent.putExtra("DonHangID", orderDataArrayList.get(position).getDonHangID());
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
             }
         });
     }
@@ -88,6 +93,7 @@ public class ShipperDonDaDongGoiActivity extends AppCompatActivity {
 
         if(getIntent().getExtras() != null){
             userName = getIntent().getExtras().getString("UserName");
+            userID = getIntent().getExtras().getString("UserID");
         }
 
         Handler handler = new Handler();

@@ -34,7 +34,7 @@ public class ShipperMainActivity extends AppCompatActivity {
     private Button btnLogout, btnAccountInfo, btnPassWordChange, btnDanhSachDonHang, btnCacDonDangGiao;
     private TextView txtCacDonDangGiaoNotify, txtShipperAccountName;
     private ImageView imgAccount;
-    private String sUserName;
+    private String sUserName, userID;
     private Intent intent;
 
     @Override
@@ -73,6 +73,7 @@ public class ShipperMainActivity extends AppCompatActivity {
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                     if(snapshot.getValue(UserData.class).getsUserName().equals(sUserName)){
                         txtShipperAccountName.setText("Shipper - " + snapshot.getValue(UserData.class).getsFullName());
+                        userID = snapshot.getValue(UserData.class).getsUserID();
                         if(!snapshot.getValue(UserData.class).getsImage().isEmpty()){
                             final Handler handler = new Handler();
                             final int delay = 1200; //milliseconds
@@ -114,6 +115,7 @@ public class ShipperMainActivity extends AppCompatActivity {
         public void onClick(View v) {
             intent = new Intent(v.getContext(), ShipperDonDaDongGoiActivity.class);
             intent.putExtra("UserName", sUserName);
+            intent.putExtra("UserID", userID);
             startActivity(intent);
         }
     };

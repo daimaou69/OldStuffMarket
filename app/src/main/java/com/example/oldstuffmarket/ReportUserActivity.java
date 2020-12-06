@@ -135,7 +135,7 @@ public class ReportUserActivity extends AppCompatActivity {
                                     public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                                         if (snapshot.getValue(UserData.class).getsUserID().equals(userID)) {
                                             String reportID = databaseReference.push().getKey();
-                                            UserReport userReport = new UserReport(reportID, userID, edtReport.getText().toString(), 0,false);
+                                            UserReport userReport = new UserReport(reportID, userID, "", edtReport.getText().toString(), 0,false);
                                             databaseReference.child("Report").child(reportID).setValue(userReport);
                                         }
                                     }

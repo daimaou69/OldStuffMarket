@@ -33,7 +33,7 @@ public class UserCodEWalletOrderActivity extends AppCompatActivity {
     private ImageView imgSP;
     private EditText edtUserName, edtDiaChi, edtLienHe;
     private TextView txtTenSP, txtSoLuongSP, txtGiaSP, txtPhuongThucThanhToan, txtTongGiaTriDonHang, txtNameLabel, txtDiaChi, txtShipperLabel, txtShipperName, txtShipperPhone;
-    private Button btnAccept, btnRefuse, btnBack;
+    private Button btnBack;
     private Intent intent;
     private String userName, userID, donHangID, nguoiBanID, nguoiMuaID, productID;
     private int loaiDonHang, sellerCommission;
@@ -60,8 +60,6 @@ public class UserCodEWalletOrderActivity extends AppCompatActivity {
         txtShipperLabel = (TextView) findViewById(R.id.txtShipperLabel);
         txtShipperPhone = (TextView) findViewById(R.id.txtShipperPhone);
         txtShipperName = (TextView) findViewById(R.id.txtShipperName);
-        btnAccept = (Button) findViewById(R.id.btnAccept);
-        btnRefuse = (Button) findViewById(R.id.btnRefuse);
         btnBack = (Button) findViewById(R.id.btnBack);
 
         btnBack.setOnClickListener(backClick);
@@ -97,10 +95,90 @@ public class UserCodEWalletOrderActivity extends AppCompatActivity {
                             }
                         });
 
-                        if(snapshot.getValue(OrderData.class).getShipperID().isEmpty()){
-                            txtShipperLabel.setText("Tình trạng: Hoàn tất đóng gói");
+                        if(snapshot.getValue(OrderData.class).getTinhTrang() == 0){
+                            txtShipperLabel.setText("Tình trạng: Chờ xác nhận");
                         }
-                        else{
+                        else if(snapshot.getValue(OrderData.class).getTinhTrang() == 1){
+                            txtShipperLabel.setText("Tình trạng: Đang đóng gói");
+                        }
+                        else if(snapshot.getValue(OrderData.class).getTinhTrang() == 2){
+                            txtShipperLabel.setText("Tình trạng: Đóng gói hoàn tất");
+                        }
+                        else if(snapshot.getValue(OrderData.class).getTinhTrang() == 3){
+                            txtShipperLabel.setText("Tình trạng: Chờ vận chuyển");
+                        }
+                        else if(!snapshot.getValue(OrderData.class).getShipperID().isEmpty() && snapshot.getValue(OrderData.class).getTinhTrang() == 5){
+                            txtShipperLabel.setText("Tình trạng: Shipper đang lấy hàng");
+                            String shipperID = snapshot.getValue(OrderData.class).getShipperID();
+                            txtShipperName.setVisibility(View.VISIBLE);
+                            txtShipperPhone.setVisibility(View.VISIBLE);
+                            databaseReference.child("User").addChildEventListener(new ChildEventListener() {
+                                @Override
+                                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                    if(snapshot.getValue(UserData.class).getsUserID().equals(shipperID)){
+                                        txtShipperName.setText("Họ tên người giao: " + snapshot.getValue(UserData.class).getsFullName());
+                                        txtShipperPhone.setText("Số điện thoại: " + snapshot.getValue(UserData.class).getsSdt());
+                                    }
+                                }
+
+                                @Override
+                                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                }
+
+                                @Override
+                                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                }
+
+                                @Override
+                                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        }
+                        else if(!snapshot.getValue(OrderData.class).getShipperID().isEmpty() && snapshot.getValue(OrderData.class).getTinhTrang() == 6){
+                            txtShipperLabel.setText("Tình trạng: Shipper lấy hàng thành công");
+                            String shipperID = snapshot.getValue(OrderData.class).getShipperID();
+                            txtShipperName.setVisibility(View.VISIBLE);
+                            txtShipperPhone.setVisibility(View.VISIBLE);
+                            databaseReference.child("User").addChildEventListener(new ChildEventListener() {
+                                @Override
+                                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                    if(snapshot.getValue(UserData.class).getsUserID().equals(shipperID)){
+                                        txtShipperName.setText("Họ tên người giao: " + snapshot.getValue(UserData.class).getsFullName());
+                                        txtShipperPhone.setText("Số điện thoại: " + snapshot.getValue(UserData.class).getsSdt());
+                                    }
+                                }
+
+                                @Override
+                                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                }
+
+                                @Override
+                                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                }
+
+                                @Override
+                                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        }
+                        else if(!snapshot.getValue(OrderData.class).getShipperID().isEmpty() && snapshot.getValue(OrderData.class).getTinhTrang() == 7){
+                            txtShipperLabel.setText("Tình trạng: Đang giao hàng");
                             String shipperID = snapshot.getValue(OrderData.class).getShipperID();
                             txtShipperName.setVisibility(View.VISIBLE);
                             txtShipperPhone.setVisibility(View.VISIBLE);
@@ -192,10 +270,7 @@ public class UserCodEWalletOrderActivity extends AppCompatActivity {
                             else{
                                 txtPhuongThucThanhToan.setText("Thanh toán E-Wallet!");
                             }
-                            if(snapshot.getValue(OrderData.class).getTinhTrang() < 3){
-                                btnAccept.setEnabled(false);
-                                btnRefuse.setEnabled(false);
-                            }
+
                             txtDiaChi.setText("Địa chỉ giao hàng: ");
                             txtNameLabel.setText("Họ tên người mua: ");
                             databaseReference.child("User").addChildEventListener(new ChildEventListener() {
