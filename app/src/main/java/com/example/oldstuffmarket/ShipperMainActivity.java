@@ -63,7 +63,7 @@ public class ShipperMainActivity extends AppCompatActivity {
         btnAccountInfo.setOnClickListener(accountInfoClick);
         btnPassWordChange.setOnClickListener(passwordChangeClick);
         btnDanhSachDonHang.setOnClickListener(donDaDongGoiClick);
-
+        btnCacDonDangGiao.setOnClickListener(cacDonDangGiaoClick);
     }
 
     @Override
@@ -155,12 +155,24 @@ public class ShipperMainActivity extends AppCompatActivity {
         }
     }
 
+    View.OnClickListener cacDonDangGiaoClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            intent = new Intent(v.getContext(), ShipperDonDangGiaoActivity.class);
+            intent.putExtra("UserName", sUserName);
+            intent.putExtra("UserID", userID);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        }
+    };
+
     View.OnClickListener donDaDongGoiClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             intent = new Intent(v.getContext(), ShipperDonDaDongGoiActivity.class);
             intent.putExtra("UserName", sUserName);
             intent.putExtra("UserID", userID);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         }
     };
@@ -179,6 +191,7 @@ public class ShipperMainActivity extends AppCompatActivity {
         public void onClick(View v) {
             intent = new Intent(v.getContext(), AccountInfoActivity.class);
             intent.putExtra("UserName", sUserName);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         }
     };
