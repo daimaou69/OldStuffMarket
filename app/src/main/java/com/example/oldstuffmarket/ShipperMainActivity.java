@@ -140,6 +140,18 @@ public class ShipperMainActivity extends AppCompatActivity {
 
                 }
             });
+
+            Handler handler = new Handler();
+            int delay = 1000;
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if(donDangGiao.size() != 0){
+                        txtCacDonDangGiaoNotify.setVisibility(View.VISIBLE);
+                        txtCacDonDangGiaoNotify.setText(String.valueOf(donDangGiao.size()));
+                    }
+                }
+            }, delay);
         }
     }
 

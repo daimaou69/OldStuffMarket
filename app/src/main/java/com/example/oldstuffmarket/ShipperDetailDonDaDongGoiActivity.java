@@ -255,6 +255,7 @@ public class ShipperDetailDonDaDongGoiActivity extends AppCompatActivity {
     View.OnClickListener backClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            finish();
             intent = new Intent(v.getContext(), ShipperDonDaDongGoiActivity.class);
             intent.putExtra("UserName", userName);
             intent.putExtra("UserID", userID);
