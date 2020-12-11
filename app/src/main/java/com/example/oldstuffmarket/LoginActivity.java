@@ -68,12 +68,8 @@ public class LoginActivity extends AppCompatActivity {
 //        String sUserID = databaseReference.push().getKey();
 //        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 //        Date date = new Date();
-//        UserData user = new UserData("admin","", "Trần Thanh Tùng", "0123456789", "Nam", "Thủ Đức", "admin", "", sUserID, dateFormat.format(date), 0, 10, 0, 0, 0, 0, 0);
+//        UserData user = new UserData("shipperAdmin","", "Trần Thanh Tùng", "0123456789", "Nam", "Thủ Đức", "123456", "", sUserID, dateFormat.format(date), 4, 10, 0, 0, 0, 0, 0);
 //        databaseReference.child("User").child(sUserID).setValue(user);
-//        databaseReference.child("TaiKhoanNH").child(sTKID).setValue(taiKhoanNH);
-//        String sKey = databaseReference.push().getKey();
-//        Commission commission = new Commission(sKey, 4, 3);
-//        databaseReference.child("Commission").child(sKey).setValue(commission);
 
     }
 
@@ -136,17 +132,6 @@ public class LoginActivity extends AppCompatActivity {
             else if(edtLoginPass.getText().toString().isEmpty()){// kiểm tra password đã được nhập hay chưa
                 edtLoginPass.setError("Bạn chưa nhập mật khẩu!");//xuất thông báo chưa nhập password
             }
-//            else if(iLogin == 0){//nếu kết quả đăng nhập == 0
-//                intent = new Intent(LoginActivity.this, AdminMainActivity.class);//chuyển đến trang admin
-//                intent.putExtra("UserName", edtLoginName.getText().toString());
-//                startActivity(intent);
-//            }
-//            else if(iLogin == 1){//nếu kết quả đăng nhập == 1
-//
-//                intent = new Intent(LoginActivity.this, UserMainActivity.class);//chuyển đến trang user
-//                intent.putExtra("UserName", edtLoginName.getText().toString());
-//                startActivity(intent);
-//            }
             else {
                 String userName = edtLoginName.getText().toString();
                 String password = edtLoginPass.getText().toString();
@@ -166,7 +151,7 @@ public class LoginActivity extends AppCompatActivity {
                                 intent.putExtra("UserName", edtLoginName.getText().toString());
                                 startActivity(intent);
                             }
-                            else if(snapshot.getValue(UserData.class).getiPermission() == 3){//nếu kết quả đăng nhập == 1
+                            else if(snapshot.getValue(UserData.class).getiPermission() == 3 || snapshot.getValue(UserData.class).getiPermission() == 4){//nếu kết quả đăng nhập == 1
 
                                 intent = new Intent(LoginActivity.this, ShipperMainActivity.class);//chuyển đến trang user
                                 intent.putExtra("UserName", edtLoginName.getText().toString());

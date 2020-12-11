@@ -11,9 +11,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -29,6 +32,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
+
 public class ShipperDetailDonDaDongGoiActivity extends AppCompatActivity {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
@@ -36,10 +41,12 @@ public class ShipperDetailDonDaDongGoiActivity extends AppCompatActivity {
     private EditText edtUserName, edtDiaChi, edtLienHe, edtSellerDiaChi, edtSellerLienHe, edtSellerUserName;
     private TextView txtTenSP, txtSoLuongSP, txtGiaSP, txtPhuongThucThanhToan, txtTongGiaTriDonHang, txtNameLabel, txtDiaChi, txtSellerLabel, txtSellerDiaChi;
     private Button btnAccept, btnRefuse, btnBack;
+    private Spinner spnShipper;
     private Intent intent;
     private String userName, userID, donHangID, nguoiBanID, nguoiMuaID, productID;
     private int loaiDonHang;
     private long tongGiaTri;
+    private ArrayList<String> shipperList = ShipperMainActivity.shipperList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +56,7 @@ public class ShipperDetailDonDaDongGoiActivity extends AppCompatActivity {
         setContentView(R.layout.shipper_detail_don_da_dong_goi_layout);
 
         imgSP = (ImageView) findViewById(R.id.imgSP);
+        spnShipper = (Spinner) findViewById(R.id.spnShipper);
         edtSellerUserName = (EditText) findViewById(R.id.edtSellerUserName);
         edtSellerLienHe = (EditText) findViewById(R.id.edtSellerLienHe);
         edtSellerDiaChi = (EditText) findViewById(R.id.edtSellerDiaChi);
@@ -75,6 +83,10 @@ public class ShipperDetailDonDaDongGoiActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(ShipperDetailDonDaDongGoiActivity.this, android.R.layout.simple_spinner_item, shipperList);
+        spnShipper.setAdapter(arrayAdapter);
+
         if(getIntent().getExtras() != null){
             userID = getIntent().getExtras().getString("UserID");
             userName = getIntent().getExtras().getString("UserName");
@@ -248,7 +260,7 @@ public class ShipperDetailDonDaDongGoiActivity extends AppCompatActivity {
                 }
             };
             AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
-            alert.setMessage("Xác nhận tiến hành lấy hàng?").setNegativeButton("No", dialog).setPositiveButton("Yes", dialog).show();
+            alert.setMessage("Xác nhận giao đơn cho " + spnShipper.getSelectedItem().toString() + "?").setNegativeButton("No", dialog).setPositiveButton("Yes", dialog).show();
         }
     };
 

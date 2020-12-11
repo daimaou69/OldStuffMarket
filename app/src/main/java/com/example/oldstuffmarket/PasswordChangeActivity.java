@@ -212,7 +212,7 @@ public class PasswordChangeActivity extends AppCompatActivity {
                         finish();
                         startActivity(intent);
                     }
-                    else if(snapshot.getValue(UserData.class).getsUserName().equals(sUserName) && snapshot.getValue(UserData.class).getiPermission() == 3){
+                    else if(snapshot.getValue(UserData.class).getsUserName().equals(sUserName) && snapshot.getValue(UserData.class).getiPermission() == 3 || snapshot.getValue(UserData.class).getsUserName().equals(sUserName) && snapshot.getValue(UserData.class).getiPermission() == 4){
                         Intent intent = new Intent(v.getContext(), ShipperMainActivity.class);
                         intent.putExtra("UserName", sUserName);
                         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);

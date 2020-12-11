@@ -40,6 +40,7 @@ public class ShipperMainActivity extends AppCompatActivity {
     private ImageView imgAccount;
     private String sUserName, userID;
     private Intent intent;
+    public static ArrayList<String> shipperList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,7 @@ public class ShipperMainActivity extends AppCompatActivity {
         btnCacDonDangGiao =(Button) findViewById(R.id.btnCacDonDangGiao);
 
         donDangGiao = new ArrayList<>();
+        shipperList = new ArrayList<>();
 
         btnLogout.setOnClickListener(logoutClick);
         btnAccountInfo.setOnClickListener(accountInfoClick);
@@ -70,6 +72,37 @@ public class ShipperMainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        donDangGiao.clear();
+        shipperList.clear();
+
+        databaseReference.child("User").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                if(snapshot.getValue(UserData.class).getiPermission() == 3){
+                    shipperList.add(snapshot.getValue(UserData.class).getsUserName());
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         if(getIntent().getExtras() != null){
 
             sUserName = getIntent().getExtras().getString("UserName");
@@ -77,7 +110,7 @@ public class ShipperMainActivity extends AppCompatActivity {
             databaseReference.child("User").addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    if(snapshot.getValue(UserData.class).getsUserName().equals(sUserName)){
+                    if(snapshot.getValue(UserData.class).getsUserName().equals(sUserName) && snapshot.getValue(UserData.class).getiPermission() == 3){
                         txtShipperAccountName.setText("Shipper - " + snapshot.getValue(UserData.class).getsFullName());
                         userID = snapshot.getValue(UserData.class).getsUserID();
                         if(!snapshot.getValue(UserData.class).getsImage().isEmpty()){
@@ -90,6 +123,22 @@ public class ShipperMainActivity extends AppCompatActivity {
                                 }
                             }, delay);
                         }
+                        btnCacDonDangGiao.setVisibility(View.VISIBLE);
+                    }
+                    else if(snapshot.getValue(UserData.class).getsUserName().equals(sUserName) && snapshot.getValue(UserData.class).getiPermission() == 4){
+                        txtShipperAccountName.setText("Trưởng shipper: " + snapshot.getValue(UserData.class).getsFullName());
+                        userID = snapshot.getValue(UserData.class).getsUserID();
+                        if(!snapshot.getValue(UserData.class).getsImage().isEmpty()){
+                            final Handler handler = new Handler();
+                            final int delay = 1200; //milliseconds
+                            handler.postDelayed(new Runnable(){
+                                public void run(){
+                                    imageLoad(snapshot.getValue(UserData.class).getsImage());
+//                                    handler.postDelayed(this, delay);
+                                }
+                            }, delay);
+                        }
+                        btnDanhSachDonHang.setVisibility(View.VISIBLE);
                     }
                 }
 
