@@ -36,13 +36,14 @@ import java.util.ArrayList;
 public class Report_SP_Activity extends AppCompatActivity {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-    private Button btnReportSP, btnBack, btnHome;
+    private Button btnReportSP, btnBack;
     private ImageView imgSP;
     private EditText edtReport;
     private TextView txtTenSP, txtMoney;
     private Intent intent;
     private String sanPhamID;
-    private String userName, userID, NavigateTo;
+    private String userName;
+    private String userID = UserMainActivity.sUserID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,6 @@ public class Report_SP_Activity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_report_sp);
 
-        btnHome = (Button) findViewById(R.id.btnHome);
         btnBack = (Button) findViewById(R.id.btnBack);
         btnReportSP = (Button) findViewById(R.id.btnReportSP);
         imgSP = (ImageView) findViewById(R.id.imgSP);
@@ -60,7 +60,6 @@ public class Report_SP_Activity extends AppCompatActivity {
         txtMoney = (TextView) findViewById(R.id.txtMoney);
 
         btnBack.setOnClickListener(backClick);
-        btnHome.setOnClickListener(homeClick);
         btnReportSP.setOnClickListener(reportClick);
     }
 
@@ -72,7 +71,6 @@ public class Report_SP_Activity extends AppCompatActivity {
             userName = getIntent().getExtras().getString("UserName");
             sanPhamID = getIntent().getExtras().getString("ProductID");
             userID = getIntent().getExtras().getString("UserID");
-            NavigateTo = getIntent().getExtras().getString("NavigateTo");
 
             databaseReference.child("SanPham").addChildEventListener(new ChildEventListener() {
                 @Override
@@ -182,25 +180,13 @@ public class Report_SP_Activity extends AppCompatActivity {
         }
     };
 
-    View.OnClickListener homeClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            finish();
-            intent = new Intent(v.getContext(), UserMainActivity.class);
-            intent.putExtra("UserName", userName);
-            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(intent);
-        }
-    };
-
     View.OnClickListener backClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             finish();
-            intent = new Intent(v.getContext(), ProductDetailActivity.class);
+            intent = new Intent(v.getContext(), CommentActivity.class);
             intent.putExtra("UserName", userName);
             intent.putExtra("ProductID", sanPhamID);
-            intent.putExtra("NavigateTo", NavigateTo);
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         }

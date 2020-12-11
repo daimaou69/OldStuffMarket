@@ -49,7 +49,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     private Intent intent;
-    private Button btnDecs, btnInc, btnBuy, btnXemTrang, btnReport, btnBack, btnAllStar, btnOneStar, btnTwoStar, btnThreeStar, btnFourStar, btnFiveStar;
+    private Button btnDecs, btnInc, btnBuy, btnXemTrang, btnBack, btnAllStar, btnOneStar, btnTwoStar, btnThreeStar, btnFourStar, btnFiveStar;
     private EditText edtQuantity;
     private TextView txtSoLuongSP, txtTenSP, txtGiaSP, txtTenShop, txtMoTaSP, txtNgayDang, txtDiaChiDang;
     private GridView gridComment;
@@ -75,7 +75,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         btnBuy = (Button) findViewById(R.id.btnBuy);
         btnBack = (Button) findViewById(R.id.btnBack);
         btnXemTrang = (Button) findViewById(R.id.btnXemTrang);
-        btnReport = (Button) findViewById(R.id.btnReport);
         btnAllStar = (Button) findViewById(R.id.btnAllStar);
         btnOneStar = (Button) findViewById(R.id.btnOneStar);
         btnTwoStar = (Button) findViewById(R.id.btnTwoStar);
@@ -93,7 +92,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         imgSP = (ImageView) findViewById(R.id.imgSP);
         imgShop = (ImageView) findViewById(R.id.imgShop);
         gridComment = (GridView) findViewById(R.id.gridComment);
-        btnReport = (Button) findViewById(R.id.btnReport);
 
         shopDataArrayList = new ArrayList<>();
         commentArrayList = new ArrayList<>();
@@ -112,8 +110,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         btnThreeStar.setOnClickListener(threeStarClick);
         btnFourStar.setOnClickListener(fourStarClick);
         btnFiveStar.setOnClickListener(fiveStarClick);
-        btnReport.setOnClickListener(reportClick);
-
     }
 
     @Override
@@ -158,7 +154,6 @@ public class ProductDetailActivity extends AppCompatActivity {
 
             if(!navigateTo.equals("Home")){
                 btnXemTrang.setEnabled(false);
-                btnReport.setEnabled(false);
             }
 
             databaseReference.child("SanPham").addChildEventListener(new ChildEventListener() {
@@ -189,7 +184,6 @@ public class ProductDetailActivity extends AppCompatActivity {
                         if(snapshot.getValue(SanPham.class).getsUserID().equals(userID)){
                             btnBuy.setEnabled(false);
                             btnXemTrang.setEnabled(false);
-                            btnReport.setEnabled(false);
                         }
 
                         txtMoTaSP.setText(snapshot.getValue(SanPham.class).getsMoTa());
@@ -227,7 +221,6 @@ public class ProductDetailActivity extends AppCompatActivity {
                                         if(snapshot.getValue(UserData.class).getiTinhTrang() != 0){
                                             btnBuy.setEnabled(false);
                                             btnXemTrang.setEnabled(false);
-                                            btnReport.setEnabled(false);
                                             btnDecs.setEnabled(false);
                                             btnInc.setEnabled(false);
                                             txtTenShop.setText(snapshot.getValue(UserData.class).getsFullName() + "(Người bán đang bị khóa)");
@@ -281,7 +274,6 @@ public class ProductDetailActivity extends AppCompatActivity {
                                                     if(snapshot.getValue(UserData.class).getiTinhTrang() != 0){
                                                         btnBuy.setEnabled(false);
                                                         btnXemTrang.setEnabled(false);
-                                                        btnReport.setEnabled(false);
                                                         btnDecs.setEnabled(false);
                                                         btnInc.setEnabled(false);
                                                         txtTenShop.setText(shopName + "(Người bán đang bị khóa)");
@@ -396,20 +388,6 @@ public class ProductDetailActivity extends AppCompatActivity {
             }, delay);
         }
     }
-
-    View.OnClickListener reportClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            finish();
-            intent = new Intent(ProductDetailActivity.this, Report_SP_Activity.class);
-            intent.putExtra("UserName", sUserName);
-            intent.putExtra("ProductID", sanPhamID);
-            intent.putExtra("NavigateTo", navigateTo);
-            intent.putExtra("UserID", userID);
-            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(intent);
-        }
-    };
 
     View.OnClickListener fiveStarClick = new View.OnClickListener() {
         @Override

@@ -42,7 +42,7 @@ public class CommentActivity extends AppCompatActivity {
     private ImageView imgSP;
     private TextView txtTenSP, txtGiaSP;
     private Spinner spnStarLevel;
-    private Button btnPostComment, btnHome;
+    private Button btnPostComment, btnHome, btnReport;
     private EditText edtComment;
     private String productID, userID, nguoiBanID, userName;
     private int diemThanhVien;
@@ -62,9 +62,11 @@ public class CommentActivity extends AppCompatActivity {
         btnPostComment = (Button) findViewById(R.id.btnPostComment);
         btnHome = (Button) findViewById(R.id.btnHome);
         edtComment = (EditText) findViewById(R.id.edtComment);
+        btnReport = (Button) findViewById(R.id.btnReport);
 
         btnHome.setOnClickListener(homeClick);
         btnPostComment.setOnClickListener(postCommentClick);
+        btnReport.setOnClickListener(reportClick);
 
     }
 
@@ -128,6 +130,19 @@ public class CommentActivity extends AppCompatActivity {
             });
         }
     }
+
+    View.OnClickListener reportClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            finish();
+            intent = new Intent(CommentActivity.this, Report_SP_Activity.class);
+            intent.putExtra("UserName", userName);
+            intent.putExtra("ProductID", productID);
+            intent.putExtra("UserID", userID);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        }
+    };
 
     View.OnClickListener postCommentClick = new View.OnClickListener() {
         @Override
