@@ -83,6 +83,7 @@ public class DonBanActivity extends AppCompatActivity {
                     if(snapshot.getValue(OrderData.class).getNguoiBanID().equals(userID)){
                         orderDataArrayList.add(snapshot.getValue(OrderData.class));
                     }
+                    donMuaLoad();
                 }
 
                 @Override
@@ -107,15 +108,6 @@ public class DonBanActivity extends AppCompatActivity {
             });
 
         }
-
-        Handler handler = new Handler();
-        int delay = 1000;
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                donMuaLoad();
-            }
-        }, delay);
     }
 
     View.OnClickListener backClick = new View.OnClickListener() {

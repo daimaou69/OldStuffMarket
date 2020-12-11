@@ -239,7 +239,7 @@ public class ShipperDetailDonDaDongGoiActivity extends AppCompatActivity {
 
                                                     databaseReference.child("DonHang").child(donHangID).setValue(orderData);
 
-                                                    databaseReference.child("Shipper").child(spnShipper.getSelectedItem().toString()).child(donHangID).setValue(orderData);
+                                                    databaseReference.child("Shipper").child(snapshot.getValue(UserData.class).getsUserID()).child(donHangID).setValue(orderData);
 
                                                     finish();
                                                     intent = new Intent(v.getContext(), ShipperDonDaDongGoiActivity.class);

@@ -48,7 +48,7 @@ public class ShipperDonDangGiaoActivity extends AppCompatActivity {
         gridDonDangGiao.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                intent = new Intent(view.getContext(), ShipperDetailDonDaDongGoiActivity.class);
+                intent = new Intent(view.getContext(), ShipperXuLiDonHangActivity.class);
                 intent.putExtra("UserName", userName);
                 intent.putExtra("UserID", userID);
                 intent.putExtra("DonHangID", orderDataArrayList.get(position).getDonHangID());
@@ -69,10 +69,11 @@ public class ShipperDonDangGiaoActivity extends AppCompatActivity {
             userName = getIntent().getExtras().getString("UserName");
             userID = getIntent().getExtras().getString("UserID");
 
-            databaseReference.child("Shipper").child(userName).addChildEventListener(new ChildEventListener() {
+            databaseReference.child("Shipper").child(userID).addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                     orderDataArrayList.add(snapshot.getValue(OrderData.class));
+                    donHangLoad();
                 }
 
                 @Override
@@ -96,15 +97,6 @@ public class ShipperDonDangGiaoActivity extends AppCompatActivity {
                 }
             });
         }
-
-        Handler handler = new Handler();
-        int delay = 1000;
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                donHangLoad();
-            }
-        }, delay);
     }
 
     View.OnClickListener backClick = new View.OnClickListener() {

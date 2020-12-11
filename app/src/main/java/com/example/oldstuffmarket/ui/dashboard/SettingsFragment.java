@@ -161,10 +161,10 @@ public class SettingsFragment extends Fragment {
                         databaseReference.child("DonHang").addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                                if(snapshot.getValue(OrderData.class).getNguoiMuaID().equals(userID) && snapshot.getValue(OrderData.class).getTinhTrang() < 4){
+                                if(snapshot.getValue(OrderData.class).getNguoiMuaID().equals(userID)){
                                     donMuaArrayList.add(snapshot.getValue(OrderData.class));
                                 }
-                                else if(snapshot.getValue(OrderData.class).getNguoiBanID().equals(userID) && snapshot.getValue(OrderData.class).getTinhTrang() < 4){
+                                else if(snapshot.getValue(OrderData.class).getNguoiBanID().equals(userID)){
                                     donBanArrayList.add(snapshot.getValue(OrderData.class));
                                 }
                             }

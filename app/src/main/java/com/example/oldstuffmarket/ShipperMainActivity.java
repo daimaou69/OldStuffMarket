@@ -125,19 +125,42 @@ public class ShipperMainActivity extends AppCompatActivity {
                             }, delay);
                         }
                         btnCacDonDangGiao.setVisibility(View.VISIBLE);
+                        databaseReference.child("Shipper").child(userID).addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                donDangGiao.add(snapshot.getValue(OrderData.class));
+                                if(donDangGiao.size() != 0){
+                                    txtCacDonDangGiaoNotify.setVisibility(View.VISIBLE);
+                                    txtCacDonDangGiaoNotify.setText(String.valueOf(donDangGiao.size()));
+                                }
+                            }
+
+                            @Override
+                            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
                     }
                     else if(snapshot.getValue(UserData.class).getsUserName().equals(sUserName) && snapshot.getValue(UserData.class).getiPermission() == 4){
                         txtShipperAccountName.setText("Trưởng shipper: " + snapshot.getValue(UserData.class).getsFullName());
                         userID = snapshot.getValue(UserData.class).getsUserID();
                         if(!snapshot.getValue(UserData.class).getsImage().isEmpty()){
-                            final Handler handler = new Handler();
-                            final int delay = 1200; //milliseconds
-                            handler.postDelayed(new Runnable(){
-                                public void run(){
-                                    imageLoad(snapshot.getValue(UserData.class).getsImage());
-//                                    handler.postDelayed(this, delay);
-                                }
-                            }, delay);
+                            imageLoad(snapshot.getValue(UserData.class).getsImage());
                         }
                         btnDanhSachDonHang.setVisibility(View.VISIBLE);
                     }
@@ -164,44 +187,6 @@ public class ShipperMainActivity extends AppCompatActivity {
                 }
             });
 
-            databaseReference.child("Shipper").child(sUserName).addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    donDangGiao.add(snapshot.getValue(OrderData.class));
-                }
-
-                @Override
-                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                }
-
-                @Override
-                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
-            Handler handler = new Handler();
-            int delay = 1000;
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if(donDangGiao.size() != 0){
-                        txtCacDonDangGiaoNotify.setVisibility(View.VISIBLE);
-                        txtCacDonDangGiaoNotify.setText(String.valueOf(donDangGiao.size()));
-                    }
-                }
-            }, delay);
         }
     }
 
