@@ -141,7 +141,7 @@ public class ShipperDetailDonDaDongGoiActivity extends AppCompatActivity {
                                     edtLienHe.setText(lienHe);
                                 }
                                 if(snapshot.getValue(UserData.class).getsUserID().equals(nguoiBanID)){
-                                    edtUserName.setText("Họ tên: " + snapshot.getValue(UserData.class).getsFullName());
+                                    edtSellerUserName.setText("Họ tên: " + snapshot.getValue(UserData.class).getsFullName());
                                     edtSellerDiaChi.setText(snapshot.getValue(UserData.class).getsDiaChi());
                                     edtSellerLienHe.setText(snapshot.getValue(UserData.class).getsSdt());
                                 }
@@ -211,7 +211,7 @@ public class ShipperDetailDonDaDongGoiActivity extends AppCompatActivity {
 
                                         databaseReference.child("DonHang").child(snapshot.getKey()).setValue(orderData);
 
-                                        databaseReference.child("Shipper").child(userID).child(snapshot.getKey()).setValue(orderData);
+                                        databaseReference.child("Shipper").child(userName).child(snapshot.getKey()).setValue(orderData);
 
                                         intent = new Intent(v.getContext(), ShipperDonDaDongGoiActivity.class);
                                         intent.putExtra("UserName", userName);
@@ -255,6 +255,7 @@ public class ShipperDetailDonDaDongGoiActivity extends AppCompatActivity {
     View.OnClickListener backClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            finish();
             intent = new Intent(v.getContext(), ShipperDonDaDongGoiActivity.class);
             intent.putExtra("UserName", userName);
             intent.putExtra("UserID", userID);

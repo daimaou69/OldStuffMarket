@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.oldstuffmarket.data_models.OrderData;
 import com.example.oldstuffmarket.data_models.UserData;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,11 +29,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
+
 public class ShipperMainActivity extends AppCompatActivity {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     private Button btnLogout, btnAccountInfo, btnPassWordChange, btnDanhSachDonHang, btnCacDonDangGiao;
     private TextView txtCacDonDangGiaoNotify, txtShipperAccountName;
+    private ArrayList<OrderData> donDangGiao;
     private ImageView imgAccount;
     private String sUserName, userID;
     private Intent intent;
@@ -53,11 +57,13 @@ public class ShipperMainActivity extends AppCompatActivity {
         btnDanhSachDonHang = (Button) findViewById(R.id.btnDanhSachDonHang);
         btnCacDonDangGiao =(Button) findViewById(R.id.btnCacDonDangGiao);
 
+        donDangGiao = new ArrayList<>();
+
         btnLogout.setOnClickListener(logoutClick);
         btnAccountInfo.setOnClickListener(accountInfoClick);
         btnPassWordChange.setOnClickListener(passwordChangeClick);
         btnDanhSachDonHang.setOnClickListener(donDaDongGoiClick);
-
+        btnCacDonDangGiao.setOnClickListener(cacDonDangGiaoClick);
     }
 
     @Override
@@ -107,8 +113,58 @@ public class ShipperMainActivity extends AppCompatActivity {
 
                 }
             });
+
+            databaseReference.child("Shipper").child(sUserName).addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    donDangGiao.add(snapshot.getValue(OrderData.class));
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+            Handler handler = new Handler();
+            int delay = 1000;
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if(donDangGiao.size() != 0){
+                        txtCacDonDangGiaoNotify.setVisibility(View.VISIBLE);
+                        txtCacDonDangGiaoNotify.setText(String.valueOf(donDangGiao.size()));
+                    }
+                }
+            }, delay);
         }
     }
+
+    View.OnClickListener cacDonDangGiaoClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            intent = new Intent(v.getContext(), ShipperDonDangGiaoActivity.class);
+            intent.putExtra("UserName", sUserName);
+            intent.putExtra("UserID", userID);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        }
+    };
 
     View.OnClickListener donDaDongGoiClick = new View.OnClickListener() {
         @Override
@@ -116,6 +172,7 @@ public class ShipperMainActivity extends AppCompatActivity {
             intent = new Intent(v.getContext(), ShipperDonDaDongGoiActivity.class);
             intent.putExtra("UserName", sUserName);
             intent.putExtra("UserID", userID);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         }
     };
@@ -134,6 +191,7 @@ public class ShipperMainActivity extends AppCompatActivity {
         public void onClick(View v) {
             intent = new Intent(v.getContext(), AccountInfoActivity.class);
             intent.putExtra("UserName", sUserName);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         }
     };
