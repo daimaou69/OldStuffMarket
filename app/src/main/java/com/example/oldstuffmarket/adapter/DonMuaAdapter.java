@@ -105,16 +105,19 @@ public class DonMuaAdapter extends BaseAdapter {
         else if(orderData.getTinhTrang() == 3){
             viewHolder.txtTinhTrang.setText("Chờ vận chuyển");
         }
-        else if(orderData.getTinhTrang() == 5){
+        else if(orderData.getTinhTrang() == 4){
             viewHolder.txtTinhTrang.setText("Shipper đang lấy hàng");
         }
-        else if(orderData.getTinhTrang() == 6){
+        else if(orderData.getTinhTrang() == 5){
             viewHolder.txtTinhTrang.setText("Shipper lấy hàng thành công");
         }
-        else if(orderData.getTinhTrang() == 7){
+        else if(orderData.getTinhTrang() == 6){
             viewHolder.txtTinhTrang.setText("Đang giao hàng");
         }
-        else if(orderData.getTinhTrang() == 4){
+        else if(orderData.getTinhTrang() == 7){
+            viewHolder.txtTinhTrang.setText("Giao hàng thành công");
+        }
+        else if(orderData.getTinhTrang() == 8){
             viewHolder.txtTinhTrang.setText("Hoàn thành");
             viewHolder.txtTinhTrang.setTextColor(Color.GREEN);
         }

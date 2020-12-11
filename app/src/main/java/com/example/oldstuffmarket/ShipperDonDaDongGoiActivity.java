@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.GridView;
 
 import com.example.oldstuffmarket.adapter.DonMuaAdapter;
+import com.example.oldstuffmarket.data_models.DanhMucData;
 import com.example.oldstuffmarket.data_models.OrderData;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -68,6 +69,7 @@ public class ShipperDonDaDongGoiActivity extends AppCompatActivity {
                 if(snapshot.getValue(OrderData.class).getLoaiDonHang() != 1 && snapshot.getValue(OrderData.class).getTinhTrang() == 3){
                     orderDataArrayList.add(snapshot.getValue(OrderData.class));
                 }
+                donHangLoad();
             }
 
             @Override
@@ -96,14 +98,6 @@ public class ShipperDonDaDongGoiActivity extends AppCompatActivity {
             userID = getIntent().getExtras().getString("UserID");
         }
 
-        Handler handler = new Handler();
-        int delay = 1000;
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                donHangLoad();
-            }
-        }, delay);
     }
 
     View.OnClickListener backClick = new View.OnClickListener() {

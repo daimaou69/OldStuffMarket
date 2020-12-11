@@ -83,6 +83,7 @@ public class HomeFragment extends Fragment{
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 danhMucDataArrayList.add(snapshot.getValue(DanhMucData.class));
+                danhMucLoad(view);
             }
 
             @Override
@@ -111,6 +112,7 @@ public class HomeFragment extends Fragment{
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 sanPhamArrayList.add(snapshot.getValue(SanPham.class));
+                sanPhamLoad(view);
             }
 
             @Override
@@ -139,8 +141,6 @@ public class HomeFragment extends Fragment{
         handler.postDelayed(new Runnable(){
             public void run(){
 
-                danhMucLoad(view);
-                sanPhamLoad(view);
 //                handler.postDelayed(this, delay);
             }
         }, delay);
@@ -160,28 +160,14 @@ public class HomeFragment extends Fragment{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(!danhMucDataArrayList.get(position).getsDanhMucID().equals("AllID")){
-                    ArrayList<SanPham> findSP = new ArrayList<>();
-                    for(SanPham sanPham : sanPhamArrayList){
-                        if(sanPham.getsDanhMuc().equals(danhMucDataArrayList.get(position).getsTenDanhMuc())){
-                            findSP.add(sanPham);
-                        }
-                    }
-                    final Handler handler = new Handler();
-                    final int delay = 1000; //milliseconds
-                    handler.postDelayed(new Runnable(){
-                        public void run(){
-                            SanPhamAdapter sanPhamAdapter = new SanPhamAdapter(view.getContext(), R.layout.san_pham_adapter_layout, findSP);
-                            gridSP.setAdapter(sanPhamAdapter);
-//                handler.postDelayed(this, delay);
-                        }
-                    }, delay);
-                }
-                else{
                     sanPhamArrayList.clear();
                     databaseReference.child("SanPham").addChildEventListener(new ChildEventListener() {
                         @Override
                         public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                            sanPhamArrayList.add(snapshot.getValue(SanPham.class));
+                            if(snapshot.getValue(SanPham.class).getsDanhMuc().equals(danhMucDataArrayList.get(position).getsTenDanhMuc())){
+                                sanPhamArrayList.add(snapshot.getValue(SanPham.class));
+                            }
+                            sanPhamLoad(view);
                         }
 
                         @Override
@@ -204,15 +190,36 @@ public class HomeFragment extends Fragment{
 
                         }
                     });
-
-                    final Handler handler = new Handler();
-                    final int delay = 1000; //milliseconds
-                    handler.postDelayed(new Runnable(){
-                        public void run(){
+                }
+                else{
+                    sanPhamArrayList.clear();
+                    databaseReference.child("SanPham").addChildEventListener(new ChildEventListener() {
+                        @Override
+                        public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                            sanPhamArrayList.add(snapshot.getValue(SanPham.class));
                             sanPhamLoad(view);
-//                handler.postDelayed(this, delay);
                         }
-                    }, delay);
+
+                        @Override
+                        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                        }
+
+                        @Override
+                        public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                        }
+
+                        @Override
+                        public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                 }
             }
         });
@@ -231,16 +238,9 @@ public class HomeFragment extends Fragment{
                                 if(sanPham.getsTenSP().toLowerCase().contains(s.toString()) || sanPham.getsTenSP().contains(s.toString()) || sanPham.getsDanhMuc().contains(s.toString())){
                                     findSP.add(sanPham);
                                 }
+                                SanPhamAdapter sanPhamAdapter = new SanPhamAdapter(view.getContext(), R.layout.san_pham_adapter_layout, findSP);
+                                gridSP.setAdapter(sanPhamAdapter);
                             }
-                            final Handler handler = new Handler();
-                            final int delay = 1000; //milliseconds
-                            handler.postDelayed(new Runnable(){
-                                public void run(){
-                                    SanPhamAdapter sanPhamAdapter = new SanPhamAdapter(view.getContext(), R.layout.san_pham_adapter_layout, findSP);
-                                    gridSP.setAdapter(sanPhamAdapter);
-//                handler.postDelayed(this, delay);
-                                }
-                            }, delay);
                         }
                         else{
                             sanPhamArrayList.clear();
@@ -248,6 +248,7 @@ public class HomeFragment extends Fragment{
                                 @Override
                                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                                     sanPhamArrayList.add(snapshot.getValue(SanPham.class));
+                                    sanPhamLoad(view);
                                 }
 
                                 @Override
@@ -270,15 +271,6 @@ public class HomeFragment extends Fragment{
 
                                 }
                             });
-
-                            final Handler handler = new Handler();
-                            final int delay = 1000; //milliseconds
-                            handler.postDelayed(new Runnable(){
-                                public void run(){
-                                    sanPhamLoad(view);
-//                handler.postDelayed(this, delay);
-                                }
-                            }, delay);
                         }
             }
 

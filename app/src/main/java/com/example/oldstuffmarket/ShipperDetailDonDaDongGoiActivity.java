@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.oldstuffmarket.data_models.OrderData;
+import com.example.oldstuffmarket.data_models.SanPham;
 import com.example.oldstuffmarket.data_models.UserData;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -217,19 +218,59 @@ public class ShipperDetailDonDaDongGoiActivity extends AppCompatActivity {
                                 @Override
                                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                                     if(snapshot.getValue(OrderData.class).getDonHangID().equals(donHangID)){
-                                        OrderData orderData = new OrderData(snapshot.getValue(OrderData.class).getDonHangID(), snapshot.getValue(OrderData.class).getNguoiMuaID(), snapshot.getValue(OrderData.class).getNguoiBanID(),
-                                                snapshot.getValue(OrderData.class).getNgayTaoDonHang(), snapshot.getValue(OrderData.class).getSoDienThoai(), snapshot.getValue(OrderData.class).getDiaChi(),
-                                                snapshot.getValue(OrderData.class).getSanPham(), snapshot.getValue(OrderData.class).getLoaiDonHang(), 5, snapshot.getValue(OrderData.class).getSellerCommission(), snapshot.getValue(OrderData.class).getGiaTien(), userID);
+                                        String donHangID = snapshot.getValue(OrderData.class).getDonHangID();
+                                        String nguoiMuaID = snapshot.getValue(OrderData.class).getNguoiMuaID();
+                                        String nguoiBanID = snapshot.getValue(OrderData.class).getNguoiBanID();
+                                        String ngayTaoDon = snapshot.getValue(OrderData.class).getNgayTaoDonHang();
+                                        String sdt = snapshot.getValue(OrderData.class).getSoDienThoai();
+                                        String diaChi = snapshot.getValue(OrderData.class).getDiaChi();
+                                        SanPham sanPham = snapshot.getValue(OrderData.class).getSanPham();
+                                        int loaiDonHang = snapshot.getValue(OrderData.class).getLoaiDonHang();
+                                        int sellerCommission = snapshot.getValue(OrderData.class).getSellerCommission();
+                                        long giaTien = snapshot.getValue(OrderData.class).getGiaTien();
 
-                                        databaseReference.child("DonHang").child(snapshot.getKey()).setValue(orderData);
+                                        databaseReference.child("User").addChildEventListener(new ChildEventListener() {
+                                            @Override
+                                            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                                if(snapshot.getValue(UserData.class).getsUserName().equals(spnShipper.getSelectedItem().toString())){
+                                                    OrderData orderData = new OrderData(donHangID, nguoiMuaID, nguoiBanID,
+                                                            ngayTaoDon, sdt, diaChi,
+                                                            sanPham, loaiDonHang, 4, sellerCommission, giaTien, snapshot.getValue(UserData.class).getsUserID());
 
-                                        databaseReference.child("Shipper").child(userName).child(snapshot.getKey()).setValue(orderData);
+                                                    databaseReference.child("DonHang").child(donHangID).setValue(orderData);
 
-                                        intent = new Intent(v.getContext(), ShipperDonDaDongGoiActivity.class);
-                                        intent.putExtra("UserName", userName);
-                                        intent.putExtra("UserID", userID);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                                        startActivity(intent);
+                                                    databaseReference.child("Shipper").child(spnShipper.getSelectedItem().toString()).child(donHangID).setValue(orderData);
+
+                                                    finish();
+                                                    intent = new Intent(v.getContext(), ShipperDonDaDongGoiActivity.class);
+                                                    intent.putExtra("UserName", userName);
+                                                    intent.putExtra("UserID", userID);
+                                                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                                                    startActivity(intent);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                            }
+
+                                            @Override
+                                            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                            }
+
+                                            @Override
+                                            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
+
                                     }
                                 }
 

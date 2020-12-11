@@ -66,6 +66,7 @@ public class ShipperMainActivity extends AppCompatActivity {
         btnPassWordChange.setOnClickListener(passwordChangeClick);
         btnDanhSachDonHang.setOnClickListener(donDaDongGoiClick);
         btnCacDonDangGiao.setOnClickListener(cacDonDangGiaoClick);
+
     }
 
     @Override
