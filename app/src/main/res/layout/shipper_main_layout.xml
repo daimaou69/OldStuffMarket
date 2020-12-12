@@ -71,6 +71,14 @@
                 android:textAllCaps="false"
                 android:layout_marginBottom="20dp"
                 android:visibility="gone"/>
+            <Button
+                android:id="@+id/btnDanhSachShipper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Danh sách shipper"
+                android:textAllCaps="false"
+                android:layout_marginBottom="20dp"
+                android:visibility="gone"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

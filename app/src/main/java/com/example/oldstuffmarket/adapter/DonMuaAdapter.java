@@ -115,7 +115,7 @@ public class DonMuaAdapter extends BaseAdapter {
             viewHolder.txtTinhTrang.setText("Đang giao hàng");
         }
         else if(orderData.getTinhTrang() == 7){
-            viewHolder.txtTinhTrang.setText("Giao hàng thành công chờ hoàn tiền");
+            viewHolder.txtTinhTrang.setText("Giao hàng thành công");
         }
         else if(orderData.getTinhTrang() == 8){
             viewHolder.txtTinhTrang.setText("Hoàn thành");
