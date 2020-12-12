@@ -328,7 +328,7 @@ public class ShipperXuLiDonHangActivity extends AppCompatActivity {
                                         databaseReference.child("CommentNeeds").child(donHangID).setValue(orderUpdate);
                                         databaseReference.child("MoneyIncome").child(donHangID).setValue(orderUpdate);
                                         databaseReference.child("Shipper").child(userID).child(donHangID).removeValue();
-                                        databaseReference.child("DonHang").child(donHangID).removeValue();
+                                        databaseReference.child("DonHang").child(donHangID).setValue(orderUpdate);
 
                                         finish();
                                         intent = new Intent(v.getContext(), ShipperDonDangGiaoActivity.class);
