@@ -72,9 +72,8 @@ public class ShipperMainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        donDangGiao.clear();
         shipperList.clear();
+        donDangGiao.clear();
 
         databaseReference.child("User").addChildEventListener(new ChildEventListener() {
             @Override
@@ -129,10 +128,6 @@ public class ShipperMainActivity extends AppCompatActivity {
                             @Override
                             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                                 donDangGiao.add(snapshot.getValue(OrderData.class));
-                                if(donDangGiao.size() != 0){
-                                    txtCacDonDangGiaoNotify.setVisibility(View.VISIBLE);
-                                    txtCacDonDangGiaoNotify.setText(String.valueOf(donDangGiao.size()));
-                                }
                             }
 
                             @Override
@@ -188,6 +183,18 @@ public class ShipperMainActivity extends AppCompatActivity {
             });
 
         }
+
+        Handler handler = new Handler();
+        int delay = 1000;
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(donDangGiao.size() != 0){
+                    txtCacDonDangGiaoNotify.setVisibility(View.VISIBLE);
+                    txtCacDonDangGiaoNotify.setText(String.valueOf(donDangGiao.size()));
+                }
+            }
+        }, delay);
     }
 
     View.OnClickListener cacDonDangGiaoClick = new View.OnClickListener() {

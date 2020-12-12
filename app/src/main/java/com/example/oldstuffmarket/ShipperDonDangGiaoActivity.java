@@ -105,6 +105,7 @@ public class ShipperDonDangGiaoActivity extends AppCompatActivity {
             intent = new Intent(v.getContext(), ShipperMainActivity.class);
             intent.putExtra("UserName", userName);
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            finish();
             startActivity(intent);
         }
     };

@@ -122,7 +122,7 @@ public class ShipperXuLiDonHangActivity extends AppCompatActivity {
                             @Override
                             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                                 if(snapshot.getValue(UserData.class).getsUserID().equals(nguoiMuaID)){
-                                    txtHoTenNguoiMua.setText(snapshot.getValue(UserData.class).getsFullName());
+                                    txtHoTenNguoiMua.setText("Họ tên người nhận: " + snapshot.getValue(UserData.class).getsFullName());
 
                                 }
                                 else if(snapshot.getValue(UserData.class).getsUserID().equals(nguoiBanID)){
@@ -324,8 +324,8 @@ public class ShipperXuLiDonHangActivity extends AppCompatActivity {
                                                 snapshot.getValue(OrderData.class).getDiaChi(), snapshot.getValue(OrderData.class).getSanPham(),
                                                 snapshot.getValue(OrderData.class).getLoaiDonHang(), 7, commission,
                                                 snapshot.getValue(OrderData.class).getGiaTien(), snapshot.getValue(OrderData.class).getShipperID());
-                                        databaseReference.child("LichSuGiaoDich").child(donHangID).setValue(orderUpdate);
-                                        databaseReference.child("CommentNeeds").child(donHangID).setValue(orderUpdate);
+//                                        databaseReference.child("LichSuGiaoDich").child(donHangID).setValue(orderUpdate);
+//                                        databaseReference.child("CommentNeeds").child(donHangID).setValue(orderUpdate);
                                         databaseReference.child("MoneyIncome").child(donHangID).setValue(orderUpdate);
                                         databaseReference.child("Shipper").child(userID).child(donHangID).removeValue();
                                         databaseReference.child("DonHang").child(donHangID).setValue(orderUpdate);
@@ -579,11 +579,11 @@ public class ShipperXuLiDonHangActivity extends AppCompatActivity {
     View.OnClickListener backClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            finish();
             intent = new Intent(v.getContext(), ShipperDonDangGiaoActivity.class);
             intent.putExtra("UserName", userName);
             intent.putExtra("UserID", userID);
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            finish();
             startActivity(intent);
         }
     };

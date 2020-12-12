@@ -64,7 +64,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/sp_da_ban"
-                        android:textSize="15sp"
+                        android:textSize="11sp"
                         android:textStyle="bold"/>
                 </LinearLayout>
                 <LinearLayout
@@ -76,7 +76,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/diem_thanh_vien"
-                        android:textSize="15sp"
+                        android:textSize="11sp"
                         android:textStyle="bold"/>
                 </LinearLayout>
             </LinearLayout>

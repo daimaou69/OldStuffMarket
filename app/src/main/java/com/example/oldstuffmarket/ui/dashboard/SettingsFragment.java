@@ -30,6 +30,7 @@ import com.example.oldstuffmarket.LoginActivity;
 import com.example.oldstuffmarket.PasswordChangeActivity;
 import com.example.oldstuffmarket.R;
 import com.example.oldstuffmarket.ShopRegistrationActivity;
+import com.example.oldstuffmarket.UserCommentNeedsActivity;
 import com.example.oldstuffmarket.UserLichSuDonBanActivity;
 import com.example.oldstuffmarket.UserMainActivity;
 import com.example.oldstuffmarket.UserShopActivity;
@@ -67,6 +68,7 @@ public class SettingsFragment extends Fragment {
     private ArrayList<ShopData> shopDataArrayList;
     private ArrayList<OrderData> donMuaArrayList;
     private ArrayList<OrderData> donBanArrayList;
+    private ArrayList<OrderData> danhGiaSPList;
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     private int diemThanhVien = 0;
     private String shopID;
@@ -106,8 +108,11 @@ public class SettingsFragment extends Fragment {
         shopDataArrayList = new ArrayList<>();
         donMuaArrayList = new ArrayList<>();
         donBanArrayList = new ArrayList<>();
+        danhGiaSPList = new ArrayList<>();
 
         if(sUserName != ""){
+
+
             databaseReference.child("ShopRegistration").addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -158,6 +163,34 @@ public class SettingsFragment extends Fragment {
                                 }
                             });
                         }
+                        databaseReference.child("CommentNeeds").addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                if(snapshot.getValue(OrderData.class).getNguoiMuaID().equals(userID)){
+                                    danhGiaSPList.add(snapshot.getValue(OrderData.class));
+                                }
+                            }
+
+                            @Override
+                            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
                         databaseReference.child("DonHang").addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -227,6 +260,7 @@ public class SettingsFragment extends Fragment {
         btnLichSuDonHang.setOnClickListener(lichSuDonHang);
         btnLichSuDonBan.setOnClickListener(lichSuDonBanClick);
         btnUploadPost.setOnClickListener(uploadedPostClick);
+        btnDanhGiaSP.setOnClickListener(danhGiaSPClick);
 
         Handler handler = new Handler();
         int delay = 1000;
@@ -241,12 +275,26 @@ public class SettingsFragment extends Fragment {
                     txtDonBanNotify.setVisibility(View.VISIBLE);
                     txtDonBanNotify.setText(String.valueOf(donBanArrayList.size()));
                 }
-
+                if(danhGiaSPList.size() != 0){
+                    txtDanhGiaSP.setVisibility(View.VISIBLE);
+                    txtDanhGiaSP.setText(String.valueOf(danhGiaSPList.size()));
+                }
             }
         }, delay);
 
         return view;
     }
+
+    View.OnClickListener danhGiaSPClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            intent = new Intent(v.getContext(), UserCommentNeedsActivity.class);
+            intent.putExtra("UserName", sUserName);
+            intent.putExtra("UserID", userID);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        }
+    };
 
     View.OnClickListener lichSuDonBanClick = new View.OnClickListener() {
         @Override
