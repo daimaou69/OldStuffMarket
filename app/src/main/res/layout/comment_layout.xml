@@ -83,6 +83,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Báo xấu"
+                    android:textSize="13sp"
                     android:textAllCaps="false"
                     android:layout_marginLeft="70dp"/>
             </LinearLayout>
@@ -109,7 +110,6 @@
                     android:gravity="top"
                     android:layout_height="200dp"/>
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -119,15 +119,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/post_review"
+                    android:textSize="13sp"
+                    android:layout_marginRight="20dp"
+                    android:textAllCaps="false"/>
+                <Button
+                    android:id="@+id/btnBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Back"
                     android:textAllCaps="false"
-                    android:layout_marginRight="30dp"/>
+                    android:textSize="13sp"
+                    android:visibility="gone"
+                    android:layout_marginRight="20dp"/>
                 <Button
                     android:id="@+id/btnHome"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/home"
-                    android:textAllCaps="false"
-                    android:layout_marginRight="30dp"/>
+                    android:textSize="13sp"
+                    android:textAllCaps="false"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

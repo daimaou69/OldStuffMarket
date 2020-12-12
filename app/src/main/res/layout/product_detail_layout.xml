@@ -262,7 +262,8 @@
                     <GridView
                         android:id="@+id/gridComment"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent"
+                        android:nestedScrollingEnabled="true"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

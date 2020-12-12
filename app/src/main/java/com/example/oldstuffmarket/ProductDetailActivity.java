@@ -355,6 +355,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                     if(snapshot.getValue(Comment.class).getSanPhamID().equals(sanPhamID)){
                         commentArrayList.add(snapshot.getValue(Comment.class));
                     }
+                    commentLoad();
                 }
 
                 @Override
@@ -378,14 +379,6 @@ public class ProductDetailActivity extends AppCompatActivity {
                 }
             });
 
-            Handler handler = new Handler();
-            int delay = 1000;
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    commentLoad();
-                }
-            }, delay);
         }
     }
 

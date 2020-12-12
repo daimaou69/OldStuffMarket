@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.oldstuffmarket.data_models.Comment;
+import com.example.oldstuffmarket.data_models.OrderData;
 import com.example.oldstuffmarket.data_models.SanPham;
 import com.example.oldstuffmarket.data_models.UserData;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -42,9 +43,9 @@ public class CommentActivity extends AppCompatActivity {
     private ImageView imgSP;
     private TextView txtTenSP, txtGiaSP;
     private Spinner spnStarLevel;
-    private Button btnPostComment, btnHome, btnReport;
+    private Button btnPostComment, btnHome, btnReport, btnBack;
     private EditText edtComment;
-    private String productID, userID, nguoiBanID, userName;
+    private String productID, userID, nguoiBanID, userName, navigateTo = "", donHangID = "";
     private int diemThanhVien;
     private Intent intent;
 
@@ -63,11 +64,12 @@ public class CommentActivity extends AppCompatActivity {
         btnHome = (Button) findViewById(R.id.btnHome);
         edtComment = (EditText) findViewById(R.id.edtComment);
         btnReport = (Button) findViewById(R.id.btnReport);
+        btnBack = (Button) findViewById(R.id.btnBack);
 
         btnHome.setOnClickListener(homeClick);
         btnPostComment.setOnClickListener(postCommentClick);
         btnReport.setOnClickListener(reportClick);
-
+        btnBack.setOnClickListener(backClick);
     }
 
     @Override
@@ -79,6 +81,12 @@ public class CommentActivity extends AppCompatActivity {
             userID = getIntent().getExtras().getString("UserID");
             nguoiBanID = getIntent().getExtras().getString("SellerID");
             userName = getIntent().getExtras().getString("UserName");
+            navigateTo = getIntent().getExtras().getString("Navigate");
+            donHangID = getIntent().getExtras().getString("DonHangID");
+
+            if(!navigateTo.isEmpty()){
+                btnBack.setVisibility(View.VISIBLE);
+            }
 
             databaseReference.child("SanPham").addChildEventListener(new ChildEventListener() {
                 @Override
@@ -97,7 +105,6 @@ public class CommentActivity extends AppCompatActivity {
                         });
 
                         if(snapshot.getValue(SanPham.class).getiTinhTrang() == 0){
-
                             txtTenSP.setText(snapshot.getValue(SanPham.class).getsTenSP() + " - New");
                         }
                         else {
@@ -130,6 +137,18 @@ public class CommentActivity extends AppCompatActivity {
             });
         }
     }
+
+    View.OnClickListener backClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            finish();
+            intent = new Intent(CommentActivity.this, UserCommentNeedsActivity.class);
+            intent.putExtra("UserName", userName);
+            intent.putExtra("UserID", userID);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        }
+    };
 
     View.OnClickListener reportClick = new View.OnClickListener() {
         @Override
@@ -240,6 +259,37 @@ public class CommentActivity extends AppCompatActivity {
 
                                             }
                                         });
+
+                                        if(!navigateTo.isEmpty()){
+                                            databaseReference.child("CommentNeeds").addChildEventListener(new ChildEventListener() {
+                                                @Override
+                                                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                                    if(snapshot.getValue(OrderData.class).getDonHangID().equals(donHangID)){
+                                                        databaseReference.child("CommentNeeds").child(snapshot.getKey()).removeValue();
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                                }
+
+                                                @Override
+                                                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                                }
+
+                                                @Override
+                                                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                }
+                                            });
+                                        }
 
                                         finish();
                                         intent = new Intent(v.getContext(), UserMainActivity.class);

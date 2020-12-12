@@ -214,6 +214,6 @@
         <item>5 sao</item>
     </string-array>
     <string name="comment">Đánh giá trải nghiệm sản phẩm: </string>
-    <string name="post_review">Gửi đánh giá </string>
+    <string name="post_review">Đánh giá</string>
     <string name="comment_user_name">Họ tên người đánh giá</string>
 </resources>
