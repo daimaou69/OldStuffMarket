@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OldStuffMarket">
-        <activity android:name=".UserCommentNeedsActivity"></activity>
+        <activity android:name=".ShipperDanhSachActivity"></activity>
+        <activity android:name=".UserCommentNeedsActivity" />
         <activity android:name=".ShipperXuLiDonHangActivity" />
         <activity android:name=".ShipperDonDangGiaoActivity" />
         <activity android:name=".HistoryUser_bibaocaoActivity" />
