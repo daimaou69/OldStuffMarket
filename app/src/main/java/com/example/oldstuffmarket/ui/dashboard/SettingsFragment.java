@@ -36,6 +36,7 @@ import com.example.oldstuffmarket.UserMainActivity;
 import com.example.oldstuffmarket.UserShopActivity;
 import com.example.oldstuffmarket.UserTransactionHistoryActivity;
 import com.example.oldstuffmarket.UserUploadedPostActivity;
+import com.example.oldstuffmarket.UserWaitingForMoneyActivity;
 import com.example.oldstuffmarket.WalletActivity;
 import com.example.oldstuffmarket.WalletUserActivity;
 import com.example.oldstuffmarket.data_models.OrderData;
@@ -59,16 +60,17 @@ import java.util.ArrayList;
 public class SettingsFragment extends Fragment {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private SettingsViewModel dashboardViewModel;
-    private Button btnLogout, btnUploadPost, btnShop, btnWallet, btnLichSuDonHang, btnLichSuDonBan, btnAccountInfo, btnDonMua, btnDonBan, btnPassWordChange, btnDanhGiaSP;
+    private Button btnLogout, btnUploadPost, btnShop, btnWallet, btnReceiveMoney, btnLichSuDonHang, btnLichSuDonBan, btnAccountInfo, btnDonMua, btnDonBan, btnPassWordChange, btnDanhGiaSP;
     private ImageView imgAccount;
     private Intent intent;
-    private TextView txtAccountName, txtSpDaBan, txtDiemThanhVien, txtDonMuaNotify, txtDonBanNotify, txtDanhGiaSP;
+    private TextView txtAccountName, txtSpDaBan, txtDiemThanhVien, txtDonMuaNotify, txtDonBanNotify, txtDanhGiaSP, txtMoneyNotify;
     private String sUserName = UserMainActivity.sUserName, userID;
     private ArrayList<UserData> userDataArrayList = UserMainActivity.userDataArrayList;
     private ArrayList<ShopData> shopDataArrayList;
     private ArrayList<OrderData> donMuaArrayList;
     private ArrayList<OrderData> donBanArrayList;
     private ArrayList<OrderData> danhGiaSPList;
+    private ArrayList<OrderData> waitingList;
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     private int diemThanhVien = 0;
     private String shopID;
@@ -104,15 +106,43 @@ public class SettingsFragment extends Fragment {
         txtDonMuaNotify = (TextView) view.findViewById(R.id.txtDonMuaNotify);
         txtDonBanNotify = (TextView) view.findViewById(R.id.txtDonBanNotify);
         imgAccount = (ImageView) view.findViewById(R.id.imgAccount);
+        btnReceiveMoney = (Button) view.findViewById(R.id.btnReceiveMoney);
+        txtMoneyNotify = (TextView) view.findViewById(R.id.txtMoneyNotify);
 
         shopDataArrayList = new ArrayList<>();
         donMuaArrayList = new ArrayList<>();
         donBanArrayList = new ArrayList<>();
         danhGiaSPList = new ArrayList<>();
+        waitingList = new ArrayList<>();
 
         if(sUserName != ""){
 
+            databaseReference.child("MoneyIncome").addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    waitingList.add(snapshot.getValue(OrderData.class));
+                }
 
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
             databaseReference.child("ShopRegistration").addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -261,6 +291,7 @@ public class SettingsFragment extends Fragment {
         btnLichSuDonBan.setOnClickListener(lichSuDonBanClick);
         btnUploadPost.setOnClickListener(uploadedPostClick);
         btnDanhGiaSP.setOnClickListener(danhGiaSPClick);
+        btnReceiveMoney.setOnClickListener(choNhanTienClick);
 
         Handler handler = new Handler();
         int delay = 1000;
@@ -279,11 +310,26 @@ public class SettingsFragment extends Fragment {
                     txtDanhGiaSP.setVisibility(View.VISIBLE);
                     txtDanhGiaSP.setText(String.valueOf(danhGiaSPList.size()));
                 }
+                if(waitingList.size() != 0){
+                    txtMoneyNotify.setVisibility(View.VISIBLE);
+                    txtMoneyNotify.setText(String.valueOf(waitingList.size()));
+                }
             }
         }, delay);
 
         return view;
     }
+
+    View.OnClickListener choNhanTienClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            intent = new Intent(v.getContext(), UserWaitingForMoneyActivity.class);
+            intent.putExtra("UserName", sUserName);
+            intent.putExtra("UserID", userID);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        }
+    };
 
     View.OnClickListener danhGiaSPClick = new View.OnClickListener() {
         @Override

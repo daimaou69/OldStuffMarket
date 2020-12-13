@@ -102,7 +102,7 @@ public class ThongKeActivity extends AppCompatActivity {
             databaseReference.child("LichSuGiaoDich").addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    if (snapshot.getValue(OrderData.class).getTinhTrang() == 4) {
+                    if (snapshot.getValue(OrderData.class).getTinhTrang() == 8) {
                         commission = snapshot.getValue(OrderData.class).getGiaTien() * snapshot.getValue(OrderData.class).getSellerCommission() / 100;
                         tong = tong + commission;
                         txtDoanhThu.setText(String.valueOf(tong) + "VNĐ");

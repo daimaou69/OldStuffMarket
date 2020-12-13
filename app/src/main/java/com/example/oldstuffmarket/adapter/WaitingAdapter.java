@@ -1,6 +1,7 @@
 package com.example.oldstuffmarket.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,38 +11,32 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 import com.example.oldstuffmarket.R;
 import com.example.oldstuffmarket.data_models.OrderData;
-import com.example.oldstuffmarket.data_models.UserData;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class GiaoDichAdapter extends BaseAdapter {
+public class WaitingAdapter extends BaseAdapter {
+
     private Context context;
     private int layout;
-    private ArrayList<OrderData> orderDataArrayList;
+    private List<OrderData> orderDataList;
 
-    public GiaoDichAdapter(Context context, int layout, ArrayList<OrderData> orderDataArrayList) {
+    public WaitingAdapter(Context context, int layout, List<OrderData> orderDataList) {
         this.context = context;
         this.layout = layout;
-        this.orderDataArrayList = orderDataArrayList;
+        this.orderDataList = orderDataList;
     }
 
     @Override
     public int getCount() {
-        return orderDataArrayList.size();
+        return orderDataList.size();
     }
 
     @Override
@@ -54,33 +49,33 @@ public class GiaoDichAdapter extends BaseAdapter {
         return 0;
     }
 
-    class ViewHolder {
+    class ViewHolder{
         ImageView imgSP;
-        TextView txtTenSP, txtMoney, txtSoLuongSP, txtTinhTrang;
+        TextView txtTenSP, txtGiaSP, txtLoaiThanhToan, txtTinhTrang;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        final ViewHolder viewHolder;
+        ViewHolder viewHolder;
 
-        if (convertView == null) {
+        if(convertView == null){
             viewHolder = new ViewHolder();
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(layout, null);
             viewHolder.imgSP = (ImageView) convertView.findViewById(R.id.imgSP);
             viewHolder.txtTenSP = (TextView) convertView.findViewById(R.id.txtTenSP);
-            viewHolder.txtMoney = (TextView) convertView.findViewById(R.id.txtMoney);
+            viewHolder.txtGiaSP = (TextView) convertView.findViewById(R.id.txtGiaSP);
+            viewHolder.txtLoaiThanhToan = (TextView) convertView.findViewById(R.id.txtLoaiThanhToan);
             viewHolder.txtTinhTrang = (TextView) convertView.findViewById(R.id.txtTinhTrang);
-            viewHolder.txtSoLuongSP = (TextView) convertView.findViewById(R.id.txtSoLuongSP);
             convertView.setTag(viewHolder);
-        } else {
+        }
+        else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        OrderData orderData = orderDataArrayList.get(position);
+        OrderData orderData = orderDataList.get(position);
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
         storageReference.child(orderData.getSanPham().getsSPImage() + ".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -90,17 +85,31 @@ public class GiaoDichAdapter extends BaseAdapter {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+//                Toast.makeText(context, "Hinh anh khong ton tai!", Toast.LENGTH_SHORT).show();
             }
         });
+
         viewHolder.txtTenSP.setText(orderData.getSanPham().getsTenSP());
-        viewHolder.txtSoLuongSP.setText(String.valueOf(orderData.getSanPham().getiSoLuong()));
-        viewHolder.txtMoney.setText(String.valueOf(orderData.getGiaTien()));
-        if (orderData.getTinhTrang() == -1) {
-            viewHolder.txtTinhTrang.setText("Thất bại");
+        viewHolder.txtGiaSP.setText("Tổng tiền: " + String.valueOf(orderData.getGiaTien()) + "vnđ");
+
+        if(orderData.getTinhTrang() == 7){
+            viewHolder.txtTinhTrang.setText("Chờ trả tiền");
         }
-        else if (orderData.getTinhTrang() == 8) {
-            viewHolder.txtTinhTrang.setText("Thành công");
+        else if(orderData.getTinhTrang() == -1){
+            viewHolder.txtTinhTrang.setText("Chờ trả hàng");
+            viewHolder.txtTinhTrang.setTextColor(Color.RED);
         }
+
+        if(orderData.getLoaiDonHang() == 1){
+            viewHolder.txtLoaiThanhToan.setText("Giao dịch trực tiếp");
+        }
+        else if(orderData.getLoaiDonHang() == 2){
+            viewHolder.txtLoaiThanhToan.setText("Thanh toán COD");
+        }
+        else if(orderData.getLoaiDonHang() == 3){
+            viewHolder.txtLoaiThanhToan.setText("Đã thanh toán");
+        }
+
         return convertView;
     }
 }

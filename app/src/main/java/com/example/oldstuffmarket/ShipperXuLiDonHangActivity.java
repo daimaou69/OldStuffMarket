@@ -324,8 +324,6 @@ public class ShipperXuLiDonHangActivity extends AppCompatActivity {
                                                 snapshot.getValue(OrderData.class).getDiaChi(), snapshot.getValue(OrderData.class).getSanPham(),
                                                 snapshot.getValue(OrderData.class).getLoaiDonHang(), 7, commission,
                                                 snapshot.getValue(OrderData.class).getGiaTien(), snapshot.getValue(OrderData.class).getShipperID());
-//                                        databaseReference.child("LichSuGiaoDich").child(donHangID).setValue(orderUpdate);
-//                                        databaseReference.child("CommentNeeds").child(donHangID).setValue(orderUpdate);
                                         databaseReference.child("MoneyIncome").child(donHangID).setValue(orderUpdate);
                                         databaseReference.child("Shipper").child(userID).child(donHangID).removeValue();
                                         databaseReference.child("DonHang").child(donHangID).setValue(orderUpdate);
@@ -458,8 +456,6 @@ public class ShipperXuLiDonHangActivity extends AppCompatActivity {
                                                 snapshot.getValue(OrderData.class).getDiaChi(), snapshot.getValue(OrderData.class).getSanPham(),
                                                 snapshot.getValue(OrderData.class).getLoaiDonHang(), -1, commission,
                                                 snapshot.getValue(OrderData.class).getGiaTien(), snapshot.getValue(OrderData.class).getShipperID());
-                                        databaseReference.child("LichSuGiaoDich").child(donHangID).setValue(orderUpdate);
-                                        databaseReference.child("CommentNeeds").child(donHangID).setValue(orderUpdate);
                                         databaseReference.child("MoneyIncome").child(donHangID).setValue(orderUpdate);
                                         databaseReference.child("Shipper").child(userID).child(donHangID).removeValue();
                                         databaseReference.child("DonHang").child(donHangID).removeValue();
