@@ -56,7 +56,7 @@ public class CommentActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
         setContentView(R.layout.comment_layout);
 
-        imgSP = (ImageView) findViewById(R.id.imgSP);
+        imgSP = (ImageView) findViewById(R.id.imgSP);//Test
         txtTenSP = (TextView) findViewById(R.id.txtTenSP);
         txtGiaSP = (TextView) findViewById(R.id.txtGiaSP);
         spnStarLevel = (Spinner) findViewById(R.id.spnStarLevel);
