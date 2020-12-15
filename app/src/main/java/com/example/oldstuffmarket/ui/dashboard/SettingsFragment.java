@@ -26,6 +26,7 @@ import com.example.oldstuffmarket.LoginActivity;
 import com.example.oldstuffmarket.PasswordChangeActivity;
 import com.example.oldstuffmarket.R;
 import com.example.oldstuffmarket.ShopRegistrationActivity;
+import com.example.oldstuffmarket.TaoLichHenActivity;
 import com.example.oldstuffmarket.UserCommentNeedsActivity;
 import com.example.oldstuffmarket.UserLichSuDonBanActivity;
 import com.example.oldstuffmarket.UserMainActivity;
@@ -52,7 +53,7 @@ import java.util.ArrayList;
 public class SettingsFragment extends Fragment {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private SettingsViewModel dashboardViewModel;
-    private Button btnLogout, btnUploadPost, btnShop, btnWallet, btnReceiveMoney, btnLichSuDonHang, btnLichSuDonBan, btnAccountInfo, btnDonMua, btnDonBan, btnPassWordChange, btnDanhGiaSP;
+    private Button btnLogout, btnUploadPost, btnShop, btnWallet, btnTaoLichHen, btnReceiveMoney, btnLichSuDonHang, btnLichSuDonBan, btnAccountInfo, btnDonMua, btnDonBan, btnPassWordChange, btnDanhGiaSP;
     private ImageView imgAccount;
     private Intent intent;
     private TextView txtAccountName, txtSpDaBan, txtDiemThanhVien, txtDonMuaNotify, txtDonBanNotify, txtDanhGiaSP, txtMoneyNotify;
@@ -91,6 +92,7 @@ public class SettingsFragment extends Fragment {
         btnDonBan = (Button) view.findViewById(R.id.btnDonBan);
         btnPassWordChange = (Button) view.findViewById(R.id.btnPassWordChange);
         btnDanhGiaSP = (Button) view.findViewById(R.id.btnDanhGiaSP);
+        btnTaoLichHen = (Button) view.findViewById(R.id.btnTaoLichHen);
         txtDanhGiaSP = (TextView) view.findViewById(R.id.txtDanhGiaSP);
         txtAccountName = (TextView) view.findViewById(R.id.txtAccountName);
         txtSpDaBan = (TextView) view.findViewById(R.id.txtSpDaBan);
@@ -284,6 +286,7 @@ public class SettingsFragment extends Fragment {
         btnUploadPost.setOnClickListener(uploadedPostClick);
         btnDanhGiaSP.setOnClickListener(danhGiaSPClick);
         btnReceiveMoney.setOnClickListener(choNhanTienClick);
+        btnTaoLichHen.setOnClickListener(taoLichHenClick);
 
         Handler handler = new Handler();
         int delay = 1000;
@@ -311,6 +314,17 @@ public class SettingsFragment extends Fragment {
 
         return view;
     }
+
+    View.OnClickListener taoLichHenClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            intent = new Intent(v.getContext(), TaoLichHenActivity.class);
+            intent.putExtra("UserName", sUserName);
+            intent.putExtra("UserID", userID);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        }
+    };
 
     View.OnClickListener choNhanTienClick = new View.OnClickListener() {
         @Override

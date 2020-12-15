@@ -1,0 +1,70 @@
+package com.example.oldstuffmarket.data_models;
+
+public class Appointment {
+    private String lichHenID;
+    private String tieuDe;
+    private String ngayHen;
+    private String moTaCuocHen;
+    private String nguoiHenID;
+    private String nguoiDuocHenID;
+
+    public Appointment() {
+    }
+
+    public Appointment(String lichHenID, String tieuDe, String ngayHen, String moTaCuocHen, String nguoiHenID, String nguoiDuocHenID) {
+        this.lichHenID = lichHenID;
+        this.tieuDe = tieuDe;
+        this.ngayHen = ngayHen;
+        this.moTaCuocHen = moTaCuocHen;
+        this.nguoiHenID = nguoiHenID;
+        this.nguoiDuocHenID = nguoiDuocHenID;
+    }
+
+    public String getTieuDe() {
+        return tieuDe;
+    }
+
+    public void setTieuDe(String tieuDe) {
+        this.tieuDe = tieuDe;
+    }
+
+    public String getLichHenID() {
+        return lichHenID;
+    }
+
+    public void setLichHenID(String lichHenID) {
+        this.lichHenID = lichHenID;
+    }
+
+    public String getNguoiHenID() {
+        return nguoiHenID;
+    }
+
+    public void setNguoiHenID(String nguoiHenID) {
+        this.nguoiHenID = nguoiHenID;
+    }
+
+    public String getNguoiDuocHenID() {
+        return nguoiDuocHenID;
+    }
+
+    public void setNguoiDuocHenID(String nguoiDuocHenID) {
+        this.nguoiDuocHenID = nguoiDuocHenID;
+    }
+
+    public String getNgayHen() {
+        return ngayHen;
+    }
+
+    public void setNgayHen(String ngayHen) {
+        this.ngayHen = ngayHen;
+    }
+
+    public String getMoTaCuocHen() {
+        return moTaCuocHen;
+    }
+
+    public void setMoTaCuocHen(String moTaCuocHen) {
+        this.moTaCuocHen = moTaCuocHen;
+    }
+}

@@ -92,6 +92,36 @@
             android:orientation="vertical"
             android:gravity="center">
             <Button
+                android:id="@+id/btnTaoLichHen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tạo lịch hẹn"
+                android:textAllCaps="false"
+                android:layout_marginBottom="20dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="10dp">
+                <Button
+                    android:id="@+id/btnLichHen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lịch hẹn"
+                    android:textAllCaps="false" />
+                <TextView
+                    android:id="@+id/txtLichHen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="x"
+                    android:textColor="#FFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    android:background="@drawable/shop_request_notification"/>
+            </LinearLayout>
+            <Button
                 android:id="@+id/btnUploadPost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

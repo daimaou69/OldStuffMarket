@@ -9,9 +9,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.GridView;
 
-import com.example.oldstuffmarket.data_models.TaiKhoanNH;
+import com.example.oldstuffmarket.adapter.DonMuaAdapter;
+import com.example.oldstuffmarket.data_models.OrderData;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,13 +21,12 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class TaiKhoanNganHangActivity extends AppCompatActivity {
-
+public class ShipperDSDonGiaoShipperActivity extends AppCompatActivity {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-    private TextView txtHoTen, txtSoDu;
+    private ArrayList<OrderData> orderDataArrayList;
+    private GridView gridDonDangGiao;
     private Button btnBack;
-    private ArrayList<TaiKhoanNH> taiKhoanNHArrayList;
-    private String sTKID, sUserName;
+    private String userName, userID, shipperID;
     private Intent intent;
 
     @Override
@@ -34,32 +34,32 @@ public class TaiKhoanNganHangActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
-        setContentView(R.layout.tai_khoan_ngan_hang_layout);
+        setContentView(R.layout.shipper_d_s_don_giao_shipper_layout);
 
-        txtHoTen = (TextView) findViewById(R.id.txtHoTen);
-        txtSoDu = (TextView) findViewById(R.id.txtSoDu);
+        gridDonDangGiao = (GridView) findViewById(R.id.gridDonDangGiao);
         btnBack = (Button) findViewById(R.id.btnBack);
 
-        taiKhoanNHArrayList = new ArrayList<>();
+
 
         btnBack.setOnClickListener(backClick);
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
+        orderDataArrayList = new ArrayList<>();
+
         if(getIntent().getExtras() != null){
-            sTKID = getIntent().getExtras().getString("TaiKhoanID");
-            sUserName = getIntent().getExtras().getString("UserName");
-            databaseReference.child("TaiKhoanNH").addChildEventListener(new ChildEventListener() {
+            userID = getIntent().getExtras().getString("UserID");
+            userName = getIntent().getExtras().getString("UserName");
+            shipperID = getIntent().getExtras().getString("ShipperID");
+
+            databaseReference.child("Shipper").child(shipperID).addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    if(snapshot.getValue(TaiKhoanNH.class).getsTKID().equals(sTKID)){
-                        txtHoTen.setText(snapshot.getValue(TaiKhoanNH.class).getsTenChuTK());
-                        txtSoDu.setText(String.valueOf(snapshot.getValue(TaiKhoanNH.class).getlMoney()) + "vnđ");
-                    }
+                    orderDataArrayList.add(snapshot.getValue(OrderData.class));
+                    orderLoad();
                 }
 
                 @Override
@@ -88,12 +88,17 @@ public class TaiKhoanNganHangActivity extends AppCompatActivity {
     View.OnClickListener backClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            intent = new Intent(v.getContext(), WalletActivity.class);
-            intent.putExtra("SoTK", sTKID);
-            intent.putExtra("UserName", sUserName);
-            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             finish();
+            intent = new Intent(v.getContext(), ShipperDanhSachActivity.class);
+            intent.putExtra("UserName", userName);
+            intent.putExtra("UserID", userID);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         }
     };
+
+    public void orderLoad(){
+        DonMuaAdapter donMuaAdapter = new DonMuaAdapter(ShipperDSDonGiaoShipperActivity.this, R.layout.don_mua_adapter, orderDataArrayList);
+        gridDonDangGiao.setAdapter(donMuaAdapter);
+    }
 }
