@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.example.oldstuffmarket.AccountInfoActivity;
 import com.example.oldstuffmarket.DonBanActivity;
 import com.example.oldstuffmarket.DonMuaActivity;
+import com.example.oldstuffmarket.LichHenActivity;
 import com.example.oldstuffmarket.LoginActivity;
 import com.example.oldstuffmarket.PasswordChangeActivity;
 import com.example.oldstuffmarket.R;
@@ -35,6 +36,7 @@ import com.example.oldstuffmarket.UserTransactionHistoryActivity;
 import com.example.oldstuffmarket.UserUploadedPostActivity;
 import com.example.oldstuffmarket.UserWaitingForMoneyActivity;
 import com.example.oldstuffmarket.WalletUserActivity;
+import com.example.oldstuffmarket.data_models.Appointment;
 import com.example.oldstuffmarket.data_models.OrderData;
 import com.example.oldstuffmarket.data_models.ShopData;
 import com.example.oldstuffmarket.data_models.UserData;
@@ -53,10 +55,10 @@ import java.util.ArrayList;
 public class SettingsFragment extends Fragment {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private SettingsViewModel dashboardViewModel;
-    private Button btnLogout, btnUploadPost, btnShop, btnWallet, btnTaoLichHen, btnReceiveMoney, btnLichSuDonHang, btnLichSuDonBan, btnAccountInfo, btnDonMua, btnDonBan, btnPassWordChange, btnDanhGiaSP;
+    private Button btnLogout, btnUploadPost, btnShop, btnWallet, btnLichHen, btnTaoLichHen, btnReceiveMoney, btnLichSuDonHang, btnLichSuDonBan, btnAccountInfo, btnDonMua, btnDonBan, btnPassWordChange, btnDanhGiaSP;
     private ImageView imgAccount;
     private Intent intent;
-    private TextView txtAccountName, txtSpDaBan, txtDiemThanhVien, txtDonMuaNotify, txtDonBanNotify, txtDanhGiaSP, txtMoneyNotify;
+    private TextView txtAccountName, txtSpDaBan, txtDiemThanhVien, txtDonMuaNotify, txtDonBanNotify, txtDanhGiaSP, txtMoneyNotify, txtLichHen;
     private String sUserName = UserMainActivity.sUserName, userID;
     private ArrayList<UserData> userDataArrayList = UserMainActivity.userDataArrayList;
     private ArrayList<ShopData> shopDataArrayList;
@@ -64,6 +66,7 @@ public class SettingsFragment extends Fragment {
     private ArrayList<OrderData> donBanArrayList;
     private ArrayList<OrderData> danhGiaSPList;
     private ArrayList<OrderData> waitingList;
+    private ArrayList<Appointment> appointmentArrayList;
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     private int diemThanhVien = 0;
     private String shopID;
@@ -93,12 +96,14 @@ public class SettingsFragment extends Fragment {
         btnPassWordChange = (Button) view.findViewById(R.id.btnPassWordChange);
         btnDanhGiaSP = (Button) view.findViewById(R.id.btnDanhGiaSP);
         btnTaoLichHen = (Button) view.findViewById(R.id.btnTaoLichHen);
+        btnLichHen = (Button) view.findViewById(R.id.btnLichHen);
         txtDanhGiaSP = (TextView) view.findViewById(R.id.txtDanhGiaSP);
         txtAccountName = (TextView) view.findViewById(R.id.txtAccountName);
         txtSpDaBan = (TextView) view.findViewById(R.id.txtSpDaBan);
         txtDiemThanhVien = (TextView) view.findViewById(R.id.txtDiemThanhVien);
         txtDonMuaNotify = (TextView) view.findViewById(R.id.txtDonMuaNotify);
         txtDonBanNotify = (TextView) view.findViewById(R.id.txtDonBanNotify);
+        txtLichHen = (TextView) view.findViewById(R.id.txtLichHen);
         imgAccount = (ImageView) view.findViewById(R.id.imgAccount);
         btnReceiveMoney = (Button) view.findViewById(R.id.btnReceiveMoney);
         txtMoneyNotify = (TextView) view.findViewById(R.id.txtMoneyNotify);
@@ -108,6 +113,7 @@ public class SettingsFragment extends Fragment {
         donBanArrayList = new ArrayList<>();
         danhGiaSPList = new ArrayList<>();
         waitingList = new ArrayList<>();
+        appointmentArrayList = new ArrayList<>();
 
         if(sUserName != ""){
 
@@ -269,6 +275,34 @@ public class SettingsFragment extends Fragment {
 
                 }
             });
+            databaseReference.child("Appointment").addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    if(snapshot.getValue(Appointment.class).getNguoiDuocHenID().equals(userID) || snapshot.getValue(Appointment.class).getNguoiHenID().equals(userID)){
+                        appointmentArrayList.add(snapshot.getValue(Appointment.class));
+                    }
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         }
         else {
             Toast.makeText(view.getContext(),"Không nhận được dữ liệu!", Toast.LENGTH_SHORT).show();
@@ -287,6 +321,7 @@ public class SettingsFragment extends Fragment {
         btnDanhGiaSP.setOnClickListener(danhGiaSPClick);
         btnReceiveMoney.setOnClickListener(choNhanTienClick);
         btnTaoLichHen.setOnClickListener(taoLichHenClick);
+        btnLichHen.setOnClickListener(lichHenClick);
 
         Handler handler = new Handler();
         int delay = 1000;
@@ -309,11 +344,26 @@ public class SettingsFragment extends Fragment {
                     txtMoneyNotify.setVisibility(View.VISIBLE);
                     txtMoneyNotify.setText(String.valueOf(waitingList.size()));
                 }
+                if(appointmentArrayList.size() != 0){
+                    txtLichHen.setVisibility(View.VISIBLE);
+                    txtLichHen.setText(String.valueOf(appointmentArrayList.size()));
+                }
             }
         }, delay);
 
         return view;
     }
+
+    View.OnClickListener lichHenClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            intent = new Intent(v.getContext(), LichHenActivity.class);
+            intent.putExtra("UserName", sUserName);
+            intent.putExtra("UserID", userID);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        }
+    };
 
     View.OnClickListener taoLichHenClick = new View.OnClickListener() {
         @Override
