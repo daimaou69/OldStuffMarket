@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -111,7 +110,7 @@ public class ShipperDonDangGiaoActivity extends AppCompatActivity {
     };
 
     public void donHangLoad(){
-        DonMuaAdapter donMuaAdapter = new DonMuaAdapter(ShipperDonDangGiaoActivity.this, R.layout.don_mua_adapter, orderDataArrayList);
+        DonMuaAdapter donMuaAdapter = new DonMuaAdapter(ShipperDonDangGiaoActivity.this, R.layout.don_mua_adapter_layout, orderDataArrayList);
         gridDonDangGiao.setAdapter(donMuaAdapter);
     }
 }

@@ -98,7 +98,7 @@ public class ShipperDSDonGiaoShipperActivity extends AppCompatActivity {
     };
 
     public void orderLoad(){
-        DonMuaAdapter donMuaAdapter = new DonMuaAdapter(ShipperDSDonGiaoShipperActivity.this, R.layout.don_mua_adapter, orderDataArrayList);
+        DonMuaAdapter donMuaAdapter = new DonMuaAdapter(ShipperDSDonGiaoShipperActivity.this, R.layout.don_mua_adapter_layout, orderDataArrayList);
         gridDonDangGiao.setAdapter(donMuaAdapter);
     }
 }

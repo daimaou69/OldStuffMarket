@@ -26,7 +26,7 @@ import com.example.oldstuffmarket.LoginActivity;
 import com.example.oldstuffmarket.PasswordChangeActivity;
 import com.example.oldstuffmarket.R;
 import com.example.oldstuffmarket.ShopRegistrationActivity;
-import com.example.oldstuffmarket.TaoLichHenActivity;
+import com.example.oldstuffmarket.UserTaoLichHenActivity;
 import com.example.oldstuffmarket.UserCommentNeedsActivity;
 import com.example.oldstuffmarket.UserLichSuDonBanActivity;
 import com.example.oldstuffmarket.UserMainActivity;
@@ -318,9 +318,14 @@ public class SettingsFragment extends Fragment {
     View.OnClickListener taoLichHenClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            intent = new Intent(v.getContext(), TaoLichHenActivity.class);
+            intent = new Intent(v.getContext(), UserTaoLichHenActivity.class);
             intent.putExtra("UserName", sUserName);
             intent.putExtra("UserID", userID);
+            intent.putExtra("NguoiCanGapID", "");
+            intent.putExtra("NguoiCanGapName", "");
+            intent.putExtra("TieuDe", "");
+            intent.putExtra("NgayHen", "");
+            intent.putExtra("ChiTiet", "");
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         }

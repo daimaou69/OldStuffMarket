@@ -130,7 +130,7 @@ public class UserCommentNeedsActivity extends AppCompatActivity {
     };
 
     public void donMuaLoad(){
-        donMuaAdapter = new DonMuaAdapter(UserCommentNeedsActivity.this, R.layout.don_mua_adapter, orderDataArrayList);
+        donMuaAdapter = new DonMuaAdapter(UserCommentNeedsActivity.this, R.layout.don_mua_adapter_layout, orderDataArrayList);
         gridCommentNeeds.setAdapter(donMuaAdapter);
     }
 }

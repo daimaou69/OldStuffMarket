@@ -110,7 +110,7 @@ public class UserWaitingForMoneyActivity extends AppCompatActivity {
     };
 
     public void donHangLoad(){
-        waitingAdapter = new WaitingAdapter(UserWaitingForMoneyActivity.this, R.layout.don_mua_adapter, orderDataArrayList);
+        waitingAdapter = new WaitingAdapter(UserWaitingForMoneyActivity.this, R.layout.don_mua_adapter_layout, orderDataArrayList);
         gridDonHang.setAdapter(waitingAdapter);
     }
 }

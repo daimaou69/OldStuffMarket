@@ -118,7 +118,7 @@ public class UserLichSuDonBanActivity extends AppCompatActivity {
     };
 
     public void orderLoad(){
-        DonMuaAdapter donMuaAdapter = new DonMuaAdapter(UserLichSuDonBanActivity.this, R.layout.don_mua_adapter, orderDataArrayList);
+        DonMuaAdapter donMuaAdapter = new DonMuaAdapter(UserLichSuDonBanActivity.this, R.layout.don_mua_adapter_layout, orderDataArrayList);
         lstOrderHistory.setAdapter(donMuaAdapter);
     }
 }

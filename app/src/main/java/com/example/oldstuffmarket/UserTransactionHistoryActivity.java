@@ -15,7 +15,6 @@ import android.widget.ListView;
 
 import com.example.oldstuffmarket.adapter.DonMuaAdapter;
 import com.example.oldstuffmarket.data_models.OrderData;
-import com.example.oldstuffmarket.data_models.UserDepositData;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -120,7 +119,7 @@ public class UserTransactionHistoryActivity extends AppCompatActivity {
     };
 
     public void orderLoad(){
-        DonMuaAdapter donMuaAdapter = new DonMuaAdapter(UserTransactionHistoryActivity.this, R.layout.don_mua_adapter, orderDataArrayList);
+        DonMuaAdapter donMuaAdapter = new DonMuaAdapter(UserTransactionHistoryActivity.this, R.layout.don_mua_adapter_layout, orderDataArrayList);
         lstOrderHistory.setAdapter(donMuaAdapter);
     }
 }

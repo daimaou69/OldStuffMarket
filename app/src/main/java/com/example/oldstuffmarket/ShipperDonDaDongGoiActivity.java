@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -14,7 +13,6 @@ import android.widget.Button;
 import android.widget.GridView;
 
 import com.example.oldstuffmarket.adapter.DonMuaAdapter;
-import com.example.oldstuffmarket.data_models.DanhMucData;
 import com.example.oldstuffmarket.data_models.OrderData;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -111,7 +109,7 @@ public class ShipperDonDaDongGoiActivity extends AppCompatActivity {
     };
 
     public void donHangLoad(){
-        DonMuaAdapter donMuaAdapter = new DonMuaAdapter(ShipperDonDaDongGoiActivity.this, R.layout.don_mua_adapter, orderDataArrayList);
+        DonMuaAdapter donMuaAdapter = new DonMuaAdapter(ShipperDonDaDongGoiActivity.this, R.layout.don_mua_adapter_layout, orderDataArrayList);
         gridDonDaDongGoi.setAdapter(donMuaAdapter);
     }
 }

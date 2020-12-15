@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TaoLichHenActivity"
+    tools:context=".UserTaoLichHenActivity"
     android:padding="10dp"
     android:background="@mipmap/app_background">
     <ScrollView
@@ -22,6 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="5"
+                android:layout_marginBottom="5dp"
                 android:layout_marginTop="10dp">
 
                 <TextView
@@ -41,6 +42,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
                     android:orientation="vertical">
                     <TextView
                         android:layout_width="wrap_content"
@@ -56,9 +58,16 @@
                         android:hint="Nhập tiêu đề..."
                         android:singleLine="true"/>
                 </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ngày hẹn:"
+                    android:textStyle="bold"
+                    android:textSize="20dp"></TextView>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
                     android:orientation="horizontal">
 
                     <EditText
@@ -86,6 +95,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
                     android:orientation="horizontal">
 
                     <EditText
@@ -119,7 +129,7 @@
                     <EditText
                         android:id="@+id/edtChiTietCuocHen"
                         android:layout_width="match_parent"
-                        android:layout_height="300dp"
+                        android:layout_height="200dp"
                         android:gravity="top"/>
                 </LinearLayout>
 
