@@ -86,6 +86,7 @@ public class ShopMainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
     }
 
     @Override

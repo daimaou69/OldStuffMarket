@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 
@@ -40,6 +41,18 @@ public class ShipperDanhSachActivity extends AppCompatActivity {
         btnBack = (Button) findViewById(R.id.btnBack);
 
         btnBack.setOnClickListener(backClick);
+
+        gridShipper.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                intent = new Intent(view.getContext(), ShipperDSDonGiaoShipperActivity.class);
+                intent.putExtra("UserName", userName);
+                intent.putExtra("UserID", userID);
+                intent.putExtra("ShipperID", userDataArrayList.get(position).getsUserID());
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+            }
+        });
 
     }
 

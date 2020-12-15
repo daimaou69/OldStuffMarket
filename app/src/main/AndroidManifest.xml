@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OldStuffMarket">
-        <activity android:name=".WaitingDetailActivity"></activity>
+        <activity android:name=".ShipperDSDonGiaoShipperActivity"></activity>
+        <activity android:name=".WaitingDetailActivity" />
         <activity android:name=".UserWaitingForMoneyActivity" />
         <activity android:name=".ShipperDanhSachActivity" />
         <activity android:name=".UserCommentNeedsActivity" />
@@ -62,8 +63,6 @@
         <activity android:name=".ShopRegistrationRequestActivity" />
         <activity android:name=".ShopRegistrationActivity" />
         <activity android:name=".ProductDetailActivity" />
-        <activity android:name=".LienKetNganHangActivity" />
-        <activity android:name=".TaiKhoanNganHangActivity" />
         <activity android:name=".QuanLyDanhMucActivity" />
         <activity android:name=".WalletActivity" />
         <activity android:name=".PasswordChangeActivity" />

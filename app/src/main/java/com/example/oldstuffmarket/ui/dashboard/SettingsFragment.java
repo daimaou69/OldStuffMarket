@@ -17,15 +17,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.example.oldstuffmarket.AccountInfoActivity;
-import com.example.oldstuffmarket.AdminMainActivity;
 import com.example.oldstuffmarket.DonBanActivity;
 import com.example.oldstuffmarket.DonMuaActivity;
-import com.example.oldstuffmarket.LienKetNganHangActivity;
 import com.example.oldstuffmarket.LoginActivity;
 import com.example.oldstuffmarket.PasswordChangeActivity;
 import com.example.oldstuffmarket.R;
@@ -37,11 +33,9 @@ import com.example.oldstuffmarket.UserShopActivity;
 import com.example.oldstuffmarket.UserTransactionHistoryActivity;
 import com.example.oldstuffmarket.UserUploadedPostActivity;
 import com.example.oldstuffmarket.UserWaitingForMoneyActivity;
-import com.example.oldstuffmarket.WalletActivity;
 import com.example.oldstuffmarket.WalletUserActivity;
 import com.example.oldstuffmarket.data_models.OrderData;
 import com.example.oldstuffmarket.data_models.ShopData;
-import com.example.oldstuffmarket.data_models.TaiKhoanNH;
 import com.example.oldstuffmarket.data_models.UserData;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -52,8 +46,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 

@@ -49,6 +49,7 @@ public class HistoryUser_bibaocaoActivity extends AppCompatActivity {
         btnBack.setOnClickListener(backClick);
     }
 
+    @Override
     protected void onResume() {
         super.onResume();
 
@@ -87,7 +88,7 @@ public class HistoryUser_bibaocaoActivity extends AppCompatActivity {
                 }
             });
             final Handler handler = new Handler();
-            final int delay = 500; //milliseconds
+            final int delay = 1000; //milliseconds
             handler.postDelayed(new Runnable(){
                 public void run(){
                     userLoad();

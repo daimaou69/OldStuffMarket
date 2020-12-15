@@ -185,6 +185,7 @@ public class UserDetailReportActivity extends AppCompatActivity {
             startActivity(intent);
         }
     };
+
     View.OnClickListener historyUserbibaoCaoClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {

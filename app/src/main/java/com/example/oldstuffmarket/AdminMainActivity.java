@@ -96,6 +96,7 @@ public class AdminMainActivity extends AppCompatActivity {
         btnAddEmployee.setOnClickListener(addEmployeeClick);
         btnEmployeeManagement.setOnClickListener(employeeManagerClick);
         btnThongKe.setOnClickListener(thongKeClick);
+        btnWallet.setOnClickListener(walletClick);
     }
 
     @Override
@@ -299,6 +300,16 @@ public class AdminMainActivity extends AppCompatActivity {
             }
         }, delay);
     }
+
+    View.OnClickListener walletClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            intent = new Intent(v.getContext(), WalletActivity.class);
+            intent.putExtra("UserName", sUserName);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        }
+    };
 
     View.OnClickListener thongKeClick = new View.OnClickListener() {
         @Override

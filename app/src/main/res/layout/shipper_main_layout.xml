@@ -63,14 +63,32 @@
             android:orientation="vertical"
             android:gravity="center">
 
-            <Button
-                android:id="@+id/btnDanhSachDonHang"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/danh_sach_don_hang"
-                android:textAllCaps="false"
+                android:orientation="horizontal"
                 android:layout_marginBottom="20dp"
-                android:visibility="gone"/>
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/btnDanhSachDonHang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/danh_sach_don_hang"
+                    android:textAllCaps="false"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/txtDanhSachDonHang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="x"
+                    android:textColor="#FFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    android:background="@drawable/shop_request_notification"/>
+            </LinearLayout>
             <Button
                 android:id="@+id/btnDanhSachShipper"
                 android:layout_width="wrap_content"
