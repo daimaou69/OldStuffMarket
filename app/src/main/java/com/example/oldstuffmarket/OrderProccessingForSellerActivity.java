@@ -36,7 +36,7 @@ public class OrderProccessingForSellerActivity extends AppCompatActivity {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     private ImageView imgSP;
-    private TextView txtTenSP, txtSoLuongSP, txtGiaSP, txtHoTenNguoiMua, txtDiaChi, txtLienHe, txtTongGiaTriDonHang, txtShipperLabel, txtShipperName, txtShipperPhone;
+    private TextView txtTenSP, txtSoLuongSP, txtMaVanDon, txtGiaSP, txtHoTenNguoiMua, txtDiaChi, txtLienHe, txtTongGiaTriDonHang, txtShipperLabel, txtShipperName, txtShipperPhone;
     private CheckBox cbProccessing, cbPacking, cbDelivery;
     private Button btnCancelOrder, btnBack;
     private String userName, userID, donHangID, nguoiMuaID, nguoiBanID;
@@ -56,6 +56,7 @@ public class OrderProccessingForSellerActivity extends AppCompatActivity {
         txtSoLuongSP = (TextView) findViewById(R.id.txtSoLuongSP);
         txtGiaSP = (TextView) findViewById(R.id.txtGiaSP);
         txtHoTenNguoiMua = (TextView) findViewById(R.id.txtHoTenNguoiMua);
+        txtMaVanDon = (TextView) findViewById(R.id.txtMaVanDon);
         txtDiaChi = (TextView) findViewById(R.id.txtDiaChi);
         txtLienHe = (TextView) findViewById(R.id.txtLienHe);
         txtTongGiaTriDonHang = (TextView) findViewById(R.id.txtTongGiaTriDonHang);
@@ -93,7 +94,7 @@ public class OrderProccessingForSellerActivity extends AppCompatActivity {
 //                Toast.makeText(context, "Hinh anh khong ton tai!", Toast.LENGTH_SHORT).show();
                             }
                         });
-
+                        txtMaVanDon.setText("Mã vận đơn: " + snapshot.getValue(OrderData.class).getDonHangID());
                         if(!snapshot.getValue(OrderData.class).getShipperID().isEmpty()){
                             txtShipperLabel.setVisibility(View.VISIBLE);
                             String shipperID = snapshot.getValue(OrderData.class).getShipperID();

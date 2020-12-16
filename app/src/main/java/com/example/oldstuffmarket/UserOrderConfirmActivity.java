@@ -38,7 +38,7 @@ public class UserOrderConfirmActivity extends AppCompatActivity {
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     private ImageView imgSP;
     private EditText edtUserName, edtDiaChi, edtLienHe;
-    private TextView txtTenSP, txtSoLuongSP, txtGiaSP, txtPhuongThucThanhToan, txtTongGiaTriDonHang, txtNameLabel, txtDiaChi;
+    private TextView txtTenSP, txtMaVanDon, txtSoLuongSP, txtGiaSP, txtPhuongThucThanhToan, txtTongGiaTriDonHang, txtNameLabel, txtDiaChi;
     private Button btnAccept, btnRefuse, btnBack;
     private Intent intent;
     private String userName, userID, donHangID, nguoiBanID, nguoiMuaID, productID;
@@ -58,6 +58,7 @@ public class UserOrderConfirmActivity extends AppCompatActivity {
         edtLienHe = (EditText) findViewById(R.id.edtLienHe);
         txtTenSP = (TextView) findViewById(R.id.txtTenSP);
         txtSoLuongSP = (TextView) findViewById(R.id.txtSoLuongSP);
+        txtMaVanDon = (TextView) findViewById(R.id.txtMaVanDon);
         txtGiaSP = (TextView) findViewById(R.id.txtGiaSP);
         txtPhuongThucThanhToan = (TextView) findViewById(R.id.txtPhuongThucThanhToan);
         txtTongGiaTriDonHang = (TextView) findViewById(R.id.txtTongGiaTriDonHang);
@@ -102,7 +103,7 @@ public class UserOrderConfirmActivity extends AppCompatActivity {
                             }
                         });
 
-
+                        txtMaVanDon.setText("Mã vận đơn: " + snapshot.getValue(OrderData.class).getDonHangID());
                         if(snapshot.getValue(OrderData.class).getSanPham().getiTinhTrang() == 0){
 
                             txtTenSP.setText(snapshot.getValue(OrderData.class).getSanPham().getsTenSP() + " - New");

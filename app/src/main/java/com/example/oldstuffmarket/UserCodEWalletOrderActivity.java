@@ -32,7 +32,7 @@ public class UserCodEWalletOrderActivity extends AppCompatActivity {
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     private ImageView imgSP;
     private EditText edtUserName, edtDiaChi, edtLienHe;
-    private TextView txtTenSP, txtSoLuongSP, txtGiaSP, txtPhuongThucThanhToan, txtTongGiaTriDonHang, txtNameLabel, txtDiaChi, txtShipperLabel, txtShipperName, txtShipperPhone;
+    private TextView txtTenSP, txtMaVanDon, txtSoLuongSP, txtGiaSP, txtPhuongThucThanhToan, txtTongGiaTriDonHang, txtNameLabel, txtDiaChi, txtShipperLabel, txtShipperName, txtShipperPhone;
     private Button btnBack;
     private Intent intent;
     private String userName, userID, donHangID, nguoiBanID, nguoiMuaID, productID;
@@ -51,6 +51,7 @@ public class UserCodEWalletOrderActivity extends AppCompatActivity {
         edtDiaChi = (EditText) findViewById(R.id.edtDiaChi);
         edtLienHe = (EditText) findViewById(R.id.edtLienHe);
         txtTenSP = (TextView) findViewById(R.id.txtTenSP);
+        txtMaVanDon = (TextView) findViewById(R.id.txtMaVanDon);
         txtSoLuongSP = (TextView) findViewById(R.id.txtSoLuongSP);
         txtGiaSP = (TextView) findViewById(R.id.txtGiaSP);
         txtPhuongThucThanhToan = (TextView) findViewById(R.id.txtPhuongThucThanhToan);
@@ -94,6 +95,8 @@ public class UserCodEWalletOrderActivity extends AppCompatActivity {
 //                Toast.makeText(context, "Hinh anh khong ton tai!", Toast.LENGTH_SHORT).show();
                             }
                         });
+
+                        txtMaVanDon.setText("Mã vận đơn: " + snapshot.getValue(OrderData.class).getDonHangID());
 
                         if(snapshot.getValue(OrderData.class).getTinhTrang() == 0){
                             txtShipperLabel.setText("Tình trạng: Chờ xác nhận");

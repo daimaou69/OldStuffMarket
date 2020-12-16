@@ -27,15 +27,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.ArrayList;
-
-public class OrderThanhToanTrucTiepActivity extends AppCompatActivity {
-
+public class ShipperLichSuChiTietDonGiaoActivity extends AppCompatActivity {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-    private ImageView imgSP;
-    private EditText edtUserName, edtDiaChi, edtLienHe;
-    private TextView txtTenSP, txtSoLuongSP, txtMaVanDon, txtGiaSP, txtPhuongThucThanhToan, txtTongGiaTriDonHang;
+    private ImageView imgSP, imgShipper;
+    private TextView txtMaVanDon, txtTenSP, txtSoLuongSP, txtGiaSP, txtPhuongThucThanhToan, txtTongGiaTriDonHang, txtShipperUserName, txtHoTenShipper, txtSDTShipper, txtDiaChiShipper;
+    private EditText edtHoTenNguoiMua, edtDiaChi, edtLienHe;
     private Button btnBack;
     private Intent intent;
     private String userName, userID, donHangID;
@@ -45,10 +42,10 @@ public class OrderThanhToanTrucTiepActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
-        setContentView(R.layout.order_thanh_toan_truc_tiep_layout);
+        setContentView(R.layout.shipper_lich_su_chi_tiet_don_giao);
 
-        imgSP = (ImageView) findViewById(R.id.imgSP);
-        edtUserName = (EditText) findViewById(R.id.edtUserName);
+        btnBack = (Button) findViewById(R.id.btnBack);
+        edtHoTenNguoiMua = (EditText) findViewById(R.id.edtHoTenNguoiMua);
         edtDiaChi = (EditText) findViewById(R.id.edtDiaChi);
         edtLienHe = (EditText) findViewById(R.id.edtLienHe);
         txtTenSP = (TextView) findViewById(R.id.txtTenSP);
@@ -57,7 +54,12 @@ public class OrderThanhToanTrucTiepActivity extends AppCompatActivity {
         txtGiaSP = (TextView) findViewById(R.id.txtGiaSP);
         txtPhuongThucThanhToan = (TextView) findViewById(R.id.txtPhuongThucThanhToan);
         txtTongGiaTriDonHang = (TextView) findViewById(R.id.txtTongGiaTriDonHang);
-        btnBack = (Button) findViewById(R.id.btnBack);
+        txtShipperUserName = (TextView) findViewById(R.id.txtShipperUserName);
+        txtHoTenShipper = (TextView) findViewById(R.id.txtHoTenShipper);
+        txtSDTShipper = (TextView) findViewById(R.id.txtSDTShipper);
+        txtDiaChiShipper = (TextView) findViewById(R.id.txtDiaChiShipper);
+        imgSP = (ImageView) findViewById(R.id.imgSP);
+        imgShipper = (ImageView) findViewById(R.id.imgShipper);
 
         btnBack.setOnClickListener(backClick);
 
@@ -68,11 +70,12 @@ public class OrderThanhToanTrucTiepActivity extends AppCompatActivity {
         super.onResume();
 
         if(getIntent().getExtras() != null){
+
             userID = getIntent().getExtras().getString("UserID");
             userName = getIntent().getExtras().getString("UserName");
             donHangID = getIntent().getExtras().getString("DonHangID");
 
-            databaseReference.child("DonHang").addChildEventListener(new ChildEventListener() {
+            databaseReference.child("LichSuGiaoDich").addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                     if(snapshot.getValue(OrderData.class).getDonHangID().equals(donHangID)){
@@ -80,7 +83,7 @@ public class OrderThanhToanTrucTiepActivity extends AppCompatActivity {
                         storageReference.child(snapshot.getValue(OrderData.class).getSanPham().getsSPImage() + ".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                Glide.with(OrderThanhToanTrucTiepActivity.this).load(uri).into(imgSP);
+                                Glide.with(ShipperLichSuChiTietDonGiaoActivity.this).load(uri).into(imgSP);
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -88,27 +91,52 @@ public class OrderThanhToanTrucTiepActivity extends AppCompatActivity {
 //                Toast.makeText(context, "Hinh anh khong ton tai!", Toast.LENGTH_SHORT).show();
                             }
                         });
-
+                        txtMaVanDon.setText("Mã vận đơn: " + snapshot.getValue(OrderData.class).getDonHangID());
                         if(snapshot.getValue(OrderData.class).getSanPham().getiTinhTrang() == 0){
-
-                            txtTenSP.setText(snapshot.getValue(OrderData.class).getSanPham().getsTenSP() + " - New");
+                            txtTenSP.setText("Tên sản phẩm: " + snapshot.getValue(OrderData.class).getSanPham().getsTenSP() + " - New");
                         }
                         else {
-                            txtTenSP.setText(snapshot.getValue(OrderData.class).getSanPham().getsTenSP() + " - 2nd");
+                            txtTenSP.setText("Tên sản phẩm: " + snapshot.getValue(OrderData.class).getSanPham().getsTenSP() + " - 2nd");
                         }
-                        txtGiaSP.setText(snapshot.getValue(OrderData.class).getSanPham().getlGiaTien() + "vnd");
-                        txtMaVanDon.setText("Mã vận đơn: " + snapshot.getValue(OrderData.class).getDonHangID());
-                        txtSoLuongSP.setText("Số lượng: " + String.valueOf(snapshot.getValue(OrderData.class).getSanPham().getiSoLuong()) + " x ");
-                        txtTongGiaTriDonHang.setText("Tổng tiền: " + String.valueOf(snapshot.getValue(OrderData.class).getGiaTien()) + "vnđ");
-                        txtPhuongThucThanhToan.setText("Thanh toán trực tiếp!");
+
+                        if(snapshot.getValue(OrderData.class).getLoaiDonHang() == 2){
+                            txtPhuongThucThanhToan.setText("Giao hàng COD");
+                        }
+                        else if(snapshot.getValue(OrderData.class).getLoaiDonHang() == 3){
+                            txtPhuongThucThanhToan.setText("Thanh toán E-Wallet");
+                        }
+                        txtTongGiaTriDonHang.setText("Tổng tiền: " + snapshot.getValue(OrderData.class).getGiaTien() + "vnd");
+                        txtSoLuongSP.setText("Số lượng: " + snapshot.getValue(OrderData.class).getSanPham().getiSoLuong() + " x ");
                         String nguoiMuaID = snapshot.getValue(OrderData.class).getNguoiMuaID();
+                        String shipperID = snapshot.getValue(OrderData.class).getShipperID();
                         databaseReference.child("User").addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                                 if(snapshot.getValue(UserData.class).getsUserID().equals(nguoiMuaID)){
-                                    edtUserName.setText(snapshot.getValue(UserData.class).getsFullName());
+                                    edtHoTenNguoiMua.setText(snapshot.getValue(UserData.class).getsFullName());
                                     edtDiaChi.setText(snapshot.getValue(UserData.class).getsDiaChi());
                                     edtLienHe.setText(snapshot.getValue(UserData.class).getsSdt());
+                                }
+                                else if(snapshot.getValue(UserData.class).getsUserID().equals(shipperID)){
+                                    if(!snapshot.getValue(UserData.class).getsImage().isEmpty()){
+                                        storageReference.child(snapshot.getValue(UserData.class).getsImage() + ".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                            @Override
+                                            public void onSuccess(Uri uri) {
+                                                Glide.with(ShipperLichSuChiTietDonGiaoActivity.this).load(uri).into(imgShipper);
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+//                Toast.makeText(context, "Hinh anh khong ton tai!", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+
+                                    txtShipperUserName.setText("Shipper user name: " + snapshot.getValue(UserData.class).getsUserName());
+                                    txtHoTenShipper.setText("Họ tên: " + snapshot.getValue(UserData.class).getsFullName());
+                                    txtSDTShipper.setText("Số điện thoại: " + snapshot.getValue(UserData.class).getsSdt());
+                                    txtDiaChiShipper.setText("Địa chỉ: " + snapshot.getValue(UserData.class).getsDiaChi());
+
                                 }
                             }
 
@@ -155,6 +183,7 @@ public class OrderThanhToanTrucTiepActivity extends AppCompatActivity {
 
                 }
             });
+
         }
     }
 
@@ -162,7 +191,7 @@ public class OrderThanhToanTrucTiepActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             finish();
-            intent = new Intent(v.getContext(), DonBanActivity.class);
+            intent = new Intent(v.getContext(), ShipperLichSuDonGiaoActivity.class);
             intent.putExtra("UserName", userName);
             intent.putExtra("UserID", userID);
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);

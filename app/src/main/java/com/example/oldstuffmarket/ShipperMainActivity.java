@@ -34,7 +34,7 @@ import java.util.ArrayList;
 public class ShipperMainActivity extends AppCompatActivity {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-    private Button btnLogout, btnAccountInfo, btnPassWordChange, btnDanhSachDonHang, btnCacDonDangGiao, btnDanhSachShipper;
+    private Button btnLogout, btnAccountInfo, btnPassWordChange, btnDanhSachDonHang, btnCacDonDangGiao, btnDanhSachShipper, btnLichSuDonHangShipper;
     private TextView txtCacDonDangGiaoNotify, txtShipperAccountName, txtDanhSachDonHang;
     private ArrayList<OrderData> donDangGiao;
     private ArrayList<OrderData> donDaDongGoi;
@@ -60,6 +60,7 @@ public class ShipperMainActivity extends AppCompatActivity {
         btnDanhSachDonHang = (Button) findViewById(R.id.btnDanhSachDonHang);
         btnCacDonDangGiao =(Button) findViewById(R.id.btnCacDonDangGiao);
         btnDanhSachShipper = (Button) findViewById(R.id.btnDanhSachShipper);
+        btnLichSuDonHangShipper = (Button) findViewById(R.id.btnLichSuDonHangShipper);
 
         donDangGiao = new ArrayList<>();
         shipperList = new ArrayList<>();
@@ -70,6 +71,7 @@ public class ShipperMainActivity extends AppCompatActivity {
         btnDanhSachDonHang.setOnClickListener(donDaDongGoiClick);
         btnCacDonDangGiao.setOnClickListener(cacDonDangGiaoClick);
         btnDanhSachShipper.setOnClickListener(danhSachShipperClick);
+        btnLichSuDonHangShipper.setOnClickListener(lichSuDonGiaoShipperClick);
 
     }
 
@@ -193,6 +195,7 @@ public class ShipperMainActivity extends AppCompatActivity {
                         }
                         btnDanhSachDonHang.setVisibility(View.VISIBLE);
                         btnDanhSachShipper.setVisibility(View.VISIBLE);
+                        btnLichSuDonHangShipper.setVisibility(View.VISIBLE);
                     }
                 }
 
@@ -241,6 +244,17 @@ public class ShipperMainActivity extends AppCompatActivity {
             }
         }, delay);
     }
+
+    View.OnClickListener lichSuDonGiaoShipperClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            intent = new Intent(v.getContext(), ShipperLichSuDonGiaoActivity.class);
+            intent.putExtra("UserName", sUserName);
+            intent.putExtra("UserID", userID);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        }
+    };
 
     View.OnClickListener danhSachShipperClick = new View.OnClickListener() {
         @Override

@@ -16,9 +16,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@drawable/layout_bg"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="10dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -46,6 +47,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@mipmap/no_image_icon"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
+                    <TextView
+                        android:id="@+id/txtMaVanDon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mã vận đơn: "
+                        android:textSize="20sp"
+                        android:textStyle="bold"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
