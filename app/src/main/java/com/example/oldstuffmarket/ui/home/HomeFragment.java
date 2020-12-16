@@ -224,62 +224,6 @@ public class HomeFragment extends Fragment{
             }
         });
 
-        edtFind.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(!s.toString().isEmpty()){
-                            ArrayList<SanPham> findSP = new ArrayList<>();
-                            for(SanPham sanPham : sanPhamArrayList){
-                                if(sanPham.getsTenSP().toLowerCase().contains(s.toString()) || sanPham.getsTenSP().contains(s.toString()) || sanPham.getsDanhMuc().contains(s.toString())){
-                                    findSP.add(sanPham);
-                                }
-                                SanPhamAdapter sanPhamAdapter = new SanPhamAdapter(view.getContext(), R.layout.san_pham_adapter_layout, findSP);
-                                gridSP.setAdapter(sanPhamAdapter);
-                            }
-                        }
-                        else{
-                            sanPhamArrayList.clear();
-                            databaseReference.child("SanPham").addChildEventListener(new ChildEventListener() {
-                                @Override
-                                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                                    sanPhamArrayList.add(snapshot.getValue(SanPham.class));
-                                    sanPhamLoad(view);
-                                }
-
-                                @Override
-                                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                                }
-
-                                @Override
-                                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-                                }
-
-                                @Override
-                                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
-                        }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
         btnGiaTang.setOnClickListener(giaTangClick);
         btnGiaGiam.setOnClickListener(giaGiamClick);
         btnDoCu.setOnClickListener(doCuClick);

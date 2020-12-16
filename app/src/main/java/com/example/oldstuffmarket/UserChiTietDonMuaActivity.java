@@ -32,7 +32,7 @@ public class UserChiTietDonMuaActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-    private TextView txtTenSP, txtSoLuongSP, txtGiaSP, txtSellerUserName, txtNgayMuaHang, txtPhuongThucThanhToan, txtDiaChi, txtLienHe, txtTongGiaTriDonHang;
+    private TextView txtTenSP, txtMaVanDon, txtSoLuongSP, txtGiaSP, txtSellerUserName, txtNgayMuaHang, txtPhuongThucThanhToan, txtDiaChi, txtLienHe, txtTongGiaTriDonHang;
     private ImageView imgSP, imgSellerUser;
     private Button btnBack;
     private String userID, userName, orderID;
@@ -47,6 +47,7 @@ public class UserChiTietDonMuaActivity extends AppCompatActivity {
 
         txtTenSP = (TextView) findViewById(R.id.txtTenSP);
         txtSoLuongSP = (TextView) findViewById(R.id.txtSoLuongSP);
+        txtMaVanDon = (TextView) findViewById(R.id.txtMaVanDon);
         txtGiaSP = (TextView) findViewById(R.id.txtGiaSP);
         txtSellerUserName = (TextView) findViewById(R.id.txtSellerUserName);
         txtNgayMuaHang = (TextView) findViewById(R.id.txtNgayMuaHang);
@@ -91,6 +92,8 @@ public class UserChiTietDonMuaActivity extends AppCompatActivity {
                         else if(snapshot.getValue(OrderData.class).getLoaiDonHang() == 3){
                             txtPhuongThucThanhToan.setText("Thanh toán qua ví điện tử!");
                         }
+
+                        txtMaVanDon.setText("Mã vận đơn: " + snapshot.getValue(OrderData.class).getDonHangID());
 
                         txtNgayMuaHang.setText("Ngày order: " + snapshot.getValue(OrderData.class).getNgayTaoDonHang());
 

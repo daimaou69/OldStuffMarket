@@ -15,12 +15,12 @@
         android:layout_weight="1"
         android:orientation="horizontal"
         android:gravity="center">
-        <EditText
-            android:id="@+id/edtFind"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:hint="@string/tim_kiem"
-            android:background="@drawable/find_edit_text"/>
+<!--        <EditText-->
+<!--            android:id="@+id/edtFind"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:hint="@string/tim_kiem"-->
+<!--            android:background="@drawable/find_edit_text"/>-->
     </LinearLayout>
 
     <LinearLayout
