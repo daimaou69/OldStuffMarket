@@ -2,10 +2,8 @@ package com.example.oldstuffmarket;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -51,53 +49,19 @@ public class LichHenActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(userID.equals(appointmentArrayList.get(position).getNguoiHenID())){
-                    DialogInterface.OnClickListener dialogClick = new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            switch (which){
-                                case DialogInterface.BUTTON_POSITIVE:
-                                    databaseReference.child("Appointment").child(appointmentArrayList.get(position).getLichHenID()).removeValue();
 
-                                    appointmentArrayList.clear();
-                                    appointmentLoad();
-                                    databaseReference.child("Appointment").addChildEventListener(new ChildEventListener() {
-                                        @Override
-                                        public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                                            if(snapshot.getValue(Appointment.class).getNguoiDuocHenID().equals(userID) || snapshot.getValue(Appointment.class).getNguoiHenID().equals(userID)){
-                                                appointmentArrayList.add(snapshot.getValue(Appointment.class));
-                                            }
-                                            appointmentLoad();
-                                        }
+                    intent = new Intent(view.getContext(), UserEditAppointmentActivity.class);
+                    intent.putExtra("UserID", userID);
+                    intent.putExtra("UserName", userName);
+                    intent.putExtra("MoTaCuocHen", appointmentArrayList.get(position).getMoTaCuocHen());
+                    intent.putExtra("AppointmentID", appointmentArrayList.get(position).getAppointmentID());
+                    intent.putExtra("TieuDeCuocHen", appointmentArrayList.get(position).getTieuDe());
+                    intent.putExtra("NguoiCanGapID", appointmentArrayList.get(position).getNguoiDuocHenID());
+                    intent.putExtra("NgayHen", appointmentArrayList.get(position).getNgayHen());
+                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(intent);
 
-                                        @Override
-                                        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
-                                        }
-
-                                        @Override
-                                        public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-                                        }
-
-                                        @Override
-                                        public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
-
-                                        }
-                                    });
-                                    break;
-                                case DialogInterface.BUTTON_NEGATIVE:
-                                    return;
-
-                            }
-                        }
-                    };
-                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                    builder.setMessage("Bạn muốn xóa cuộc hẹn?").setNegativeButton("No",dialogClick).setPositiveButton("Yes",dialogClick).show();
                 }
 
             }

@@ -1,7 +1,7 @@
 package com.example.oldstuffmarket.data_models;
 
 public class Appointment {
-    private String lichHenID;
+    private String appointmentID;
     private String tieuDe;
     private String ngayHen;
     private String moTaCuocHen;
@@ -11,8 +11,8 @@ public class Appointment {
     public Appointment() {
     }
 
-    public Appointment(String lichHenID, String tieuDe, String ngayHen, String moTaCuocHen, String nguoiHenID, String nguoiDuocHenID) {
-        this.lichHenID = lichHenID;
+    public Appointment(String appointmentID, String tieuDe, String ngayHen, String moTaCuocHen, String nguoiHenID, String nguoiDuocHenID) {
+        this.appointmentID = appointmentID;
         this.tieuDe = tieuDe;
         this.ngayHen = ngayHen;
         this.moTaCuocHen = moTaCuocHen;
@@ -28,12 +28,12 @@ public class Appointment {
         this.tieuDe = tieuDe;
     }
 
-    public String getLichHenID() {
-        return lichHenID;
+    public String getAppointmentID() {
+        return appointmentID;
     }
 
-    public void setLichHenID(String lichHenID) {
-        this.lichHenID = lichHenID;
+    public void setAppointmentID(String appointmentID) {
+        this.appointmentID = appointmentID;
     }
 
     public String getNguoiHenID() {

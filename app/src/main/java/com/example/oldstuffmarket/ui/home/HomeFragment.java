@@ -235,18 +235,7 @@ public class HomeFragment extends Fragment{
         spnSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                if(spnSort.getSelectedItemPosition() == 0){
-//                    Toast.makeText(view.getContext(), spnSort.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
-//                }
-//                else if(spnSort.getSelectedItemPosition() == 1){
-//                    Toast.makeText(view.getContext(), spnSort.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
-//                }
-//                else if(spnSort.getSelectedItemPosition() == 2){
-//                    Toast.makeText(view.getContext(), spnSort.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
-//                }
-//                else if(spnSort.getSelectedItemPosition() == 3){
-//                    Toast.makeText(view.getContext(), spnSort.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
-//                }
+
                 switch(position){
                     case 0:
                         sanPhamArrayList.clear();
