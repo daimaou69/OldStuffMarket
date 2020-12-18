@@ -189,7 +189,7 @@ public class SettingsFragment extends Fragment {
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(view.getContext(), "Hinh anh khong ton tai!", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(view.getContext(), "Hinh anh khong ton tai!", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }

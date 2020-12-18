@@ -51,7 +51,7 @@ public class SanPhamAdapter extends BaseAdapter {
 
     class ViewHolder{
         ImageView imgSP;
-        TextView txtTenSP, txtGiaSP, txtDanhMuc;
+        TextView txtTenSP, txtNgayDang, txtGiaSP, txtDanhMuc;
     }
 
     @Override
@@ -67,6 +67,7 @@ public class SanPhamAdapter extends BaseAdapter {
             viewHolder.txtGiaSP = (TextView) convertView.findViewById(R.id.txtGiaSP);
             viewHolder.txtTenSP = (TextView) convertView.findViewById(R.id.txtTenSP);
             viewHolder.txtDanhMuc = (TextView) convertView.findViewById(R.id.txtDanhMuc);
+            viewHolder.txtNgayDang = (TextView) convertView.findViewById(R.id.txtNgayDang);
             convertView.setTag(viewHolder);
         }
         else {
@@ -87,6 +88,8 @@ public class SanPhamAdapter extends BaseAdapter {
 //                Toast.makeText(context, "Hinh anh khong ton tai!", Toast.LENGTH_SHORT).show();
             }
         });
+
+        viewHolder.txtNgayDang.setText("Ngày đăng: " + sanPham.getsNgayDang());
 
         if(sanPham.getiTinhTrang() == 0){
 

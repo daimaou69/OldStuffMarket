@@ -23,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 public class ShipperDonDaDongGoiActivity extends AppCompatActivity {
+
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private ArrayList<OrderData> orderDataArrayList;
     private Button btnBack;
@@ -104,6 +105,7 @@ public class ShipperDonDaDongGoiActivity extends AppCompatActivity {
             intent = new Intent(v.getContext(), ShipperMainActivity.class);
             intent.putExtra("UserName", userName);
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            finish();
             startActivity(intent);
         }
     };

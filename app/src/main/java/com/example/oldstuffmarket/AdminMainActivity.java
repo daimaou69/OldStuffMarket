@@ -240,14 +240,7 @@ public class AdminMainActivity extends AppCompatActivity {
                         }
                         btnWallet.setText("Ví tài khoản: " + String.valueOf(snapshot.getValue(UserData.class).getlMoney()) + "vnđ");
                         if(!snapshot.getValue(UserData.class).getsImage().isEmpty()){
-                            final Handler handler = new Handler();
-                            final int delay = 1200; //milliseconds
-                            handler.postDelayed(new Runnable(){
-                                public void run(){
-                                    imageLoad(snapshot.getValue(UserData.class).getsImage());
-//                                    handler.postDelayed(this, delay);
-                                }
-                            }, delay);
+                            imageLoad(snapshot.getValue(UserData.class).getsImage());
                         }
                     }
                 }

@@ -114,7 +114,13 @@ public class AppointmentAdapter extends BaseAdapter {
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                     if(snapshot.getValue(UserData.class).getsUserID().equals(appointment.getNguoiHenID())){
                         viewHolder.txtNguoiHen.setText("Bạn có một cuộc hẹn với " + snapshot.getValue(UserData.class).getsFullName() + " vào ngày " + appointment.getNgayHen());
-                        viewHolder.txtChiTiet.setText("Chi tiết: " + appointment.getMoTaCuocHen() + " - Liên hệ: " + snapshot.getValue(UserData.class).getsSdt());
+                        if(appointment.getMoTaCuocHen().length() > 30){
+
+                        }
+                        else {
+                            viewHolder.txtChiTiet.setText("Chi tiết: " + appointment.getMoTaCuocHen() + " - Liên hệ: " + snapshot.getValue(UserData.class).getsSdt());
+                        }
+
                     }
                 }
 
