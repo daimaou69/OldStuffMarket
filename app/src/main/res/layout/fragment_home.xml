@@ -15,12 +15,12 @@
         android:layout_weight="1"
         android:orientation="horizontal"
         android:gravity="center">
-<!--        <EditText-->
-<!--            android:id="@+id/edtFind"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="30dp"-->
-<!--            android:hint="@string/tim_kiem"-->
-<!--            android:background="@drawable/find_edit_text"/>-->
+        <EditText
+            android:id="@+id/edtFind"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:hint="@string/tim_kiem"
+            android:background="@drawable/find_edit_text"/>
     </LinearLayout>
 
     <LinearLayout
@@ -37,6 +37,7 @@
             android:layout_height="match_parent"
             android:verticalSpacing="5dp"
             android:numColumns="4" />
+
     </LinearLayout>
 
 
@@ -44,36 +45,49 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:gravity="right|center_vertical"
         android:layout_marginBottom="5dp">
 
-        <Button
-            android:id="@+id/btnGiaTang"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+<!--        <Button-->
+<!--            android:id="@+id/btnGiaTang"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Giá ↑"-->
+<!--            android:textAllCaps="false"/>-->
+<!--        <Button-->
+<!--            android:id="@+id/btnGiaGiam"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/sap_xep_gia_giam_dan"-->
+<!--            android:textAllCaps="false"/>-->
+<!--        <Button-->
+<!--            android:id="@+id/btnDoCu"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/sap_xep_do_cu"-->
+<!--            android:textAllCaps="false"/>-->
+<!--        <Button-->
+<!--            android:id="@+id/btnDoMoi"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/sap_xep_do_moi"-->
+<!--            android:textAllCaps="false"/>-->
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/sap_xep_gia_tang_dan"
-            android:textAllCaps="false"/>
-        <Button
-            android:id="@+id/btnGiaGiam"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:text="Lọc: "
+            android:textStyle="bold"
+            android:textSize="20sp"/>
+        <Spinner
+            android:id="@+id/spnSort"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/sap_xep_gia_giam_dan"
-            android:textAllCaps="false"/>
-        <Button
-            android:id="@+id/btnDoCu"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="@string/sap_xep_do_cu"
-            android:textAllCaps="false"/>
-        <Button
-            android:id="@+id/btnDoMoi"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="@string/sap_xep_do_moi"
-            android:textAllCaps="false"/>
+            android:entries="@array/sp_sort"
+            android:background="@color/white"/>
 
     </LinearLayout>
 
@@ -81,7 +95,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="12"
-        android:background="@color/white">
+        android:background="@drawable/appointment_bg">
         <GridView
             android:id="@+id/gridSP"
             android:layout_width="match_parent"

@@ -17,7 +17,10 @@ import com.example.oldstuffmarket.data_models.Appointment;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class UserTaoLichHenActivity extends AppCompatActivity {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -26,6 +29,7 @@ public class UserTaoLichHenActivity extends AppCompatActivity {
     private EditText edtTieuDe, edtNgayHen, edtNguoiCanGap, edtChiTietCuocHen;
     private Button btnChonNgay, btnTimUser, btnCreate, btnBack, btnClear;
     private int mYear, mMonth, mDay;
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +89,16 @@ public class UserTaoLichHenActivity extends AppCompatActivity {
     View.OnClickListener taoLichHenClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            Date currentDate = new Date();
+            Date appointmentDate = new Date();
+            if(!edtNgayHen.getText().toString().isEmpty()){
+                try{
+                    appointmentDate = simpleDateFormat.parse(edtNgayHen.getText().toString());
+                }catch (Exception ex){
+                    ex.printStackTrace();
+                }
+            }
+
             if(edtTieuDe.getText().toString().isEmpty() || edtTieuDe.getText().toString().length() < 10){
                 AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
                 alert.setMessage("Bạn chưa nhập tiêu đề hoặc tiêu đề quá ngắn!").setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -97,6 +111,15 @@ public class UserTaoLichHenActivity extends AppCompatActivity {
             else if(edtNgayHen.getText().toString().isEmpty()){
                 AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
                 alert.setMessage("Bạn chưa chọn ngày hẹn!").setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).show();
+            }
+            else if(currentDate.compareTo(appointmentDate) == 1){
+                AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+                alert.setMessage("Ngày hẹn không thể nhỏ hơn ngày hiện tại!").setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 

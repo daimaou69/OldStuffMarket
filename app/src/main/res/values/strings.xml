@@ -32,6 +32,13 @@
     <string name="sap_xep_gia_giam_dan">Giá giảm</string>
     <string name="sap_xep_do_cu">Đồ cũ</string>
     <string name="sap_xep_do_moi">Đồ mới</string>
+    <string-array name="sp_sort">
+        <item>Tất cả</item>
+        <item>Giá tăng dần</item>
+        <item>Giá giảm dần</item>
+        <item>Đồ cũ</item>
+        <item>Đồ mới</item>
+    </string-array>
 
     //Account Info
     <string name="account_info">Thông tin tài khoản</string>

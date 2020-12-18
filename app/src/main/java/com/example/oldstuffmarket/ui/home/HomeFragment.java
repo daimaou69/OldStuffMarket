@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.Spinner;
 import android.widget.TabWidget;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,7 +53,8 @@ public class HomeFragment extends Fragment{
     private ArrayList<DanhMucData> danhMucDataArrayList;
     private ArrayList<SanPham> sanPhamArrayList;
     private Intent intent;
-    private Button btnGiaTang, btnGiaGiam, btnDoCu, btnDoMoi;
+    private Spinner spnSort;
+    private SanPhamAdapter sanPhamAdapter;
 //    private HomeViewModel homeViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -71,10 +73,11 @@ public class HomeFragment extends Fragment{
         edtFind = (EditText) view.findViewById(R.id.edtFind);
         gridDanhMuc = (GridView) view.findViewById(R.id.gridDanhMuc);
         gridSP = (GridView) view.findViewById(R.id.gridSP);
-        btnGiaTang = (Button) view.findViewById(R.id.btnGiaTang);
-        btnGiaGiam = (Button) view.findViewById(R.id.btnGiaGiam);
-        btnDoCu = (Button) view.findViewById(R.id.btnDoCu);
-        btnDoMoi = (Button) view.findViewById(R.id.btnDoMoi);
+        spnSort = (Spinner) view.findViewById(R.id.spnSort);
+//        btnGiaTang = (Button) view.findViewById(R.id.btnGiaTang);
+//        btnGiaGiam = (Button) view.findViewById(R.id.btnGiaGiam);
+//        btnDoCu = (Button) view.findViewById(R.id.btnDoCu);
+//        btnDoMoi = (Button) view.findViewById(R.id.btnDoMoi);
 
         danhMucDataArrayList = new ArrayList<>();
         DanhMucData danhMucData = new DanhMucData("AllID","Tất cả","danh_muc_khac");
@@ -224,10 +227,140 @@ public class HomeFragment extends Fragment{
             }
         });
 
-        btnGiaTang.setOnClickListener(giaTangClick);
-        btnGiaGiam.setOnClickListener(giaGiamClick);
-        btnDoCu.setOnClickListener(doCuClick);
-        btnDoMoi.setOnClickListener(doMoiClick);
+//        btnGiaTang.setOnClickListener(giaTangClick);
+//        btnGiaGiam.setOnClickListener(giaGiamClick);
+//        btnDoCu.setOnClickListener(doCuClick);
+//        btnDoMoi.setOnClickListener(doMoiClick);
+
+        spnSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                if(spnSort.getSelectedItemPosition() == 0){
+//                    Toast.makeText(view.getContext(), spnSort.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+//                }
+//                else if(spnSort.getSelectedItemPosition() == 1){
+//                    Toast.makeText(view.getContext(), spnSort.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+//                }
+//                else if(spnSort.getSelectedItemPosition() == 2){
+//                    Toast.makeText(view.getContext(), spnSort.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+//                }
+//                else if(spnSort.getSelectedItemPosition() == 3){
+//                    Toast.makeText(view.getContext(), spnSort.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+//                }
+                switch(position){
+                    case 0:
+                        sanPhamArrayList.clear();
+                        databaseReference.child("SanPham").addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                sanPhamArrayList.add(snapshot.getValue(SanPham.class));
+                                sanPhamLoad(view);
+                            }
+
+                            @Override
+                            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                        break;
+                    case 1:
+                        Collections.sort(sanPhamArrayList, new Comparator<SanPham>() {
+                            @Override
+                            public int compare(SanPham sp1, SanPham sp2) {
+                                if(sp1.getlGiaTien() == sp2.getlGiaTien()){
+                                    return 0;
+                                }
+                                else if(sp1.getlGiaTien() > sp2.getlGiaTien()){
+                                    return 1;
+                                }
+                                else{
+                                    return -1;
+                                }
+                            }
+                        });
+
+                        sanPhamAdapter = new SanPhamAdapter(view.getContext(), R.layout.san_pham_adapter_layout, sanPhamArrayList);
+                        gridSP.setAdapter(sanPhamAdapter);
+                        break;
+                    case 2:
+                        Collections.sort(sanPhamArrayList, new Comparator<SanPham>() {
+                            @Override
+                            public int compare(SanPham sp1, SanPham sp2) {
+                                if(sp1.getlGiaTien() == sp2.getlGiaTien()){
+                                    return 0;
+                                }
+                                else if(sp1.getlGiaTien() < sp2.getlGiaTien()){
+                                    return 1;
+                                }
+                                else{
+                                    return -1;
+                                }
+                            }
+                        });
+
+                        sanPhamAdapter = new SanPhamAdapter(view.getContext(), R.layout.san_pham_adapter_layout, sanPhamArrayList);
+                        gridSP.setAdapter(sanPhamAdapter);
+                        break;
+                    case 3:
+                        Collections.sort(sanPhamArrayList, new Comparator<SanPham>() {
+                            @Override
+                            public int compare(SanPham sp1, SanPham sp2) {
+                                if(sp1.getiTinhTrang() == sp2.getiTinhTrang()){
+                                    return 0;
+                                }
+                                else if(sp1.getiTinhTrang() < sp2.getiTinhTrang()){
+                                    return 1;
+                                }
+                                else{
+                                    return -1;
+                                }
+                            }
+                        });
+                        sanPhamAdapter = new SanPhamAdapter(view.getContext(), R.layout.san_pham_adapter_layout, sanPhamArrayList);
+                        gridSP.setAdapter(sanPhamAdapter);
+                        break;
+                    case 4:
+                        Collections.sort(sanPhamArrayList, new Comparator<SanPham>() {
+                            @Override
+                            public int compare(SanPham sp1, SanPham sp2) {
+                                if(sp1.getiTinhTrang() == sp2.getiTinhTrang()){
+                                    return 0;
+                                }
+                                else if(sp1.getiTinhTrang() > sp2.getiTinhTrang()){
+                                    return 1;
+                                }
+                                else{
+                                    return -1;
+                                }
+                            }
+                        });
+
+                        sanPhamAdapter = new SanPhamAdapter(view.getContext(), R.layout.san_pham_adapter_layout, sanPhamArrayList);
+                        gridSP.setAdapter(sanPhamAdapter);
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         return view;
     }
