@@ -31,7 +31,7 @@ public class UserEditAppointmentActivity extends AppCompatActivity {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private EditText edtTieuDe, edtNgayHen, edtNguoiCanGap, edtChiTietCuocHen;
     private Button btnSua, btnXoa, btnBack, btnChonNgay;
-    private String userID, userName, appointmentID, nguoiCanGapID, moTaCuocHen, tieuDeCuocHen, ngayHen;
+    private String userID, userName, appointmentID, nguoiCanGapID, nguoiHenID, moTaCuocHen, tieuDeCuocHen, ngayHen;
     private int mYear, mMonth, mDay;
     private Intent intent;
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -68,6 +68,7 @@ public class UserEditAppointmentActivity extends AppCompatActivity {
             userName = getIntent().getExtras().getString("UserName");
             appointmentID = getIntent().getExtras().getString("AppointmentID");
             nguoiCanGapID = getIntent().getExtras().getString("NguoiCanGapID");
+            nguoiHenID = getIntent().getExtras().getString("NguoiHenID");
             moTaCuocHen = getIntent().getExtras().getString("MoTaCuocHen");
             tieuDeCuocHen = getIntent().getExtras().getString("TieuDeCuocHen");
             ngayHen = getIntent().getExtras().getString("NgayHen");

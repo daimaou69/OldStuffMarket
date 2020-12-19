@@ -57,6 +57,23 @@ public class LichHenActivity extends AppCompatActivity {
                     intent.putExtra("AppointmentID", appointmentArrayList.get(position).getAppointmentID());
                     intent.putExtra("TieuDeCuocHen", appointmentArrayList.get(position).getTieuDe());
                     intent.putExtra("NguoiCanGapID", appointmentArrayList.get(position).getNguoiDuocHenID());
+                    intent.putExtra("NguoiHenID", appointmentArrayList.get(position).getNguoiHenID());
+                    intent.putExtra("NgayHen", appointmentArrayList.get(position).getNgayHen());
+                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(intent);
+
+
+                }
+                else if(userID.equals(appointmentArrayList.get(position).getNguoiDuocHenID())){
+
+                    intent = new Intent(view.getContext(), UserAppointmentDetailActivity.class);
+                    intent.putExtra("UserID", userID);
+                    intent.putExtra("UserName", userName);
+                    intent.putExtra("MoTaCuocHen", appointmentArrayList.get(position).getMoTaCuocHen());
+                    intent.putExtra("AppointmentID", appointmentArrayList.get(position).getAppointmentID());
+                    intent.putExtra("TieuDeCuocHen", appointmentArrayList.get(position).getTieuDe());
+                    intent.putExtra("NguoiCanGapID", appointmentArrayList.get(position).getNguoiDuocHenID());
+                    intent.putExtra("NguoiHenID", appointmentArrayList.get(position).getNguoiHenID());
                     intent.putExtra("NgayHen", appointmentArrayList.get(position).getNgayHen());
                     intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     startActivity(intent);
