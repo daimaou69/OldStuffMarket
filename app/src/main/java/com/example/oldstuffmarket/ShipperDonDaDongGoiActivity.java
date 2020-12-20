@@ -50,8 +50,8 @@ public class ShipperDonDaDongGoiActivity extends AppCompatActivity {
                 intent = new Intent(view.getContext(), ShipperDetailDonDaDongGoiActivity.class);
                 intent.putExtra("UserName", userName);
                 intent.putExtra("UserID", userID);
+                intent.putExtra("ShipperUserName", "");
                 intent.putExtra("DonHangID", orderDataArrayList.get(position).getDonHangID());
-                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
             }
         });

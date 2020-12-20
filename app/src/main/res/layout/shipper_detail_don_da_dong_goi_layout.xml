@@ -15,8 +15,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@drawable/layout_bg"
             android:gravity="center"
+            android:padding="15dp"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -221,6 +222,19 @@
                         android:text="@string/phuong_thuc_thanh_toan"
                         android:textSize="17sp"/>
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right">
+                    <TextView
+                        android:id="@+id/txtTongGiaTriDonHang"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/product_price"
+                        android:textSize="25sp"
+                        android:textColor="@color/red"
+                        android:textStyle="bold" />
+                </LinearLayout>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -229,37 +243,27 @@
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:layout_marginBottom="5dp"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="5dp"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="2"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical">
-                        <androidx.appcompat.widget.AppCompatSpinner
-                            android:id="@+id/spnShipper"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:entries="@array/spn_gender"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="3"
-                        android:layout_height="match_parent"
-                        android:gravity="right">
-                        <TextView
-                            android:id="@+id/txtTongGiaTriDonHang"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/product_price"
-                            android:textSize="25sp"
-                            android:textColor="@color/red"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
+                    <EditText
+                        android:id="@+id/edtShipperUserName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Shipper ID..."
+                        android:editable="false"
+                        android:singleLine="true"
+                        android:layout_marginRight="30dp"/>
+                    <Button
+                        android:id="@+id/btnTimShipper"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tìm shipper"
+                        android:textAllCaps="false"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -271,7 +275,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/accepted"
                         android:textAllCaps="false"
-                        android:layout_marginRight="30dp"/>
+                        android:layout_marginRight="60dp"/>
                     <Button
                         android:id="@+id/btnBack"
                         android:layout_width="wrap_content"

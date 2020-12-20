@@ -79,7 +79,7 @@ public class DonBanActivity extends AppCompatActivity {
             databaseReference.child("DonHang").addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    if(snapshot.getValue(OrderData.class).getNguoiBanID().equals(userID)){
+                    if(snapshot.getValue(OrderData.class).getNguoiBanID().equals(userID) && snapshot.getValue(OrderData.class).getTinhTrang() < 7){
                         orderDataArrayList.add(snapshot.getValue(OrderData.class));
                     }
                     donMuaLoad();

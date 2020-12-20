@@ -227,7 +227,7 @@ public class SettingsFragment extends Fragment {
                                 if(snapshot.getValue(OrderData.class).getNguoiMuaID().equals(userID)){
                                     donMuaArrayList.add(snapshot.getValue(OrderData.class));
                                 }
-                                else if(snapshot.getValue(OrderData.class).getNguoiBanID().equals(userID)){
+                                else if(snapshot.getValue(OrderData.class).getNguoiBanID().equals(userID) && snapshot.getValue(OrderData.class).getTinhTrang() < 7){
                                     donBanArrayList.add(snapshot.getValue(OrderData.class));
                                 }
                             }
