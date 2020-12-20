@@ -14,9 +14,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="1000dp"
-            android:background="@color/white"
+            android:background="@drawable/layout_bg"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="15dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -218,6 +218,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
+                        android:textSize="10sp"
                         android:text="@string/all_star"
                         android:textAllCaps="false"/>
                     <Button
@@ -226,6 +227,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:textAllCaps="false"
+                        android:textSize="10sp"
                         android:text="@string/one_star"/>
                     <Button
                         android:id="@+id/btnTwoStar"
@@ -233,6 +235,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:textAllCaps="false"
+                        android:textSize="10sp"
                         android:text="@string/two_star"/>
                     <Button
                         android:id="@+id/btnThreeStar"
@@ -240,6 +243,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:textAllCaps="false"
+                        android:textSize="10sp"
                         android:text="@string/three_star"/>
                     <Button
                         android:id="@+id/btnFourStar"
@@ -247,11 +251,13 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:textAllCaps="false"
+                        android:textSize="10sp"
                         android:text="@string/four_star"/>
                     <Button
                         android:id="@+id/btnFiveStar"
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:textSize="10sp"
                         android:layout_height="wrap_content"
                         android:textAllCaps="false"
                         android:text="@string/five_star"/>
