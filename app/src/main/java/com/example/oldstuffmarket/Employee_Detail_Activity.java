@@ -4,7 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -17,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.oldstuffmarket.data_models.OrderData;
 import com.example.oldstuffmarket.data_models.ProductReport;
 import com.example.oldstuffmarket.data_models.UserData;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -36,7 +42,7 @@ public class Employee_Detail_Activity extends AppCompatActivity {
     private Intent intent;
     private Button btnBack, btnHome, btnRemove;
     private ImageView imgNV;
-    private TextView txtFullName, txtSDT, txtDiaChi;
+    private TextView txtFullName, txtSDT, txtDiaChi, txtEmployee;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +58,7 @@ public class Employee_Detail_Activity extends AppCompatActivity {
         txtFullName = (TextView) findViewById(R.id.txtFullName);
         txtSDT = (TextView) findViewById(R.id.txtSDT);
         txtDiaChi = (TextView) findViewById(R.id.txtDiaChi);
+        txtEmployee = (TextView) findViewById(R.id.txtEmployee);
 
         btnBack.setOnClickListener(backClick);
         btnHome.setOnClickListener(homeClick);
@@ -82,6 +89,12 @@ public class Employee_Detail_Activity extends AppCompatActivity {
                         txtFullName.setText(snapshot.getValue(UserData.class).getsFullName());
                         txtSDT.setText(snapshot.getValue(UserData.class).getsSdt());
                         txtDiaChi.setText(snapshot.getValue(UserData.class).getsDiaChi());
+                        if (snapshot.getValue(UserData.class).getiPermission() == 3){
+                            txtEmployee.setText("Shipper");
+                        }
+                        else if (snapshot.getValue(UserData.class).getiPermission() == 2) {
+                            txtEmployee.setText("Nhân viên");
+                        }
                     }
                 }
 
@@ -145,6 +158,7 @@ public class Employee_Detail_Activity extends AppCompatActivity {
 
                                 }
                             });
+
                             Intent intent = new Intent(v.getContext(), Employee_AdminActivity.class);
                             intent.putExtra("UserName", userName);
                             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
