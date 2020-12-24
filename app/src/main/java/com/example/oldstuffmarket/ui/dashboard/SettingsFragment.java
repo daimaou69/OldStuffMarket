@@ -117,32 +117,6 @@ public class SettingsFragment extends Fragment {
 
         if(sUserName != ""){
 
-            databaseReference.child("MoneyIncome").addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    waitingList.add(snapshot.getValue(OrderData.class));
-                }
-
-                @Override
-                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                }
-
-                @Override
-                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
             databaseReference.child("ShopRegistration").addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -229,6 +203,34 @@ public class SettingsFragment extends Fragment {
                                 }
                                 else if(snapshot.getValue(OrderData.class).getNguoiBanID().equals(userID) && snapshot.getValue(OrderData.class).getTinhTrang() < 7){
                                     donBanArrayList.add(snapshot.getValue(OrderData.class));
+                                }
+                            }
+
+                            @Override
+                            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                        databaseReference.child("MoneyIncome").addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                if(snapshot.getValue(OrderData.class).getNguoiBanID().equals(userID)) {
+                                    waitingList.add(snapshot.getValue(OrderData.class));
                                 }
                             }
 
