@@ -69,7 +69,7 @@ public class Employee_AdminActivity extends AppCompatActivity {
             databaseReference.child("User").addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    if(snapshot.getValue(UserData.class).getiPermission() == 2 && snapshot.getValue(UserData.class).getiPermission() == 3){
+                    if(snapshot.getValue(UserData.class).getiPermission() == 2 || snapshot.getValue(UserData.class).getiPermission() == 3){
                         userDataArrayList.add(snapshot.getValue(UserData.class));
                     }
                 }
