@@ -88,38 +88,39 @@ public class QuanLyDanhMucActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        danhMucDataArrayList.clear();
-
-        databaseReference.child("DanhMuc").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                danhMucDataArrayList.add(snapshot.getValue(DanhMucData.class));
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
         if(getIntent().getExtras() != null){
             sUserName = getIntent().getExtras().getString("UserName");
 
+            danhMucDataArrayList.clear();
+
+            databaseReference.child("DanhMuc").addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    danhMucDataArrayList.add(snapshot.getValue(DanhMucData.class));
+                    danhMucLoad();
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         }
 
         final Handler handler = new Handler();
@@ -193,6 +194,7 @@ public class QuanLyDanhMucActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Toast.makeText(QuanLyDanhMucActivity.this, "Xóa danh mục thành công!", Toast.LENGTH_SHORT).show();
+
                                     }
                                 });
                                 databaseReference.child("SanPham").addChildEventListener(new ChildEventListener() {
