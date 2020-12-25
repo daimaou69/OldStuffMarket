@@ -71,7 +71,7 @@ public class Product_detail_ReportActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        if(getIntent().getExtras() != null) {
+        if (getIntent().getExtras() != null) {
             reportID = getIntent().getExtras().getString("ReportID");
             userName = getIntent().getExtras().getString("UserName");
             userID = getIntent().getExtras().getString("UserID");
@@ -172,7 +172,7 @@ public class Product_detail_ReportActivity extends AppCompatActivity {
                 }
             };
             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-            builder.setMessage("Bạn muốn hủy yêu cầu báo cáo?").setNegativeButton("No",dialogClick).setPositiveButton("Yes",dialogClick).show();
+            builder.setMessage("Bạn muốn hủy yêu cầu báo cáo?").setNegativeButton("No", dialogClick).setPositiveButton("Yes", dialogClick).show();
         }
     };
 
@@ -216,17 +216,9 @@ public class Product_detail_ReportActivity extends AppCompatActivity {
                                 @Override
                                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                                     if (snapshot.getValue(SanPham.class).getsID().equals(sanphamID)) {
-//                                        sanphamImage = snapshot.getValue(SanPham.class).getsSPImage();
-//                                        storageReference.child(sanphamImage + ".png").delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                            @Override
-//                                            public void onSuccess(Void aVoid) {
-//                                            }
-//                                        }).addOnFailureListener(new OnFailureListener() {
-//                                            @Override
-//                                            public void onFailure(@NonNull Exception exception) {
-//                                                Toast.makeText(v.getContext(), "Xoa hinh that bai", Toast.LENGTH_SHORT).show();
-//                                            }
-//                                        });
+                                        SanPham sanPham = new SanPham(snapshot.getValue(SanPham.class).getsID(), snapshot.getValue(SanPham.class).getsUserID(), snapshot.getValue(SanPham.class).getsShopID(), snapshot.getValue(SanPham.class).getsTenSP()
+                                                , snapshot.getValue(SanPham.class).getsSPImage(), snapshot.getValue(SanPham.class).getsMoTa(), snapshot.getValue(SanPham.class).getsDanhMuc(), snapshot.getValue(SanPham.class).getsNgayDang(), snapshot.getValue(SanPham.class).getsDiaChiDang()
+                                                , snapshot.getValue(SanPham.class).getlGiaTien(), snapshot.getValue(SanPham.class).getiSoLuong(), snapshot.getValue(SanPham.class).getiTinhTrang());
                                         databaseReference.child("SanPham").child(sanphamID).removeValue();
                                     }
                                 }
@@ -321,7 +313,7 @@ public class Product_detail_ReportActivity extends AppCompatActivity {
                 }
             };
             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-            builder.setMessage("Bạn chắc chắn muốn xóa sản phẩm?").setNegativeButton("No",dialogClick).setPositiveButton("Yes",dialogClick).show();
+            builder.setMessage("Bạn chắc chắn muốn xóa sản phẩm?").setNegativeButton("No", dialogClick).setPositiveButton("Yes", dialogClick).show();
         }
     };
 

@@ -91,6 +91,29 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="10dp">
+                <Button
+                    android:id="@+id/btnNotification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thông báo"
+                    android:textAllCaps="false" />
+                <TextView
+                    android:id="@+id/txtNotification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="x"
+                    android:textColor="#FFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    android:background="@drawable/shop_request_notification"/>
+            </LinearLayout>
             <Button
                 android:id="@+id/btnTaoLichHen"
                 android:layout_width="wrap_content"

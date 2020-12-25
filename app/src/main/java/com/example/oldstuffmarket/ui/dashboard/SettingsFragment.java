@@ -55,10 +55,10 @@ import java.util.ArrayList;
 public class SettingsFragment extends Fragment {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private SettingsViewModel dashboardViewModel;
-    private Button btnLogout, btnUploadPost, btnShop, btnWallet, btnLichHen, btnTaoLichHen, btnReceiveMoney, btnLichSuDonHang, btnLichSuDonBan, btnAccountInfo, btnDonMua, btnDonBan, btnPassWordChange, btnDanhGiaSP;
+    private Button btnLogout, btnUploadPost, btnShop, btnWallet, btnNotification, btnLichHen, btnTaoLichHen, btnReceiveMoney, btnLichSuDonHang, btnLichSuDonBan, btnAccountInfo, btnDonMua, btnDonBan, btnPassWordChange, btnDanhGiaSP;
     private ImageView imgAccount;
     private Intent intent;
-    private TextView txtAccountName, txtSpDaBan, txtDiemThanhVien, txtDonMuaNotify, txtDonBanNotify, txtDanhGiaSP, txtMoneyNotify, txtLichHen;
+    private TextView txtAccountName, txtSpDaBan, txtDiemThanhVien, txtNotification, txtDonMuaNotify, txtDonBanNotify, txtDanhGiaSP, txtMoneyNotify, txtLichHen;
     private String sUserName = UserMainActivity.sUserName, userID;
     private ArrayList<UserData> userDataArrayList = UserMainActivity.userDataArrayList;
     private ArrayList<ShopData> shopDataArrayList;
@@ -107,6 +107,8 @@ public class SettingsFragment extends Fragment {
         imgAccount = (ImageView) view.findViewById(R.id.imgAccount);
         btnReceiveMoney = (Button) view.findViewById(R.id.btnReceiveMoney);
         txtMoneyNotify = (TextView) view.findViewById(R.id.txtMoneyNotify);
+        btnNotification = (Button) view.findViewById(R.id.btnNotification);
+        txtNotification = (TextView) view.findViewById(R.id.txtNotification);
 
         shopDataArrayList = new ArrayList<>();
         donMuaArrayList = new ArrayList<>();
