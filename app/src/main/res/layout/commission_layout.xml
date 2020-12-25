@@ -85,6 +85,23 @@
                     android:inputType="number"
                     android:text="Thay Đổi"/>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hoa Hồng Shiper"
+                    android:textSize="20dp"
+                    android:layout_marginTop="40dp"/>
+                <EditText
+                    android:id="@+id/edtCommissionShipper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <Button
+                    android:id="@+id/btnChangeShipper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:text="Thay Đổi"/>
+
             </LinearLayout>
 
 

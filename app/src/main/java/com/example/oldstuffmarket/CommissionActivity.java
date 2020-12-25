@@ -25,10 +25,10 @@ import com.google.firebase.database.FirebaseDatabase;
 public class CommissionActivity extends AppCompatActivity {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-    private int commissionShop, commissionUser;
+    private int commissionShop, commissionUser, commissionShipper;
     private Intent intent;
-    private Button btnBack, btnChangeShop, btnChangeUser;
-    private EditText edtCommissionShop, edtCommissionUser;
+    private Button btnBack, btnChangeShop, btnChangeUser, btnChangeShipper;
+    private EditText edtCommissionShop, edtCommissionUser, edtCommissionShipper;
     private String userName;
 
     @Override
@@ -43,11 +43,14 @@ public class CommissionActivity extends AppCompatActivity {
         btnChangeUser = (Button) findViewById(R.id.btnChangeUser);
         edtCommissionShop = (EditText) findViewById(R.id.edtCommissionShop);
         edtCommissionUser = (EditText) findViewById(R.id.edtCommissionUser);
+        btnChangeShipper = (Button) findViewById(R.id.btnChangeShipper);
+        edtCommissionShipper = (EditText) findViewById(R.id.edtCommissionShipper);
 
 
         btnBack.setOnClickListener(backClick);
         btnChangeShop.setOnClickListener(changeShopClick);
         btnChangeUser.setOnClickListener(changeUserClick);
+        btnChangeShipper.setOnClickListener(changeShipperClick);
     }
 
     @Override
@@ -90,6 +93,55 @@ public class CommissionActivity extends AppCompatActivity {
             }
         });
     }
+
+    View.OnClickListener changeShipperClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if(edtCommissionShipper.getText().toString().isEmpty()){
+                edtCommissionShipper.setError("Không được để trống!");
+            }
+            else if (Integer.valueOf(edtCommissionShipper.getText().toString()) <= 0) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+                alert.setMessage("Không được nhập nhỏ hơn 0 hoặc bằng 0").setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                }).show();
+            }
+            else {
+                commissionShipper = Integer.valueOf(edtCommissionShipper.getText().toString());
+                databaseReference.child("Commission").child("-MKyZZdaQ3ucidlxPkUV").child("shipperCommission").setValue(commissionShipper);
+            }
+            databaseReference.child("User").addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    if (snapshot.getValue(UserData.class).getiPermission() == 4) {
+                        databaseReference.child("User").child(snapshot.getKey()).child("iCommission").setValue(commissionShipper);
+                    }
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+    };
 
     View.OnClickListener changeShopClick = new View.OnClickListener() {
         @Override
