@@ -41,6 +41,7 @@ public class ShipperMainActivity extends AppCompatActivity {
     private ImageView imgAccount;
     private String sUserName, userID;
     private Intent intent;
+    private int permission = 0;
     public static ArrayList<String> shipperList;
 
     @Override
@@ -147,6 +148,7 @@ public class ShipperMainActivity extends AppCompatActivity {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                     if(snapshot.getValue(UserData.class).getsUserName().equals(sUserName) && snapshot.getValue(UserData.class).getiPermission() == 3){
+                        permission = 3;
                         txtShipperAccountName.setText("Shipper - " + snapshot.getValue(UserData.class).getsFullName());
                         userID = snapshot.getValue(UserData.class).getsUserID();
                         if(!snapshot.getValue(UserData.class).getsImage().isEmpty()){
@@ -188,6 +190,7 @@ public class ShipperMainActivity extends AppCompatActivity {
                         });
                     }
                     else if(snapshot.getValue(UserData.class).getsUserName().equals(sUserName) && snapshot.getValue(UserData.class).getiPermission() == 4){
+                        permission = 4;
                         txtShipperAccountName.setText("Trưởng shipper: " + snapshot.getValue(UserData.class).getsFullName());
                         userID = snapshot.getValue(UserData.class).getsUserID();
                         if(!snapshot.getValue(UserData.class).getsImage().isEmpty()){
@@ -234,7 +237,7 @@ public class ShipperMainActivity extends AppCompatActivity {
                 else{
                     txtCacDonDangGiaoNotify.setVisibility(View.GONE);
                 }
-                if(donDaDongGoi.size() != 0){
+                if(donDaDongGoi.size() != 0 && permission == 4){
                     txtDanhSachDonHang.setVisibility(View.VISIBLE);
                     txtDanhSachDonHang.setText(String.valueOf(donDaDongGoi.size()));
                 }
