@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.example.oldstuffmarket.data_models.Comment;
 import com.example.oldstuffmarket.data_models.OrderData;
 import com.example.oldstuffmarket.data_models.ProductReport;
+import com.example.oldstuffmarket.data_models.RemoveProductData;
 import com.example.oldstuffmarket.data_models.SanPham;
 import com.example.oldstuffmarket.data_models.ShopData;
 import com.example.oldstuffmarket.data_models.UserData;
@@ -40,7 +41,7 @@ public class Product_detail_ReportActivity extends AppCompatActivity {
     private TextView txtTenSP, txtDiaChiDang, txtGiaSP, txtSoLuongSP, txtMoTaSP, txtLyDoReport;
     private Button btnDelete, btnBack, btnHome, btnHuy;
     private Intent intent;
-    private String userName, reportID, sanphamID, sanphamImage, userID;
+    private String userName, reportID, sanphamID, moTa, userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -188,6 +189,7 @@ public class Product_detail_ReportActivity extends AppCompatActivity {
                                 @Override
                                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                                     if (snapshot.getValue(ProductReport.class).getSanPham().getsID().equals(sanphamID)) {
+                                        moTa = snapshot.getValue(ProductReport.class).getLyDoBaoCao();
                                         databaseReference.child("ProductReport").child(snapshot.getKey()).removeValue();
                                     }
                                 }
@@ -216,9 +218,12 @@ public class Product_detail_ReportActivity extends AppCompatActivity {
                                 @Override
                                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                                     if (snapshot.getValue(SanPham.class).getsID().equals(sanphamID)) {
+                                        String id = databaseReference.push().getKey();
                                         SanPham sanPham = new SanPham(snapshot.getValue(SanPham.class).getsID(), snapshot.getValue(SanPham.class).getsUserID(), snapshot.getValue(SanPham.class).getsShopID(), snapshot.getValue(SanPham.class).getsTenSP()
                                                 , snapshot.getValue(SanPham.class).getsSPImage(), snapshot.getValue(SanPham.class).getsMoTa(), snapshot.getValue(SanPham.class).getsDanhMuc(), snapshot.getValue(SanPham.class).getsNgayDang(), snapshot.getValue(SanPham.class).getsDiaChiDang()
                                                 , snapshot.getValue(SanPham.class).getlGiaTien(), snapshot.getValue(SanPham.class).getiSoLuong(), snapshot.getValue(SanPham.class).getiTinhTrang());
+                                        RemoveProductData removeProductData = new RemoveProductData(id, moTa, sanPham);
+                                        databaseReference.child("DeletedProduct").child(id).setValue(removeProductData);
                                         databaseReference.child("SanPham").child(sanphamID).removeValue();
                                     }
                                 }
