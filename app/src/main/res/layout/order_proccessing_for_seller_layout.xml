@@ -177,6 +177,92 @@
                     android:text="@string/delivery"
                     android:enabled="false"/>
             </LinearLayout>
+            <TextView
+                android:id="@+id/txtChonNguoiGiaoHang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chọn người giao hàng:"
+                android:textColor="@color/red"
+                android:textStyle="bold"
+                android:visibility="gone"
+                android:textSize="20sp"
+                android:layout_marginBottom="5dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/edtShipperID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Shipper ID..."
+                    android:editable="false"
+                    android:visibility="gone"
+                    android:singleLine="true"
+                    android:layout_marginRight="30dp"/>
+                <Button
+                    android:id="@+id/btnTimShipper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tìm shipper"
+                    android:visibility="gone"
+                    android:enabled="false"
+                    android:textAllCaps="false"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="10dp">
+                <TextView
+                    android:id="@+id/txtShipperPhuTrach"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Shipper phụ trách: "
+                    android:textSize="25sp"
+                    android:visibility="gone"
+                    android:layout_marginBottom="10dp"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/txtShipperUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="User name: shipper"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="20sp"
+                    android:visibility="gone"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/txtHoTenShipper"
+                    android:layout_width="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_height="wrap_content"
+                    android:text="Họ tên shipper: Shipper Guy Ichigo"
+                    android:textSize="20sp"
+                    android:visibility="gone"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/txtSDTShipper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="Số điện thoại: 015616416513"
+                    android:textSize="20sp"
+                    android:visibility="gone"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/txtDiaChiShipper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="Địa chỉ shipper: Shipper Guy Ichigo"
+                    android:textSize="20sp"
+                    android:visibility="gone"
+                    android:textStyle="bold"/>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

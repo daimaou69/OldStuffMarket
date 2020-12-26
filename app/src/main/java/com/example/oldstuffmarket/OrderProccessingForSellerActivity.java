@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,9 +37,11 @@ public class OrderProccessingForSellerActivity extends AppCompatActivity {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     private ImageView imgSP;
-    private TextView txtTenSP, txtSoLuongSP, txtMaVanDon, txtGiaSP, txtHoTenNguoiMua, txtDiaChi, txtLienHe, txtTongGiaTriDonHang, txtShipperLabel, txtShipperName, txtShipperPhone;
+    private TextView txtChonNguoiGiaoHang, txtShipperPhuTrach, txtShipperUserName, txtHoTenShipper, txtSDTShipper, txtDiaChiShipper, txtTenSP, txtSoLuongSP, txtMaVanDon, txtGiaSP, txtHoTenNguoiMua, txtDiaChi, txtLienHe, txtTongGiaTriDonHang, txtShipperLabel, txtShipperName, txtShipperPhone;
     private CheckBox cbProccessing, cbPacking, cbDelivery;
-    private Button btnCancelOrder, btnBack;
+    private Button btnCancelOrder, btnBack, btnTimShipper;
+    private EditText edtShipperID;
+    private String shipperID;
     private String userName, userID, donHangID, nguoiMuaID, nguoiBanID;
     private int loaiDonHang;
     private long tongGiaTri;
@@ -52,6 +55,13 @@ public class OrderProccessingForSellerActivity extends AppCompatActivity {
         setContentView(R.layout.order_proccessing_for_seller_layout);
 
         imgSP = (ImageView) findViewById(R.id.imgSP);
+        edtShipperID = (EditText) findViewById(R.id.edtShipperID);
+        txtChonNguoiGiaoHang = (TextView) findViewById(R.id.txtChonNguoiGiaoHang);
+        txtShipperPhuTrach = (TextView) findViewById(R.id.txtShipperPhuTrach);
+        txtShipperUserName = (TextView) findViewById(R.id.txtShipperUserName);
+        txtHoTenShipper = (TextView) findViewById(R.id.txtHoTenShipper);
+        txtSDTShipper = (TextView) findViewById(R.id.txtSDTShipper);
+        txtDiaChiShipper = (TextView) findViewById(R.id.txtDiaChiShipper);
         txtTenSP = (TextView) findViewById(R.id.txtTenSP);
         txtSoLuongSP = (TextView) findViewById(R.id.txtSoLuongSP);
         txtGiaSP = (TextView) findViewById(R.id.txtGiaSP);
@@ -68,6 +78,22 @@ public class OrderProccessingForSellerActivity extends AppCompatActivity {
         cbDelivery = (CheckBox) findViewById(R.id.cbDelivery);
         btnCancelOrder = (Button) findViewById(R.id.btnCancelOrder);
         btnBack = (Button) findViewById(R.id.btnBack);
+        btnTimShipper = (Button) findViewById(R.id.btnTimShipper);
+
+
+
+        btnBack.setOnClickListener(backClick);
+        btnCancelOrder.setOnClickListener(cancelOrderClick);
+        btnTimShipper.setOnClickListener(timShipperClick);
+
+        cbDelivery.setOnCheckedChangeListener(deliveryCheck);
+        cbPacking.setOnCheckedChangeListener(packingCheck);
+        cbProccessing.setOnCheckedChangeListener(proccessingCheck);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         if(getIntent().getExtras() != null){
             userID = getIntent().getExtras().getString("UserID");
@@ -83,6 +109,55 @@ public class OrderProccessingForSellerActivity extends AppCompatActivity {
                         loaiDonHang = snapshot.getValue(OrderData.class).getLoaiDonHang();
                         tongGiaTri = snapshot.getValue(OrderData.class).getGiaTien();
 
+                        if(!snapshot.getValue(OrderData.class).getShipperID().isEmpty()){
+                            edtShipperID.setText(snapshot.getValue(OrderData.class).getShipperID());
+                            shipperID = snapshot.getValue(OrderData.class).getShipperID();
+
+                            txtShipperPhuTrach.setVisibility(View.VISIBLE);
+                            txtShipperUserName.setVisibility(View.VISIBLE);
+                            txtHoTenShipper.setVisibility(View.VISIBLE);
+                            txtSDTShipper.setVisibility(View.VISIBLE);
+                            txtDiaChiShipper.setVisibility(View.VISIBLE);
+
+                            databaseReference.child("User").addChildEventListener(new ChildEventListener() {
+                                @Override
+                                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                    if(snapshot.getValue(UserData.class).getsUserID().equals(shipperID)){
+                                        txtShipperUserName.setText("User name: " + snapshot.getValue(UserData.class).getsUserName());
+                                        txtHoTenShipper.setText("Họ tên: " + snapshot.getValue(UserData.class).getsFullName());
+                                        txtSDTShipper.setText("Số điện thoại: " + snapshot.getValue(UserData.class).getsSdt());
+                                        txtDiaChiShipper.setText("Địa chỉ: " + snapshot.getValue(UserData.class).getsDiaChi());
+                                    }
+                                }
+
+                                @Override
+                                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                }
+
+                                @Override
+                                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                }
+
+                                @Override
+                                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        }
+
+                        if(snapshot.getValue(OrderData.class).getTinhTrang() >= 3){
+                            btnTimShipper.setEnabled(true);
+                            txtChonNguoiGiaoHang.setVisibility(View.VISIBLE);
+                            edtShipperID.setVisibility(View.VISIBLE);
+                            btnTimShipper.setVisibility(View.VISIBLE);
+                        }
                         storageReference.child(snapshot.getValue(OrderData.class).getSanPham().getsSPImage() + ".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
@@ -213,14 +288,20 @@ public class OrderProccessingForSellerActivity extends AppCompatActivity {
                 }
             });
         }
-
-        btnBack.setOnClickListener(backClick);
-        btnCancelOrder.setOnClickListener(cancelOrderClick);
-
-        cbDelivery.setOnCheckedChangeListener(deliveryCheck);
-        cbPacking.setOnCheckedChangeListener(packingCheck);
-        cbProccessing.setOnCheckedChangeListener(proccessingCheck);
     }
+
+    View.OnClickListener timShipperClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            intent = new Intent(v.getContext(), ShipperSelectingActivity.class);
+            intent.putExtra("UserID", userID);
+            intent.putExtra("UserName", userName);
+            intent.putExtra("DonHangID", donHangID);
+            intent.putExtra("ShipperID", shipperID);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        }
+    };
 
     CompoundButton.OnCheckedChangeListener deliveryCheck = new CompoundButton.OnCheckedChangeListener() {
         @Override
@@ -232,7 +313,7 @@ public class OrderProccessingForSellerActivity extends AppCompatActivity {
                         switch (which){
                             case DialogInterface.BUTTON_POSITIVE:
                                 cbDelivery.setEnabled(false);
-
+                                btnTimShipper.setEnabled(true);
                                 databaseReference.child("DonHang").addChildEventListener(new ChildEventListener() {
                                     @Override
                                     public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -409,6 +490,12 @@ public class OrderProccessingForSellerActivity extends AppCompatActivity {
                                                     snapshot.getValue(OrderData.class).getDiaChi(), snapshot.getValue(OrderData.class).getSanPham(), snapshot.getValue(OrderData.class).getLoaiDonHang(), -1, snapshot.getValue(OrderData.class).getSellerCommission(), snapshot.getValue(OrderData.class).getGiaTien(), snapshot.getValue(OrderData.class).getShipperID());
                                             databaseReference.child("LichSuGiaoDich").child(donHangID).setValue(orderUpdate);
                                             databaseReference.child("DonHang").child(donHangID).removeValue();
+
+                                            if(!shipperID.isEmpty()){
+                                                databaseReference.child("Shipper").child(shipperID).child(donHangID).removeValue();
+                                            }
+
+
                                             finish();
                                             intent = new Intent(v.getContext(), DonBanActivity.class);
                                             intent.putExtra("UserName", userName);
@@ -499,6 +586,10 @@ public class OrderProccessingForSellerActivity extends AppCompatActivity {
 
                                                 }
                                             });
+
+                                            if(!shipperID.isEmpty()){
+                                                databaseReference.child("Shipper").child(shipperID).child(donHangID).removeValue();
+                                            }
 
                                             Handler handler = new Handler();
                                             int delay = 1500;

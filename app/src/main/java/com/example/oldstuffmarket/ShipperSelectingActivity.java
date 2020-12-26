@@ -18,6 +18,8 @@ import android.widget.EditText;
 import android.widget.GridView;
 
 import com.example.oldstuffmarket.adapter.ShipperAdapter;
+import com.example.oldstuffmarket.data_models.OrderData;
+import com.example.oldstuffmarket.data_models.SanPham;
 import com.example.oldstuffmarket.data_models.UserData;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -34,7 +36,7 @@ public class ShipperSelectingActivity extends AppCompatActivity {
     private Button btnBack;
     private EditText edtFind;
     private Intent intent;
-    private String userName, userID, donHangID;
+    private String userName, userID, donHangID, shipperID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +60,95 @@ public class ShipperSelectingActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which){
                             case DialogInterface.BUTTON_POSITIVE:
-                                finish();
-                                intent = new Intent(view.getContext(), ShipperDetailDonDaDongGoiActivity.class);
-                                intent.putExtra("UserName", userName);
-                                intent.putExtra("UserID", userID);
-                                intent.putExtra("ShipperUserName", userDataArrayList.get(position).getsUserName());
-                                intent.putExtra("DonHangID", donHangID);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                                startActivity(intent);
+
+                                databaseReference.child("DonHang").addChildEventListener(new ChildEventListener() {
+                                    @Override
+                                    public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                        if(snapshot.getValue(OrderData.class).getDonHangID().equals(donHangID)){
+                                            String donHangID = snapshot.getValue(OrderData.class).getDonHangID();
+                                            String nguoiMuaID = snapshot.getValue(OrderData.class).getNguoiMuaID();
+                                            String nguoiBanID = snapshot.getValue(OrderData.class).getNguoiBanID();
+                                            String ngayTaoDon = snapshot.getValue(OrderData.class).getNgayTaoDonHang();
+                                            String sdt = snapshot.getValue(OrderData.class).getSoDienThoai();
+                                            String diaChi = snapshot.getValue(OrderData.class).getDiaChi();
+                                            SanPham sanPham = snapshot.getValue(OrderData.class).getSanPham();
+                                            int loaiDonHang = snapshot.getValue(OrderData.class).getLoaiDonHang();
+                                            int sellerCommission = snapshot.getValue(OrderData.class).getSellerCommission();
+                                            long giaTien = snapshot.getValue(OrderData.class).getGiaTien();
+
+
+                                            if(!shipperID.isEmpty() && !shipperID.equals(userDataArrayList.get(position).getsUserID())){
+                                                databaseReference.child("Shipper").child(shipperID).child(donHangID).removeValue();
+                                            }
+
+
+                                            databaseReference.child("User").addChildEventListener(new ChildEventListener() {
+                                                @Override
+                                                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                                    if(snapshot.getValue(UserData.class).getsUserID().equals(userDataArrayList.get(position).getsUserID())){
+
+                                                        OrderData orderData = new OrderData(donHangID, nguoiMuaID, nguoiBanID,
+                                                                ngayTaoDon, sdt, diaChi,
+                                                                sanPham, loaiDonHang, 4, sellerCommission, giaTien, snapshot.getValue(UserData.class).getsUserID());
+
+                                                        databaseReference.child("DonHang").child(donHangID).setValue(orderData);
+
+                                                        databaseReference.child("Shipper").child(snapshot.getValue(UserData.class).getsUserID()).child(donHangID).setValue(orderData);
+
+                                                        finish();
+                                                        intent = new Intent(view.getContext(), OrderProccessingForSellerActivity.class);
+                                                        intent.putExtra("UserName", userName);
+                                                        intent.putExtra("UserID", userID);
+                                                        intent.putExtra("DonHangID", donHangID);
+                                                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                                                        startActivity(intent);
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                                }
+
+                                                @Override
+                                                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                                }
+
+                                                @Override
+                                                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                }
+                                            });
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                    }
+
+                                    @Override
+                                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                    }
+
+                                    @Override
+                                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
                                 return;
@@ -73,7 +156,7 @@ public class ShipperSelectingActivity extends AppCompatActivity {
                     }
                 };
                 AlertDialog.Builder alert = new AlertDialog.Builder(view.getContext());
-                alert.setMessage("Bạn chọn shipper " + userDataArrayList.get(position).getsFullName() + "?").setPositiveButton("Yes", dialog).setNegativeButton("No", dialog).show();
+                alert.setMessage("Bạn chọn giao đơn hàng cho shipper " + userDataArrayList.get(position).getsFullName() + "?").setPositiveButton("Yes", dialog).setNegativeButton("No", dialog).show();
 
             }
         });
@@ -171,6 +254,7 @@ public class ShipperSelectingActivity extends AppCompatActivity {
             userName = getIntent().getExtras().getString("UserName");
             userID = getIntent().getExtras().getString("UserID");
             donHangID = getIntent().getExtras().getString("DonHangID");
+            shipperID = getIntent().getExtras().getString("ShipperID");
 
             databaseReference.child("User").addChildEventListener(new ChildEventListener() {
                 @Override
@@ -208,10 +292,10 @@ public class ShipperSelectingActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             finish();
-            intent = new Intent(v.getContext(), ShipperDetailDonDaDongGoiActivity.class);
+            intent = new Intent(v.getContext(), OrderProccessingForSellerActivity.class);
             intent.putExtra("UserName", userName);
             intent.putExtra("UserID", userID);
-            intent.putExtra("ShipperUserName", "");
+            intent.putExtra("ShipperID", "");
             intent.putExtra("DonHangID", donHangID);
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
