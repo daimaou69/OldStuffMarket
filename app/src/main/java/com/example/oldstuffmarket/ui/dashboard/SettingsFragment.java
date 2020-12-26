@@ -26,6 +26,7 @@ import com.example.oldstuffmarket.LichHenActivity;
 import com.example.oldstuffmarket.LoginActivity;
 import com.example.oldstuffmarket.PasswordChangeActivity;
 import com.example.oldstuffmarket.R;
+import com.example.oldstuffmarket.RemoveProductActivity;
 import com.example.oldstuffmarket.ShopRegistrationActivity;
 import com.example.oldstuffmarket.UserTaoLichHenActivity;
 import com.example.oldstuffmarket.UserCommentNeedsActivity;
@@ -38,6 +39,7 @@ import com.example.oldstuffmarket.UserWaitingForMoneyActivity;
 import com.example.oldstuffmarket.WalletUserActivity;
 import com.example.oldstuffmarket.data_models.Appointment;
 import com.example.oldstuffmarket.data_models.OrderData;
+import com.example.oldstuffmarket.data_models.RemoveProductData;
 import com.example.oldstuffmarket.data_models.ShopData;
 import com.example.oldstuffmarket.data_models.UserData;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -67,6 +69,7 @@ public class SettingsFragment extends Fragment {
     private ArrayList<OrderData> danhGiaSPList;
     private ArrayList<OrderData> waitingList;
     private ArrayList<Appointment> appointmentArrayList;
+    private ArrayList<RemoveProductData> removeProductDataArrayList;
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     private int diemThanhVien = 0;
     private String shopID;
@@ -116,8 +119,9 @@ public class SettingsFragment extends Fragment {
         danhGiaSPList = new ArrayList<>();
         waitingList = new ArrayList<>();
         appointmentArrayList = new ArrayList<>();
+        removeProductDataArrayList = new ArrayList<>();
 
-        if(sUserName != ""){
+        if (sUserName != "") {
 
             databaseReference.child("ShopRegistration").addChildEventListener(new ChildEventListener() {
                 @Override
@@ -148,7 +152,7 @@ public class SettingsFragment extends Fragment {
             databaseReference.child("User").addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    if(snapshot.getValue(UserData.class).getsUserName().equals(sUserName)){
+                    if (snapshot.getValue(UserData.class).getsUserName().equals(sUserName)) {
                         txtAccountName.setText(snapshot.getValue(UserData.class).getsFullName());
                         btnWallet.setText("Ví điện tử: " + String.valueOf(snapshot.getValue(UserData.class).getlMoney()) + "vnđ");
                         txtSpDaBan.setText("Số sản phẩm đã bán: " + String.valueOf(snapshot.getValue(UserData.class).getiSoSPDaBan()));
@@ -156,7 +160,7 @@ public class SettingsFragment extends Fragment {
                         shopID = snapshot.getValue(UserData.class).getsShopID();
                         userID = snapshot.getValue(UserData.class).getsUserID();
                         diemThanhVien = snapshot.getValue(UserData.class).getiAccPoint();
-                        if(!snapshot.getValue(UserData.class).getsImage().isEmpty()){
+                        if (!snapshot.getValue(UserData.class).getsImage().isEmpty()) {
                             storageReference.child(snapshot.getValue(UserData.class).getsImage() + ".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
@@ -169,10 +173,38 @@ public class SettingsFragment extends Fragment {
                                 }
                             });
                         }
+                        databaseReference.child("DeletedProduct").addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                if (snapshot.getValue(RemoveProductData.class).getSanPham().getsUserID().equals(userID)) {
+                                    removeProductDataArrayList.add(snapshot.getValue(RemoveProductData.class));
+                                }
+                            }
+
+                            @Override
+                            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
                         databaseReference.child("CommentNeeds").addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                                if(snapshot.getValue(OrderData.class).getNguoiMuaID().equals(userID)){
+                                if (snapshot.getValue(OrderData.class).getNguoiMuaID().equals(userID)) {
                                     danhGiaSPList.add(snapshot.getValue(OrderData.class));
                                 }
                             }
@@ -200,10 +232,9 @@ public class SettingsFragment extends Fragment {
                         databaseReference.child("DonHang").addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                                if(snapshot.getValue(OrderData.class).getNguoiMuaID().equals(userID)){
+                                if (snapshot.getValue(OrderData.class).getNguoiMuaID().equals(userID)) {
                                     donMuaArrayList.add(snapshot.getValue(OrderData.class));
-                                }
-                                else if(snapshot.getValue(OrderData.class).getNguoiBanID().equals(userID) && snapshot.getValue(OrderData.class).getTinhTrang() < 7){
+                                } else if (snapshot.getValue(OrderData.class).getNguoiBanID().equals(userID) && snapshot.getValue(OrderData.class).getTinhTrang() < 7) {
                                     donBanArrayList.add(snapshot.getValue(OrderData.class));
                                 }
                             }
@@ -231,7 +262,7 @@ public class SettingsFragment extends Fragment {
                         databaseReference.child("MoneyIncome").addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                                if(snapshot.getValue(OrderData.class).getNguoiBanID().equals(userID)) {
+                                if (snapshot.getValue(OrderData.class).getNguoiBanID().equals(userID)) {
                                     waitingList.add(snapshot.getValue(OrderData.class));
                                 }
                             }
@@ -282,7 +313,7 @@ public class SettingsFragment extends Fragment {
             databaseReference.child("Appointment").addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    if(snapshot.getValue(Appointment.class).getNguoiDuocHenID().equals(userID) || snapshot.getValue(Appointment.class).getNguoiHenID().equals(userID)){
+                    if (snapshot.getValue(Appointment.class).getNguoiDuocHenID().equals(userID) || snapshot.getValue(Appointment.class).getNguoiHenID().equals(userID)) {
                         appointmentArrayList.add(snapshot.getValue(Appointment.class));
                     }
                 }
@@ -307,9 +338,8 @@ public class SettingsFragment extends Fragment {
 
                 }
             });
-        }
-        else {
-            Toast.makeText(view.getContext(),"Không nhận được dữ liệu!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(view.getContext(), "Không nhận được dữ liệu!", Toast.LENGTH_SHORT).show();
         }
 
         btnLogout.setOnClickListener(logoutClick);
@@ -326,37 +356,53 @@ public class SettingsFragment extends Fragment {
         btnReceiveMoney.setOnClickListener(choNhanTienClick);
         btnTaoLichHen.setOnClickListener(taoLichHenClick);
         btnLichHen.setOnClickListener(lichHenClick);
+        btnNotification.setOnClickListener(notificationClick);
 
         Handler handler = new Handler();
         int delay = 1000;
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(donMuaArrayList.size() != 0){
+                if (donMuaArrayList.size() != 0) {
                     txtDonMuaNotify.setVisibility(View.VISIBLE);
                     txtDonMuaNotify.setText(String.valueOf(donMuaArrayList.size()));
                 }
-                if(donBanArrayList.size() != 0){
+                if (donBanArrayList.size() != 0) {
                     txtDonBanNotify.setVisibility(View.VISIBLE);
                     txtDonBanNotify.setText(String.valueOf(donBanArrayList.size()));
                 }
-                if(danhGiaSPList.size() != 0){
+                if (danhGiaSPList.size() != 0) {
                     txtDanhGiaSP.setVisibility(View.VISIBLE);
                     txtDanhGiaSP.setText(String.valueOf(danhGiaSPList.size()));
                 }
-                if(waitingList.size() != 0){
+                if (waitingList.size() != 0) {
                     txtMoneyNotify.setVisibility(View.VISIBLE);
                     txtMoneyNotify.setText(String.valueOf(waitingList.size()));
                 }
-                if(appointmentArrayList.size() != 0){
+                if (appointmentArrayList.size() != 0) {
                     txtLichHen.setVisibility(View.VISIBLE);
                     txtLichHen.setText(String.valueOf(appointmentArrayList.size()));
+                }
+                if (removeProductDataArrayList.size() != 0) {
+                    txtNotification.setVisibility(View.VISIBLE);
+                    txtNotification.setText(String.valueOf(removeProductDataArrayList.size()));
                 }
             }
         }, delay);
 
         return view;
     }
+
+    View.OnClickListener notificationClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            intent = new Intent(v.getContext(), RemoveProductActivity.class);
+            intent.putExtra("UserName", sUserName);
+            intent.putExtra("UserID", userID);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        }
+    };
 
     View.OnClickListener lichHenClick = new View.OnClickListener() {
         @Override
@@ -462,9 +508,9 @@ public class SettingsFragment extends Fragment {
         }
     };
 
-    public boolean shopRegistrationCheck(ArrayList<ShopData> shopDataArrayList, String shopID){
-        for(ShopData shopData : shopDataArrayList){
-            if(shopData.getShopID().equals(shopID)){
+    public boolean shopRegistrationCheck(ArrayList<ShopData> shopDataArrayList, String shopID) {
+        for (ShopData shopData : shopDataArrayList) {
+            if (shopData.getShopID().equals(shopID)) {
                 return false;
             }
         }
@@ -474,7 +520,7 @@ public class SettingsFragment extends Fragment {
     View.OnClickListener shopClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(diemThanhVien < 20 && shopID.isEmpty()){
+            if (diemThanhVien < 20 && shopID.isEmpty()) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
                 alert.setMessage("Bạn chưa đủ điều kiện tạo shop!").setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
@@ -482,8 +528,7 @@ public class SettingsFragment extends Fragment {
 
                     }
                 }).show();
-            }
-            else if(shopRegistrationCheck(shopDataArrayList, shopID) == false){
+            } else if (shopRegistrationCheck(shopDataArrayList, shopID) == false) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
                 alert.setMessage("Yêu cầu tạo shop đang được xử lý!").setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
@@ -491,12 +536,11 @@ public class SettingsFragment extends Fragment {
 
                     }
                 }).show();
-            }
-            else if(diemThanhVien >= 20 && shopID.isEmpty()){
+            } else if (diemThanhVien >= 20 && shopID.isEmpty()) {
                 DialogInterface.OnClickListener dialogClick = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        switch (which){
+                        switch (which) {
                             case DialogInterface.BUTTON_POSITIVE:
                                 intent = new Intent(v.getContext(), ShopRegistrationActivity.class);
                                 intent.putExtra("UserName", sUserName);
@@ -511,7 +555,7 @@ public class SettingsFragment extends Fragment {
                     }
                 };
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                builder.setMessage("Bạn chưa đăng ký shop, tiến hành đăng ký?").setNegativeButton("No",dialogClick).setPositiveButton("Yes",dialogClick).show();
+                builder.setMessage("Bạn chưa đăng ký shop, tiến hành đăng ký?").setNegativeButton("No", dialogClick).setPositiveButton("Yes", dialogClick).show();
             }
 //            else if(shopActiveCheck(shopDataArrayList, shopID) == 3){
 //                AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
@@ -522,12 +566,12 @@ public class SettingsFragment extends Fragment {
 //                    }
 //                }).show();
 //            }
-            else if(!shopID.isEmpty()){
+            else if (!shopID.isEmpty()) {
                 databaseReference.child("Shop").addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                        if(snapshot.getValue(ShopData.class).getShopID().equals(shopID)){
-                            if(snapshot.getValue(ShopData.class).getTinhTrangShop() == -1){
+                        if (snapshot.getValue(ShopData.class).getShopID().equals(shopID)) {
+                            if (snapshot.getValue(ShopData.class).getTinhTrangShop() == -1) {
                                 AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
                                 alert.setMessage("Shop bạn đã bị khóa do điểm thành viên <20!").setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     @Override
@@ -535,8 +579,7 @@ public class SettingsFragment extends Fragment {
 
                                     }
                                 }).show();
-                            }
-                            else if(snapshot.getValue(ShopData.class).getTinhTrangShop() == 1){
+                            } else if (snapshot.getValue(ShopData.class).getTinhTrangShop() == 1) {
 //                                Toast.makeText(v.getContext(), "Bạn đã tạo shop thành công!", Toast.LENGTH_SHORT).show();
                                 intent = new Intent(v.getContext(), UserShopActivity.class);
                                 intent.putExtra("UserName", sUserName);
@@ -606,7 +649,7 @@ public class SettingsFragment extends Fragment {
             DialogInterface.OnClickListener dialogClick = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    switch (which){
+                    switch (which) {
                         case DialogInterface.BUTTON_POSITIVE:
                             intent = new Intent(v.getContext(), LoginActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -619,7 +662,7 @@ public class SettingsFragment extends Fragment {
                 }
             };
             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-            builder.setMessage("Bạn muốn đăng xuất?").setNegativeButton("No",dialogClick).setPositiveButton("Yes",dialogClick).show();
+            builder.setMessage("Bạn muốn đăng xuất?").setNegativeButton("No", dialogClick).setPositiveButton("Yes", dialogClick).show();
         }
     };
 }

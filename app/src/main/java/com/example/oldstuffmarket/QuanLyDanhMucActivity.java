@@ -359,7 +359,6 @@ public class QuanLyDanhMucActivity extends AppCompatActivity {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                     danhMucDataArrayList.add(snapshot.getValue(DanhMucData.class));
-//                danhMucLoad();
                 }
 
                 @Override

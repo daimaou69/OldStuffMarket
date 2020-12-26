@@ -115,7 +115,7 @@ public class CommissionActivity extends AppCompatActivity {
             databaseReference.child("User").addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    if (snapshot.getValue(UserData.class).getiPermission() == 4) {
+                    if (snapshot.getValue(UserData.class).getiPermission() == 3) {
                         databaseReference.child("User").child(snapshot.getKey()).child("iCommission").setValue(commissionShipper);
                     }
                 }

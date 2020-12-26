@@ -1,22 +1,30 @@
 package com.example.oldstuffmarket.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 
 import com.bumptech.glide.Glide;
 import com.example.oldstuffmarket.R;
-import com.example.oldstuffmarket.data_models.SanPham;
+import com.example.oldstuffmarket.data_models.RemoveProductData;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -26,17 +34,17 @@ public class NotificationAdapter extends BaseAdapter {
 
     private Context context;
     private int layout;
-    private ArrayList<SanPham> sanPhamArrayList;
+    private ArrayList<RemoveProductData> removeProductDataArrayList;
 
-    public NotificationAdapter(Context context, int layout, ArrayList<SanPham> sanPhamArrayList) {
+    public NotificationAdapter(Context context, int layout, ArrayList<RemoveProductData> removeProductDataArrayList) {
         this.context = context;
         this.layout = layout;
-        this.sanPhamArrayList = sanPhamArrayList;
+        this.removeProductDataArrayList = removeProductDataArrayList;
     }
 
     @Override
     public int getCount() {
-        return sanPhamArrayList.size();
+        return removeProductDataArrayList.size();
     }
 
     @Override
@@ -50,8 +58,8 @@ public class NotificationAdapter extends BaseAdapter {
     }
 
     class ViewHolder{
-        ImageView imgSP;
-        TextView txtTenSP, txtNgayDang, txtGiaSP, txtDanhMuc;
+        ImageView imgSp;
+        TextView txtTenSp, btnSeen;
     }
 
     @Override
@@ -63,55 +71,70 @@ public class NotificationAdapter extends BaseAdapter {
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(layout, null);
 
-            viewHolder.imgSP = (ImageView) convertView.findViewById(R.id.imgSP);
-            viewHolder.txtGiaSP = (TextView) convertView.findViewById(R.id.txtGiaSP);
-            viewHolder.txtTenSP = (TextView) convertView.findViewById(R.id.txtTenSP);
-            viewHolder.txtDanhMuc = (TextView) convertView.findViewById(R.id.txtDanhMuc);
-            viewHolder.txtNgayDang = (TextView) convertView.findViewById(R.id.txtNgayDang);
+            viewHolder.imgSp = (ImageView) convertView.findViewById(R.id.imgSp);
+            viewHolder.txtTenSp = (TextView) convertView.findViewById(R.id.txtTenSp);
+            viewHolder.btnSeen = (Button) convertView.findViewById(R.id.btnSeen);
             convertView.setTag(viewHolder);
         }
         else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        SanPham sanPham = sanPhamArrayList.get(position);
+        RemoveProductData removeProductData = removeProductDataArrayList.get(position);
 
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-        storageReference.child(sanPham.getsSPImage() + ".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storageReference.child(removeProductData.getSanPham().getsSPImage() + ".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Glide.with(context).load(uri).into(viewHolder.imgSP);
+                Glide.with(context).load(uri).into(viewHolder.imgSp);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-//                Toast.makeText(context, "Hinh anh khong ton tai!", Toast.LENGTH_SHORT).show();
             }
         });
+        viewHolder.txtTenSp.setText("Tên sản phẩm: " + removeProductData.getSanPham().getsTenSP());
+        viewHolder.btnSeen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogInterface.OnClickListener dialog = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        databaseReference.child("DeletedProduct").addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                if (snapshot.getValue(RemoveProductData.class).getSanPham().getsUserID().equals(removeProductData.getSanPham().getsUserID())) {
+                                    databaseReference.child("DeletedProduct").child(snapshot.getKey()).removeValue();
+                                }
+                            }
 
-        viewHolder.txtNgayDang.setText("Ngày đăng: " + sanPham.getsNgayDang());
+                            @Override
+                            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
-        if(sanPham.getiTinhTrang() == 0){
+                            }
 
-            viewHolder.txtTenSP.setText(sanPham.getsTenSP() + " - New");
-        }
-        else {
-            viewHolder.txtTenSP.setText(sanPham.getsTenSP() + " - 2nd");
-        }
+                            @Override
+                            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
 
-        if(sanPham.getiSoLuong() == 0){
+                            }
 
-            viewHolder.txtDanhMuc.setText("Hết hàng");
-            viewHolder.txtDanhMuc.setTextColor(Color.RED);
-        }
-        else{
+                            @Override
+                            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
-            viewHolder.txtDanhMuc.setText(sanPham.getsDanhMuc());
-        }
+                            }
 
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
 
-        viewHolder.txtGiaSP.setText(String.valueOf(sanPham.getlGiaTien()) + "vnđ");
-
+                            }
+                        });
+                    }
+                };
+                AlertDialog.Builder alert = new AlertDialog.Builder(view.getContext());
+                alert.setMessage("Bạn đã xem thông báo này!").setNegativeButton("No", dialog).setPositiveButton("Yes", dialog).show();
+            }
+        });
         return convertView;
     }
 }

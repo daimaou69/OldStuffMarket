@@ -5,7 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RemoveProductActivity">
+    tools:context=".RemoveProductActivity"
+    android:background="@mipmap/app_background"
+    android:padding="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,6 +51,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/Back"/>
+
+            <Button
+                android:layout_marginLeft="40dp"
+                android:id="@+id/btnClear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Refesh"/>
         </LinearLayout>
     </LinearLayout>
 
