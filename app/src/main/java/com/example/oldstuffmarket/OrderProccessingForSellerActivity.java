@@ -41,7 +41,7 @@ public class OrderProccessingForSellerActivity extends AppCompatActivity {
     private CheckBox cbProccessing, cbPacking, cbDelivery;
     private Button btnCancelOrder, btnBack, btnTimShipper;
     private EditText edtShipperID;
-    private String shipperID;
+    private String shipperID = "";
     private String userName, userID, donHangID, nguoiMuaID, nguoiBanID;
     private int loaiDonHang;
     private long tongGiaTri;
@@ -298,7 +298,6 @@ public class OrderProccessingForSellerActivity extends AppCompatActivity {
             intent.putExtra("UserName", userName);
             intent.putExtra("DonHangID", donHangID);
             intent.putExtra("ShipperID", shipperID);
-            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         }
     };
