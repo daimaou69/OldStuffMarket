@@ -84,7 +84,7 @@ public class AppointmentAdapter extends BaseAdapter {
                         viewHolder.txtNguoiHen.setText("Bạn hẹn gặp " + snapshot.getValue(UserData.class).getsFullName() + " vào ngày " + appointment.getNgayHen());
 
                         if(appointment.getMoTaCuocHen().length() > 30){
-                            viewHolder.txtChiTiet.setText("Chi tiết: " + appointment.getMoTaCuocHen().substring(0, 30) + "..." + " - Liên hệ: " + snapshot.getValue(UserData.class).getsSdt());
+                            viewHolder.txtChiTiet.setText("Chi tiết: " + appointment.getMoTaCuocHen().substring(0, 28) + "..." + " - Liên hệ: " + snapshot.getValue(UserData.class).getsSdt());
                         }
                         else{
                             viewHolder.txtChiTiet.setText("Chi tiết: " + appointment.getMoTaCuocHen() + " - Liên hệ: " + snapshot.getValue(UserData.class).getsSdt());

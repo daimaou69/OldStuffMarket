@@ -151,7 +151,7 @@ public class UserTaoLichHenActivity extends AppCompatActivity {
                         switch (which){
                             case DialogInterface.BUTTON_POSITIVE:
                                 String appointmentID = databaseReference.push().getKey();
-                                Appointment appointment = new Appointment(appointmentID, edtTieuDe.getText().toString(), edtNgayHen.getText().toString(), edtChiTietCuocHen.getText().toString(), userID, nguoiCanGapID);
+                                Appointment appointment = new Appointment(appointmentID, edtTieuDe.getText().toString(), edtNgayHen.getText().toString(), edtChiTietCuocHen.getText().toString(), userID, nguoiCanGapID, true);
 
                                 databaseReference.child("Appointment").child(appointmentID).setValue(appointment);
 

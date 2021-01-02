@@ -186,7 +186,7 @@ public class UserEditAppointmentActivity extends AppCompatActivity {
                                         public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                                             if (snapshot.getValue(Appointment.class).getAppointmentID().equals(appointmentID)) {
 
-                                                Appointment appointment = new Appointment(appointmentID, edtTieuDe.getText().toString(), edtNgayHen.getText().toString(), edtChiTietCuocHen.getText().toString(), snapshot.getValue(Appointment.class).getNguoiHenID(), snapshot.getValue(Appointment.class).getNguoiDuocHenID());
+                                                Appointment appointment = new Appointment(appointmentID, edtTieuDe.getText().toString(), edtNgayHen.getText().toString(), edtChiTietCuocHen.getText().toString(), snapshot.getValue(Appointment.class).getNguoiHenID(), snapshot.getValue(Appointment.class).getNguoiDuocHenID(), true);
 
                                                 databaseReference.child("Appointment").child(appointmentID).setValue(appointment);
                                             }

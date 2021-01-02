@@ -96,7 +96,7 @@ public class LichHenActivity extends AppCompatActivity {
             databaseReference.child("Appointment").addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    if(snapshot.getValue(Appointment.class).getNguoiDuocHenID().equals(userID) || snapshot.getValue(Appointment.class).getNguoiHenID().equals(userID)){
+                    if((snapshot.getValue(Appointment.class).getNguoiDuocHenID().equals(userID) && snapshot.getValue(Appointment.class).isActive()) || snapshot.getValue(Appointment.class).getNguoiHenID().equals(userID)){
                         appointmentArrayList.add(snapshot.getValue(Appointment.class));
                     }
                     appointmentLoad();

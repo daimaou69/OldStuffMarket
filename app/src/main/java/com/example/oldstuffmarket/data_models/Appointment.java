@@ -7,17 +7,27 @@ public class Appointment {
     private String moTaCuocHen;
     private String nguoiHenID;
     private String nguoiDuocHenID;
+    private boolean active;
 
     public Appointment() {
     }
 
-    public Appointment(String appointmentID, String tieuDe, String ngayHen, String moTaCuocHen, String nguoiHenID, String nguoiDuocHenID) {
+    public Appointment(String appointmentID, String tieuDe, String ngayHen, String moTaCuocHen, String nguoiHenID, String nguoiDuocHenID, boolean active) {
         this.appointmentID = appointmentID;
         this.tieuDe = tieuDe;
         this.ngayHen = ngayHen;
         this.moTaCuocHen = moTaCuocHen;
         this.nguoiHenID = nguoiHenID;
         this.nguoiDuocHenID = nguoiDuocHenID;
+        this.active = active;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public String getTieuDe() {
