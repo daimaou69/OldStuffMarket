@@ -30,7 +30,7 @@ public class ShipperLichSuDonGiaoActivity extends AppCompatActivity {
     private EditText edtFind;
     private Intent intent;
     private ArrayList<OrderData> orderDataArrayList;
-    private String userName, userID;
+    private String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,6 @@ public class ShipperLichSuDonGiaoActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 intent = new Intent(view.getContext(), ShipperLichSuChiTietDonGiaoActivity.class);
                 intent.putExtra("UserName", userName);
-                intent.putExtra("UserID", userID);
                 intent.putExtra("DonHangID", orderDataArrayList.get(position).getDonHangID());
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
@@ -67,7 +66,6 @@ public class ShipperLichSuDonGiaoActivity extends AppCompatActivity {
         orderDataArrayList.clear();
 
         if(getIntent().getExtras() != null){
-            userID = getIntent().getExtras().getString("UserID");
             userName = getIntent().getExtras().getString("UserName");
 
             databaseReference.child("LichSuGiaoDich").addChildEventListener(new ChildEventListener() {
@@ -112,11 +110,10 @@ public class ShipperLichSuDonGiaoActivity extends AppCompatActivity {
     View.OnClickListener backClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            finish();
-            intent = new Intent(v.getContext(), ShipperMainActivity.class);
+            intent = new Intent(v.getContext(), AdminMainActivity.class);
             intent.putExtra("UserName", userName);
-            intent.putExtra("UserID", userID);
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            finish();
             startActivity(intent);
         }
     };

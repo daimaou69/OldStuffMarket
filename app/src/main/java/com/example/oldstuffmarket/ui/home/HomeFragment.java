@@ -13,6 +13,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -48,13 +49,14 @@ import java.util.Comparator;
 public class HomeFragment extends Fragment{
 
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-    private EditText edtFind;
+    private AutoCompleteTextView edtFind;
     private GridView gridDanhMuc, gridSP;
     private ArrayList<DanhMucData> danhMucDataArrayList;
     private ArrayList<SanPham> sanPhamArrayList;
     private Intent intent;
     private Spinner spnSort;
     private SanPhamAdapter sanPhamAdapter;
+    private ArrayList<String> findArr;
 //    private HomeViewModel homeViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -70,7 +72,7 @@ public class HomeFragment extends Fragment{
 //            }
 //        });
 
-        edtFind = (EditText) view.findViewById(R.id.edtFind);
+        edtFind = (AutoCompleteTextView) view.findViewById(R.id.edtFind);
         gridDanhMuc = (GridView) view.findViewById(R.id.gridDanhMuc);
         gridSP = (GridView) view.findViewById(R.id.gridSP);
         spnSort = (Spinner) view.findViewById(R.id.spnSort);
@@ -79,6 +81,8 @@ public class HomeFragment extends Fragment{
 //        btnDoCu = (Button) view.findViewById(R.id.btnDoCu);
 //        btnDoMoi = (Button) view.findViewById(R.id.btnDoMoi);
 
+
+        findArr = new ArrayList<>();
         danhMucDataArrayList = new ArrayList<>();
         DanhMucData danhMucData = new DanhMucData("AllID","Tất cả","danh_muc_khac");
         danhMucDataArrayList.add(danhMucData);
@@ -115,7 +119,9 @@ public class HomeFragment extends Fragment{
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 sanPhamArrayList.add(snapshot.getValue(SanPham.class));
+                findArr.add(snapshot.getValue(SanPham.class).getsTenSP());
                 sanPhamLoad(view);
+                findLoad(view);
             }
 
             @Override
@@ -446,6 +452,10 @@ public class HomeFragment extends Fragment{
         }
     };
 
+    public void findLoad(View view){
+        ArrayAdapter<String> autoAdapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1, findArr);
+        edtFind.setAdapter(autoAdapter);
+    }
 
     public void danhMucLoad(View view){
         DanhMucAdapter danhMucAdapter = new DanhMucAdapter(view.getContext(),R.layout.danh_muc_adapter_layout,danhMucDataArrayList);

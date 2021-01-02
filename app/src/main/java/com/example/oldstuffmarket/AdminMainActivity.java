@@ -38,7 +38,7 @@ import java.util.ArrayList;
 public class AdminMainActivity extends AppCompatActivity {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-    private Button btnLogout, btnQuanLyDanhMuc, btnAccountInfo, btnWallet, btnProductReport, btnUserReport, btnUserReported, btnUserDepositMoney, btnEmployeeManagement, btnPassWordChange, btnShopRegistration, btnCommission, btnAddEmployee, btnThongKe;
+    private Button btnLogout, btnQuanLyDanhMuc, btnLichSuDonHangShipper, btnAccountInfo, btnWallet, btnProductReport, btnUserReport, btnUserReported, btnUserDepositMoney, btnEmployeeManagement, btnPassWordChange, btnShopRegistration, btnCommission, btnAddEmployee, btnThongKe;
     private TextView txtAdminAccountName, txtNotify, txtUserDepositMoneyNotify, txtProductReprtedNotify, txtUserReportedNotify;
     private ImageView imgAccount;
     private Intent intent = LoginActivity.intent;
@@ -60,6 +60,7 @@ public class AdminMainActivity extends AppCompatActivity {
         txtNotify = (TextView) findViewById(R.id.txtNotify);
         txtUserDepositMoneyNotify = (TextView) findViewById(R.id.txtUserDepositMoneyNotify);
         imgAccount = (ImageView) findViewById(R.id.imgAccount);
+        btnLichSuDonHangShipper = (Button) findViewById(R.id.btnLichSuDonHangShipper);
         btnLogout = (Button) findViewById(R.id.btnLogout);
         btnPassWordChange = (Button) findViewById(R.id.btnPassWordChange);
         btnAccountInfo = (Button) findViewById(R.id.btnAccountInfo);
@@ -97,6 +98,7 @@ public class AdminMainActivity extends AppCompatActivity {
         btnEmployeeManagement.setOnClickListener(employeeManagerClick);
         btnThongKe.setOnClickListener(thongKeClick);
         btnWallet.setOnClickListener(walletClick);
+        btnLichSuDonHangShipper.setOnClickListener(lichSuDonGiaoShipperClick);
     }
 
     @Override
@@ -293,6 +295,16 @@ public class AdminMainActivity extends AppCompatActivity {
             }
         }, delay);
     }
+
+    View.OnClickListener lichSuDonGiaoShipperClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            intent = new Intent(v.getContext(), ShipperLichSuDonGiaoActivity.class);
+            intent.putExtra("UserName", sUserName);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        }
+    };
 
     View.OnClickListener walletClick = new View.OnClickListener() {
         @Override

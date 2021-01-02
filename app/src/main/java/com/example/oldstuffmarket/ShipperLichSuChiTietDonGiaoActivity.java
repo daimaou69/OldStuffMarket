@@ -35,7 +35,7 @@ public class ShipperLichSuChiTietDonGiaoActivity extends AppCompatActivity {
     private EditText edtHoTenNguoiMua, edtDiaChi, edtLienHe;
     private Button btnBack;
     private Intent intent;
-    private String userName, userID, donHangID;
+    private String userName, donHangID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +71,6 @@ public class ShipperLichSuChiTietDonGiaoActivity extends AppCompatActivity {
 
         if(getIntent().getExtras() != null){
 
-            userID = getIntent().getExtras().getString("UserID");
             userName = getIntent().getExtras().getString("UserName");
             donHangID = getIntent().getExtras().getString("DonHangID");
 
@@ -193,7 +192,6 @@ public class ShipperLichSuChiTietDonGiaoActivity extends AppCompatActivity {
             finish();
             intent = new Intent(v.getContext(), ShipperLichSuDonGiaoActivity.class);
             intent.putExtra("UserName", userName);
-            intent.putExtra("UserID", userID);
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         }

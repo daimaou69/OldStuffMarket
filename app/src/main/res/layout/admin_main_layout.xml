@@ -159,6 +159,13 @@
                 android:textAllCaps="false"
                 android:layout_marginBottom="20dp"/>
             <Button
+                android:id="@+id/btnLichSuDonHangShipper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lịch sử đơn giao"
+                android:textAllCaps="false"
+                android:layout_marginBottom="20dp"/>
+            <Button
                 android:id="@+id/btnWallet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

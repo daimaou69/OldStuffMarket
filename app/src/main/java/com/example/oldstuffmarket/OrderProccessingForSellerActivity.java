@@ -313,6 +313,9 @@ public class OrderProccessingForSellerActivity extends AppCompatActivity {
                             case DialogInterface.BUTTON_POSITIVE:
                                 cbDelivery.setEnabled(false);
                                 btnTimShipper.setEnabled(true);
+                                txtChonNguoiGiaoHang.setVisibility(View.VISIBLE);
+                                edtShipperID.setVisibility(View.VISIBLE);
+                                btnTimShipper.setVisibility(View.VISIBLE);
                                 databaseReference.child("DonHang").addChildEventListener(new ChildEventListener() {
                                     @Override
                                     public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
