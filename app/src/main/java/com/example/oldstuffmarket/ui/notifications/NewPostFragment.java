@@ -177,7 +177,7 @@ public class NewPostFragment extends Fragment {
                                     }
                                 });
                                 String sSPID = databaseReference.push().getKey();
-                                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
                                 Date date = new Date();
                                 SanPham sanPham = new SanPham(sSPID, sUserID, sShopID, edtTenSP.getText().toString(),sKey,edtMoTaSP.getText().toString(),spnDanhMuc.getSelectedItem().toString(), dateFormat.format(date), edtDiaChiDang.getText().toString(), Long.valueOf(edtGiaSP.getText().toString()),
                                         Integer.valueOf(edtSoLuongSP.getText().toString()),spnPhanLoai.getSelectedItemPosition());

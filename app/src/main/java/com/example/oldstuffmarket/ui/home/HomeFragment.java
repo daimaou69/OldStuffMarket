@@ -463,6 +463,7 @@ public class HomeFragment extends Fragment{
     }
 
     public void sanPhamLoad(View view){
+        Collections.reverse(sanPhamArrayList);
         SanPhamAdapter sanPhamAdapter = new SanPhamAdapter(view.getContext(), R.layout.san_pham_adapter_layout, sanPhamArrayList);
         gridSP.setAdapter(sanPhamAdapter);
     }
