@@ -36,6 +36,7 @@ import com.example.oldstuffmarket.adapter.SanPhamAdapter;
 import com.example.oldstuffmarket.data_models.DanhMucData;
 import com.example.oldstuffmarket.data_models.SanPham;
 import com.example.oldstuffmarket.data_models.ShopData;
+import com.example.oldstuffmarket.data_models.UserData;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -353,6 +354,84 @@ public class HomeFragment extends Fragment{
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        edtFind.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(!s.toString().isEmpty()){
+                    sanPhamArrayList.clear();
+                    databaseReference.child("SanPham").addChildEventListener(new ChildEventListener() {
+                        @Override
+                        public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                            if(snapshot.getValue(SanPham.class).getsTenSP().toLowerCase().contains(edtFind.getText().toString().toLowerCase())){
+                                sanPhamArrayList.add(snapshot.getValue(SanPham.class));
+                            }
+                            sanPhamLoad(view);
+                        }
+
+                        @Override
+                        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                        }
+
+                        @Override
+                        public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                        }
+
+                        @Override
+                        public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+                else{
+                    sanPhamArrayList.clear();
+                    databaseReference.child("SanPham").addChildEventListener(new ChildEventListener() {
+                        @Override
+                        public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                            sanPhamArrayList.add(snapshot.getValue(SanPham.class));
+                            sanPhamLoad(view);
+                        }
+
+                        @Override
+                        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                        }
+
+                        @Override
+                        public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                        }
+
+                        @Override
+                        public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
 
             }
         });

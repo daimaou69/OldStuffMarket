@@ -198,17 +198,10 @@
                     android:layout_height="wrap_content"
                     android:gravity="center">
                     <Button
-                        android:id="@+id/btnAccept"
+                        android:id="@+id/btnHuyDon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/accepted"
-                        android:textAllCaps="false"
-                        android:layout_marginRight="30dp"/>
-                    <Button
-                        android:id="@+id/btnRefuse"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/refuse"
+                        android:text="@string/huy_don"
                         android:textAllCaps="false"
                         android:layout_marginRight="30dp"/>
                     <Button

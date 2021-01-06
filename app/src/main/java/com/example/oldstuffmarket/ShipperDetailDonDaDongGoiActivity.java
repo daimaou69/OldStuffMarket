@@ -73,7 +73,6 @@ public class ShipperDetailDonDaDongGoiActivity extends AppCompatActivity {
         txtNameLabel = (TextView) findViewById(R.id.txtNameLabel);
         txtDiaChi = (TextView) findViewById(R.id.txtDiaChi);
         btnAccept = (Button) findViewById(R.id.btnAccept);
-        btnRefuse = (Button) findViewById(R.id.btnRefuse);
         btnBack = (Button) findViewById(R.id.btnBack);
         btnTimShipper = (Button) findViewById(R.id.btnTimShipper);
 

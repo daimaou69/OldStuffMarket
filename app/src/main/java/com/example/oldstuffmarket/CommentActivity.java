@@ -322,6 +322,7 @@ public class CommentActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     switch (which){
                         case DialogInterface.BUTTON_POSITIVE:
+                            databaseReference.child("CommentNeeds").child(donHangID).removeValue();
                             finish();
                             intent = new Intent(v.getContext(), UserMainActivity.class);
                             intent.putExtra("UserName", userName);

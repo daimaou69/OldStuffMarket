@@ -7,16 +7,17 @@
     android:layout_height="match_parent"
     tools:context=".OrderThanhToanTrucTiepActivity"
     android:padding="20dp"
-    android:background="@mipmap/app_background">
+    android:background="@mipmap/bg1"
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="11">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/layout_bg"
             android:gravity="center"
             android:padding="10dp"
             android:orientation="vertical">
@@ -30,12 +31,11 @@
                     android:layout_height="wrap_content"
                     android:text="@string/don_ban"
                     android:textStyle="bold"
-                    android:textSize="25sp"/>
+                    android:textSize="30sp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
                 android:orientation="vertical"
                 android:padding="10dp">
                 <LinearLayout
@@ -100,7 +100,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/product_price"
                             android:textSize="20sp"
-                            android:textColor="@color/red"
+                            android:textColor="#FD1969"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>
@@ -154,7 +154,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/so_dt"
-                        android:inputType="number"
                         android:editable="false"
                         android:textSize="20dp"/>
 
@@ -189,22 +188,42 @@
                         android:layout_height="wrap_content"
                         android:text="@string/product_price"
                         android:textSize="25sp"
-                        android:textColor="@color/red"
+                        android:textColor="#FD1969"
                         android:textStyle="bold" />
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
-                    <Button
-                        android:id="@+id/btnBack"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/Back"
-                        android:textAllCaps="false"/>
-                </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center">
+        <Button
+            android:id="@+id/btnHoanTat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hoàn tất"
+            android:backgroundTint="#FF5722"
+            android:textAllCaps="false"/>
+        <Button
+            android:id="@+id/btnHuyDon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/huy_don"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:backgroundTint="#FF5722"
+            android:textAllCaps="false"/>
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FF5722"
+            android:text="@string/Back"
+            android:textAllCaps="false"/>
+    </LinearLayout>
 
 </LinearLayout>

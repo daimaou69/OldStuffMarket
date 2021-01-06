@@ -2,8 +2,10 @@ package com.example.oldstuffmarket;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -36,7 +38,7 @@ public class OrderThanhToanTrucTiepActivity extends AppCompatActivity {
     private ImageView imgSP;
     private EditText edtUserName, edtDiaChi, edtLienHe;
     private TextView txtTenSP, txtSoLuongSP, txtMaVanDon, txtGiaSP, txtPhuongThucThanhToan, txtTongGiaTriDonHang;
-    private Button btnBack;
+    private Button btnBack, btnHuyDon, btnHoanTat;
     private Intent intent;
     private String userName, userID, donHangID;
 
@@ -58,9 +60,13 @@ public class OrderThanhToanTrucTiepActivity extends AppCompatActivity {
         txtPhuongThucThanhToan = (TextView) findViewById(R.id.txtPhuongThucThanhToan);
         txtTongGiaTriDonHang = (TextView) findViewById(R.id.txtTongGiaTriDonHang);
         btnBack = (Button) findViewById(R.id.btnBack);
+        btnHuyDon = (Button) findViewById(R.id.btnHuyDon);
+        btnHoanTat = (Button) findViewById(R.id.btnHoanTat);
 
         btnBack.setOnClickListener(backClick);
 
+        btnHuyDon.setOnClickListener(huyDonClick);
+        btnHoanTat.setOnClickListener(hoanThanhClick);
     }
 
     @Override
@@ -157,6 +163,122 @@ public class OrderThanhToanTrucTiepActivity extends AppCompatActivity {
             });
         }
     }
+
+    View.OnClickListener hoanThanhClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            DialogInterface.OnClickListener dialog = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which){
+                        case DialogInterface.BUTTON_POSITIVE:
+                            databaseReference.child("DonHang").addChildEventListener(new ChildEventListener() {
+                                @Override
+                                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                    if(snapshot.getValue(OrderData.class).getDonHangID().equals(donHangID)){
+                                        OrderData orderData = new OrderData(snapshot.getValue(OrderData.class).getDonHangID(), snapshot.getValue(OrderData.class).getNguoiMuaID(), snapshot.getValue(OrderData.class).getNguoiBanID(),
+                                                snapshot.getValue(OrderData.class).getNgayTaoDonHang(), snapshot.getValue(OrderData.class).getSoDienThoai(), snapshot.getValue(OrderData.class).getDiaChi(),
+                                                snapshot.getValue(OrderData.class).getSanPham(), snapshot.getValue(OrderData.class).getLoaiDonHang(), 8, snapshot.getValue(OrderData.class).getSellerCommission(), snapshot.getValue(OrderData.class).getGiaTien(), snapshot.getValue(OrderData.class).getShipperID());
+                                        databaseReference.child("LichSuGiaoDich").child(snapshot.getValue(OrderData.class).getDonHangID()).setValue(orderData);
+                                        databaseReference.child("DonHang").child(snapshot.getValue(OrderData.class).getDonHangID()).removeValue();
+                                        databaseReference.child("CommentNeeds").child(donHangID).setValue(orderData);
+
+                                        intent = new Intent(v.getContext(), DonBanActivity.class);
+                                        intent.putExtra("UserID", userID);
+                                        intent.putExtra("UserName", userName);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                                        startActivity(intent);
+                                    }
+                                }
+
+                                @Override
+                                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                }
+
+                                @Override
+                                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                }
+
+                                @Override
+                                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                            break;
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            return;
+                    }
+                }
+            };
+            AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+            alert.setMessage("Hoàn tất đơn hàng và cho user comment?").setNegativeButton("No", dialog).setPositiveButton("Yes", dialog).show();
+        }
+    };
+
+    View.OnClickListener huyDonClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            DialogInterface.OnClickListener dialog = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which){
+                        case DialogInterface.BUTTON_POSITIVE:
+                            databaseReference.child("DonHang").addChildEventListener(new ChildEventListener() {
+                                @Override
+                                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                    if(snapshot.getValue(OrderData.class).getDonHangID().equals(donHangID)){
+                                        OrderData orderData = new OrderData(snapshot.getValue(OrderData.class).getDonHangID(), snapshot.getValue(OrderData.class).getNguoiMuaID(), snapshot.getValue(OrderData.class).getNguoiBanID(),
+                                                snapshot.getValue(OrderData.class).getNgayTaoDonHang(), snapshot.getValue(OrderData.class).getSoDienThoai(), snapshot.getValue(OrderData.class).getDiaChi(),
+                                                snapshot.getValue(OrderData.class).getSanPham(), snapshot.getValue(OrderData.class).getLoaiDonHang(), -1, snapshot.getValue(OrderData.class).getSellerCommission(), snapshot.getValue(OrderData.class).getGiaTien(), snapshot.getValue(OrderData.class).getShipperID());
+                                        databaseReference.child("LichSuGiaoDich").child(snapshot.getValue(OrderData.class).getDonHangID()).setValue(orderData);
+                                        databaseReference.child("DonHang").child(snapshot.getValue(OrderData.class).getDonHangID()).removeValue();
+                                        intent = new Intent(v.getContext(), DonBanActivity.class);
+//                                        intent.putExtra("ProductID", productID);
+                                        intent.putExtra("UserID", userID);
+//                                        intent.putExtra("SellerID", nguoiBanID);
+                                        intent.putExtra("UserName", userName);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                                        startActivity(intent);
+                                    }
+                                }
+
+                                @Override
+                                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                }
+
+                                @Override
+                                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                }
+
+                                @Override
+                                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                            break;
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            return;
+                    }
+                }
+            };
+            AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+            alert.setMessage("Bạn muốn hủy đơn hàng?").setNegativeButton("No", dialog).setPositiveButton("Yes", dialog).show();
+        }
+    };
 
     View.OnClickListener backClick = new View.OnClickListener() {
         @Override

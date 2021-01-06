@@ -118,7 +118,7 @@
                     android:id="@+id/btnPostComment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/post_review"
+                    android:text="Gửi đánh giá"
                     android:textSize="13sp"
                     android:layout_marginRight="20dp"
                     android:textAllCaps="false"/>
@@ -135,7 +135,7 @@
                     android:id="@+id/btnHome"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/home"
+                    android:text="Hủy đánh giá"
                     android:textSize="13sp"
                     android:textAllCaps="false"/>
             </LinearLayout>
