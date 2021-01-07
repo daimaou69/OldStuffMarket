@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.dashboard.SettingsFragment"
     android:orientation="vertical"
-    android:background="@mipmap/app_background">
+    android:background="@mipmap/bg6">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,6 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/account_info"
+                android:backgroundTint="#FF6E40"
                 android:textAllCaps="false" />
             <LinearLayout
                 android:layout_width="match_parent"
@@ -101,6 +102,7 @@
                     android:id="@+id/btnNotification"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#FF6E40"
                     android:text="Thông báo"
                     android:textAllCaps="false" />
                 <TextView
@@ -119,6 +121,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tạo lịch hẹn"
+                android:backgroundTint="#FF6E40"
                 android:textAllCaps="false"
                 android:layout_marginBottom="20dp"/>
             <LinearLayout
@@ -131,6 +134,7 @@
                     android:id="@+id/btnLichHen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#FF6E40"
                     android:text="Lịch hẹn"
                     android:textAllCaps="false" />
                 <TextView
@@ -148,6 +152,7 @@
                 android:id="@+id/btnUploadPost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#FF6E40"
                 android:text="@string/my_post"
                 android:textAllCaps="false"
                 android:layout_marginBottom="20dp"/>
@@ -160,6 +165,7 @@
                 <Button
                     android:id="@+id/btnReceiveMoney"
                     android:layout_width="wrap_content"
+                    android:backgroundTint="#FF6E40"
                     android:layout_height="wrap_content"
                     android:text="Đơn hàng chờ nhận tiền"
                     android:textAllCaps="false" />
@@ -178,6 +184,7 @@
                 android:id="@+id/btnShop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#FF6E40"
                 android:text="@string/shop"
                 android:textAllCaps="false"
                 android:layout_marginBottom="20dp"/>
@@ -186,6 +193,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/wallet"
+                android:backgroundTint="#FF6E40"
                 android:textAllCaps="false"
                 android:layout_marginBottom="20dp"/>
             <LinearLayout
@@ -198,6 +206,7 @@
                     android:id="@+id/btnDonMua"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#FF6E40"
                     android:text="@string/don_mua"
                     android:textAllCaps="false"/>
 
@@ -216,6 +225,7 @@
                 android:id="@+id/btnLichSuDonHang"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#FF6E40"
                 android:text="@string/lich_su_don_hang"
                 android:textAllCaps="false"
                 android:layout_marginBottom="20dp"/>
@@ -229,6 +239,7 @@
                     android:id="@+id/btnDanhGiaSP"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#FF6E40"
                     android:text="@string/danh_gia_sp"
                     android:textAllCaps="false"/>
 
@@ -252,6 +263,7 @@
                 <Button
                     android:id="@+id/btnDonBan"
                     android:layout_width="wrap_content"
+                    android:backgroundTint="#FF6E40"
                     android:layout_height="wrap_content"
                     android:text="@string/don_ban"
                     android:textAllCaps="false"/>
@@ -271,6 +283,7 @@
                 android:id="@+id/btnLichSuDonBan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#FF6E40"
                 android:text="@string/lich_su_don_ban"
                 android:textAllCaps="false"
                 android:layout_marginBottom="20dp"/>
@@ -279,6 +292,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/user_password_change"
+                android:backgroundTint="#FF6E40"
                 android:textAllCaps="false"
                 android:layout_marginBottom="20dp"/>
         </LinearLayout>
@@ -294,6 +308,7 @@
             android:id="@+id/btnLogout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="#FF6E40"
             android:text="@string/logout_text"
             android:textAllCaps="false"/>
     </LinearLayout>

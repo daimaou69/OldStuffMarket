@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".AdminMainActivity"
     android:orientation="vertical"
-    android:background="@mipmap/admin_background">
+    android:background="@mipmap/bg5">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -18,11 +18,16 @@
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:padding="10dp">
-            <ImageView
-                android:id="@+id/imgAccount"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@mipmap/no_image_icon"/>
+                app:cardCornerRadius="15dp">
+                <ImageView
+                    android:id="@+id/imgAccount"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/no_image_icon"/>
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
@@ -40,15 +45,17 @@
                 android:textSize="20dp"/>
             <Button
                 android:id="@+id/btnAccountInfo"
-                android:layout_width="wrap_content"
+                android:layout_width="175dp"
                 android:layout_height="wrap_content"
                 android:text="@string/account_info"
+                android:backgroundTint="#FF5252"
                 android:textAllCaps="false" />
             <Button
                 android:id="@+id/btnPassWordChange"
-                android:layout_width="wrap_content"
+                android:layout_width="175dp"
                 android:layout_height="wrap_content"
                 android:text="@string/user_password_change"
+                android:backgroundTint="#FF5252"
                 android:textAllCaps="false"/>
         </LinearLayout>
     </LinearLayout>
@@ -58,30 +65,34 @@
         android:layout_height="0dp"
         android:layout_weight="8">
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:layout_gravity="center">
 
             <Button
                 android:id="@+id/btnAddEmployee"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:backgroundTint="#FF5252"
                 android:text="@string/add_employee"
-                android:textAllCaps="false"
-                android:layout_marginBottom="20dp"/>
+                android:textAllCaps="false" />
             <Button
                 android:id="@+id/btnEmployeeManagement"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/employee_management"
                 android:textAllCaps="false"
+                android:backgroundTint="#FF5252"
                 android:layout_marginBottom="20dp"/>
 
             <Button
                 android:id="@+id/btnUserReported"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#FF5252"
                 android:text="@string/quan_li_user"
                 android:textAllCaps="false"
                 android:layout_marginBottom="20dp"/>
@@ -94,14 +105,17 @@
                 android:layout_marginBottom="20dp">
                 <Button
                     android:id="@+id/btnUserReport"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="10"
+                    android:backgroundTint="#FF5252"
                     android:layout_height="wrap_content"
                     android:text="@string/user_bi_report"
                     android:textAllCaps="false"/>
 
                 <TextView
                     android:id="@+id/txtUserReportedNotify"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="x"
                     android:textColor="#FFF"
@@ -119,14 +133,17 @@
                 android:layout_marginBottom="20dp">
                 <Button
                     android:id="@+id/btnProductReport"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="10"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#FF5252"
                     android:text="Sản phẩm bị báo cáo"
                     android:textAllCaps="false"/>
 
                 <TextView
                     android:id="@+id/txtProductReprtedNotify"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="x"
                     android:textColor="#FFF"
@@ -139,35 +156,40 @@
 
             <Button
                 android:id="@+id/btnQuanLyDanhMuc"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/quan_li_danh_muc"
                 android:textAllCaps="false"
+                android:backgroundTint="#FF5252"
                 android:layout_marginBottom="20dp"/>
             <Button
                 android:id="@+id/btnCommission"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#FF5252"
                 android:text="@string/quan_li_commission"
                 android:textAllCaps="false"
                 android:layout_marginBottom="20dp"/>
             <Button
                 android:id="@+id/btnThongKe"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#FF5252"
                 android:text="@string/thong_ke"
                 android:textAllCaps="false"
                 android:layout_marginBottom="20dp"/>
             <Button
                 android:id="@+id/btnLichSuDonHangShipper"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:backgroundTint="#FF5252"
                 android:layout_height="wrap_content"
                 android:text="Lịch sử đơn giao"
                 android:textAllCaps="false"
                 android:layout_marginBottom="20dp"/>
             <Button
                 android:id="@+id/btnWallet"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:backgroundTint="#FF5252"
                 android:layout_height="wrap_content"
                 android:text="@string/wallet"
                 android:textAllCaps="false"
@@ -180,14 +202,17 @@
                 android:layout_marginBottom="20dp">
                 <Button
                     android:id="@+id/btnUserDepositMoney"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="10"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#FF5252"
                     android:text="@string/yeu_cau_chuyen_khoan_user"
                     android:textAllCaps="false"/>
 
                 <TextView
                     android:id="@+id/txtUserDepositMoneyNotify"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="x"
                     android:textColor="#FFF"
@@ -204,14 +229,17 @@
                 android:gravity="center">
                 <Button
                     android:id="@+id/btnShopRegistration"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="10"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#FF5252"
                     android:text="@string/yeu_cau_tao_shop"
                     android:textAllCaps="false"/>
 
                 <TextView
                     android:id="@+id/txtNotify"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="x"
                     android:textColor="#FFF"
@@ -224,14 +252,16 @@
     </ScrollView>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical"
+        android:layout_gravity="center"
         android:gravity="center_horizontal">
         <Button
             android:id="@+id/btnLogout"
             android:layout_width="wrap_content"
+            android:backgroundTint="#FF5252"
             android:layout_height="wrap_content"
             android:text="@string/logout_text"
             android:textAllCaps="false"/>

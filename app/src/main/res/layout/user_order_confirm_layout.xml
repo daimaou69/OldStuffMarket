@@ -6,18 +6,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".UserOrderConfirmActivity"
-    android:background="@mipmap/app_background"
+    android:background="@mipmap/bg2"
+    android:orientation="vertical"
     android:padding="20dp">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="12">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/layout_bg"
             android:gravity="center"
+            android:background="@drawable/layout_bg"
+            android:backgroundTint="#FFEB3B"
             android:orientation="vertical"
             android:padding="10dp">
             <LinearLayout
@@ -35,7 +38,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
                 android:orientation="vertical"
                 android:padding="10dp">
                 <LinearLayout
@@ -193,26 +195,30 @@
                         android:textColor="@color/red"
                         android:textStyle="bold" />
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
-                    <Button
-                        android:id="@+id/btnHuyDon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/huy_don"
-                        android:textAllCaps="false"
-                        android:layout_marginRight="30dp"/>
-                    <Button
-                        android:id="@+id/btnBack"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/Back"
-                        android:textAllCaps="false"/>
-                </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center">
+        <Button
+            android:id="@+id/btnHuyDon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/huy_don"
+            android:backgroundTint="#FF9800"
+            android:textAllCaps="false"
+            android:layout_marginRight="60dp"/>
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Back"
+            android:backgroundTint="#FF9800"
+            android:textAllCaps="false"/>
+    </LinearLayout>
 
 </LinearLayout>

@@ -126,17 +126,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="REPORT"
+                android:backgroundTint="#FF9800"
                 android:layout_marginRight="30dp"/>
             <Button
                 android:id="@+id/btnHome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="HOME"
+                android:backgroundTint="#FF9800"
                 android:layout_marginRight="30dp"/>
             <Button
                 android:id="@+id/btnBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#FF9800"
                 android:text="@string/Back"/>
         </LinearLayout>
     </LinearLayout>

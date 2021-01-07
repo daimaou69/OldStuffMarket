@@ -181,6 +181,7 @@
                         android:id="@+id/btnDelete"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="#FF9800"
                         android:text="@string/delete"
                         android:textAllCaps="false"
                         android:layout_marginRight="50dp"/>
@@ -188,6 +189,7 @@
                         android:id="@+id/btnHuy"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="#FF9800"
                         android:textAllCaps="false"
                         android:text="Hủy"/>
                 </LinearLayout>
@@ -201,6 +203,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Home"
+                        android:backgroundTint="#FF9800"
                         android:textAllCaps="false"
                         android:layout_marginRight="50dp"/>
                     <Button
@@ -208,6 +211,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAllCaps="false"
+                        android:backgroundTint="#FF9800"
                         android:text="@string/Back"/>
                 </LinearLayout>
             </LinearLayout>

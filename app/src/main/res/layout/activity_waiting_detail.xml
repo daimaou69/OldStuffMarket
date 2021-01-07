@@ -176,12 +176,14 @@
                     android:layout_height="wrap_content"
                     android:text="Xác nhận"
                     android:textAllCaps="false"
+                    android:backgroundTint="#FF9800"
                     android:layout_marginRight="30dp"/>
                 <Button
                     android:id="@+id/btnBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/Back"
+                    android:backgroundTint="#FF9800"
                     android:textAllCaps="false"/>
             </LinearLayout>
         </LinearLayout>

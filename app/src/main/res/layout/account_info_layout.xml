@@ -5,21 +5,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/bg1"
+    android:orientation="vertical"
     tools:context=".AccountInfoActivity">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@mipmap/app_background"
+        android:layout_height="0dp"
+        android:layout_weight="11"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="20dp"
             android:layout_weight="5"
-            android:background="@drawable/layout_bg"
             android:orientation="vertical"
             android:padding="20dp">
 
@@ -58,16 +59,18 @@
 
                     <Button
                         android:id="@+id/btnChooseFromGallery"
-                        android:layout_width="wrap_content"
+                        android:layout_width="185dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
+                        android:backgroundTint="#FF9800"
                         android:text="@string/choose_from_gallery"
                         android:textAllCaps="false" />
 
                     <Button
                         android:id="@+id/btnOpenCamera"
-                        android:layout_width="wrap_content"
+                        android:layout_width="185dp"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="#FF9800"
                         android:text="@string/open_camera"
                         android:textAllCaps="false" />
                 </LinearLayout>
@@ -77,17 +80,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/current_commission"
+                android:textStyle="bold"
                 android:textSize="20dp"/>
 
             <EditText
                 android:id="@+id/edtCommission"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:layout_marginBottom="20dp"
                 android:editable="false"
                 android:singleLine="true"></EditText>
 
             <TextView
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/registry_username"
@@ -98,6 +104,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
+                android:textStyle="bold"
                 android:editable="false"
                 android:hint="@string/registry_username"
                 android:singleLine="true"></EditText>
@@ -106,6 +113,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/registry_name"
+                android:textStyle="bold"
                 android:textSize="20dp"></TextView>
 
             <EditText
@@ -113,6 +121,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
+                android:textStyle="bold"
                 android:hint="@string/registry_name"
                 android:singleLine="true"></EditText>
 
@@ -120,6 +129,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/registry_phone"
+                android:textStyle="bold"
                 android:textSize="20dp"></TextView>
 
             <EditText
@@ -128,6 +138,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:hint="@string/registry_phone"
+                android:textStyle="bold"
                 android:phoneNumber="true"
                 android:singleLine="true"></EditText>
 
@@ -140,6 +151,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textStyle="bold"
                     android:text="@string/registry_gender"
                     android:textSize="20dp"></TextView>
 
@@ -154,6 +166,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/registry_address"
+                android:textStyle="bold"
                 android:textSize="20dp" />
 
             <EditText
@@ -161,25 +174,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
+                android:textStyle="bold"
                 android:hint="@string/registry_address"
                 android:singleLine="true" />
 
-            <Button
-                android:id="@+id/btnSave"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/login_button"
-                android:text="@string/Save"
-                android:textSize="15sp"></Button>
 
-            <Button
-                android:id="@+id/btnBack"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/login_button"
-                android:text="@string/Back"
-                android:textSize="15sp"/>
         </LinearLayout>
     </ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_weight="1">
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Save"
+            android:layout_marginRight="60dp"
+            android:backgroundTint="#FF8400"
+            android:textSize="15sp"></Button>
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Back"
+            android:backgroundTint="#FF8400"
+            android:textSize="15sp"/>
+    </LinearLayout>
 </LinearLayout>

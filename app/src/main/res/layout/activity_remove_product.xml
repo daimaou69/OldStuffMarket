@@ -50,6 +50,7 @@
                 android:id="@+id/btnBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#FF9800"
                 android:text="@string/Back"/>
 
             <Button
@@ -57,6 +58,7 @@
                 android:id="@+id/btnClear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#FF9800"
                 android:text="Refesh"/>
         </LinearLayout>
     </LinearLayout>

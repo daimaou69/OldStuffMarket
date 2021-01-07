@@ -113,23 +113,23 @@
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center">
                 <Button
                     android:id="@+id/btnRegistry"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="70dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
                     android:text="@string/registry_btn"
-                    android:textSize="20dp"
-                    android:background="@drawable/login_button"/>
+                    android:layout_marginRight="60dp"
+                    android:textSize="20dp"/>
                 <Button
                     android:id="@+id/btnBack"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="70dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
                     android:text="@string/Back"
-                    android:textSize="20dp"
-                    android:background="@drawable/login_button"/>
+                    android:textSize="20dp"/>
             </LinearLayout>
 
 

@@ -118,6 +118,7 @@
                 android:id="@+id/btnLock1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#FF9800"
                 android:text="lock"
                 android:layout_marginBottom="20dp"/>
 
@@ -125,6 +126,7 @@
                 android:id="@+id/btnHistory1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#FF9800"
                 android:text="history"/>
         </LinearLayout>
 
@@ -248,6 +250,7 @@
                 android:id="@+id/btnLock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#FF9800"
                 android:text="lock"
                 android:layout_marginBottom="20dp"/>
 
@@ -255,11 +258,13 @@
                 android:id="@+id/btnHistory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#FF9800"
                 android:text="history"
                 android:layout_marginBottom="20dp"/>
             <Button
                 android:id="@+id/btnBack"
                 android:layout_width="wrap_content"
+                android:backgroundTint="#FF9800"
                 android:layout_height="wrap_content"
                 android:text="Back" />
         </LinearLayout>
