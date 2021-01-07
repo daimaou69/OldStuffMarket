@@ -19,5 +19,6 @@
         android:id="@+id/btnXacNhan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="#FF6E40"
         android:text="@string/xac_nhan"/>
 </LinearLayout>

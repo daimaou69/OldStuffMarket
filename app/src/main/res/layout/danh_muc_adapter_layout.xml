@@ -9,7 +9,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="90dp"
         android:layout_height="90dp"
-        app:cardCornerRadius="20dp">
+        app:cardCornerRadius="10dp">
 
         <ImageView
             android:id="@+id/imgDanhMuc"
@@ -22,6 +22,7 @@
         android:id="@+id/txtTenDanhMuc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:hint="@string/danh_muc_hint"
-        android:textSize="15sp"/>
+        android:textSize="11sp"/>
 </LinearLayout>

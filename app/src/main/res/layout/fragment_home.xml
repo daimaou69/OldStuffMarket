@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment"
     android:orientation="vertical"
-    android:background="@mipmap/app_background"
+    android:background="@mipmap/bg1"
     android:padding="10dp">
 
     <LinearLayout
@@ -35,14 +35,14 @@
         android:layout_height="0dp"
         android:layout_weight="3"
         android:layout_marginBottom="5dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/white">
+        android:layout_marginTop="10dp">
 
         <GridView
             android:id="@+id/gridDanhMuc"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:verticalSpacing="5dp"
+            android:horizontalSpacing="5dp"
             android:numColumns="4" />
 
     </LinearLayout>
@@ -101,10 +101,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="12"
-        android:background="@drawable/appointment_bg">
+        android:layout_weight="12">
         <GridView
             android:id="@+id/gridSP"
+            android:verticalSpacing="5dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>
