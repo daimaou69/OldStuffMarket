@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".CommentActivity"
     android:padding="20dp"
-    android:background="@mipmap/app_background">
+    android:background="@mipmap/bg1">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -84,6 +84,7 @@
                     android:layout_height="wrap_content"
                     android:text="Báo xấu"
                     android:textSize="13sp"
+                    android:backgroundTint="#FD825A"
                     android:textAllCaps="false"
                     android:layout_marginLeft="70dp"/>
             </LinearLayout>
@@ -121,6 +122,7 @@
                     android:text="Gửi đánh giá"
                     android:textSize="13sp"
                     android:layout_marginRight="20dp"
+                    android:backgroundTint="#FD825A"
                     android:textAllCaps="false"/>
                 <Button
                     android:id="@+id/btnBack"
@@ -136,6 +138,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Hủy đánh giá"
+                    android:backgroundTint="#FD825A"
                     android:textSize="13sp"
                     android:textAllCaps="false"/>
             </LinearLayout>

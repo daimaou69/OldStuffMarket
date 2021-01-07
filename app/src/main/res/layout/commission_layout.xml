@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".CommissionActivity"
     android:padding="20dp"
-    android:background="@mipmap/app_background">
+    android:background="@mipmap/bg1">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -56,6 +56,7 @@
                     android:id="@+id/btnChangeShop"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#FD825A"
                     android:text="Thay Đổi"/>
 
 
@@ -82,6 +83,7 @@
                     android:id="@+id/btnChangeUser"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#FD825A"
                     android:inputType="number"
                     android:text="Thay Đổi"/>
 
@@ -99,6 +101,7 @@
                     android:id="@+id/btnChangeShipper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#FD825A"
                     android:inputType="number"
                     android:text="Thay Đổi"/>
 
@@ -117,6 +120,7 @@
                 android:id="@+id/btnBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#FD825A"
                 android:text="@string/Back"/>
         </LinearLayout>
     </LinearLayout>

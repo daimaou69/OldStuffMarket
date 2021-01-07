@@ -61,7 +61,7 @@ public class SettingsFragment extends Fragment {
     private ImageView imgAccount;
     private Intent intent;
     private TextView txtAccountName, txtSpDaBan, txtDiemThanhVien, txtNotification, txtDonMuaNotify, txtDonBanNotify, txtDanhGiaSP, txtMoneyNotify, txtLichHen;
-    private String sUserName = UserMainActivity.sUserName, userID;
+    private String sUserName = UserMainActivity.sUserName, userID = "";
     private ArrayList<UserData> userDataArrayList = UserMainActivity.userDataArrayList;
     private ArrayList<ShopData> shopDataArrayList;
     private ArrayList<OrderData> donMuaArrayList;
