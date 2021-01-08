@@ -48,6 +48,7 @@ public class AdminMainActivity extends AppCompatActivity {
     private ArrayList<ProductReport> productReportArrayList;
     private ArrayList<UserReport> userReportArrayList;
     private String sUserName;
+    private int per;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -228,6 +229,7 @@ public class AdminMainActivity extends AppCompatActivity {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                     if(snapshot.getValue(UserData.class).getsUserName().equals(sUserName)){
+                        per = snapshot.getValue(UserData.class).getiPermission();
                         if(snapshot.getValue(UserData.class).getiPermission() == 2){
                             btnAddEmployee.setVisibility(View.GONE);
                             btnEmployeeManagement.setVisibility(View.GONE);
@@ -280,7 +282,7 @@ public class AdminMainActivity extends AppCompatActivity {
                     txtNotify.setVisibility(View.VISIBLE);
                     txtNotify.setText(String.valueOf(shopDataArrayList.size()));
                 }
-                if(userDepositDataArrayList.size() != 0){
+                if(userDepositDataArrayList.size() != 0 && per == 0){
                     txtUserDepositMoneyNotify.setVisibility(View.VISIBLE);
                     txtUserDepositMoneyNotify.setText(String.valueOf(userDepositDataArrayList.size()));
                 }
