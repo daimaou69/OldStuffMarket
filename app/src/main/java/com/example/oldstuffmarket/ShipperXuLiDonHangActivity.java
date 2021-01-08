@@ -34,7 +34,7 @@ public class ShipperXuLiDonHangActivity extends AppCompatActivity {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     private ImageView imgSP;
-    private TextView txtTenSP, txtSoLuongSP, txtGiaSP, txtHoTenNguoiMua, txtDiaChi, txtLienHe, txtTongGiaTriDonHang;
+    private TextView txtTenSP, txtSoLuongSP, txtGiaSP, txtHoTenNguoiMua, txtDiaChi, txtLienHe, txtTongGiaTriDonHang, txtSellerLabel, txtSellerDiaChi, txtSellerSDT;
     private CheckBox cbLayHangThanhCong, cbDangGiaoHang;
     private Button btnGiaoThanhCong, btnGiaoThatBai, btnBack;
     private String userName, userID, donHangID, nguoiMuaID, nguoiBanID;
@@ -57,6 +57,9 @@ public class ShipperXuLiDonHangActivity extends AppCompatActivity {
         txtDiaChi = (TextView) findViewById(R.id.txtDiaChi);
         txtLienHe = (TextView) findViewById(R.id.txtLienHe);
         txtTongGiaTriDonHang = (TextView) findViewById(R.id.txtTongGiaTriDonHang);
+        txtSellerLabel = (TextView) findViewById(R.id.txtSellerLabel);
+        txtSellerDiaChi = (TextView) findViewById(R.id.txtSellerDiaChi);
+        txtSellerSDT = (TextView) findViewById(R.id.txtSellerSDT);
         cbLayHangThanhCong = (CheckBox) findViewById(R.id.cbLayHangThanhCong);
         cbDangGiaoHang = (CheckBox) findViewById(R.id.cbDangGiaoHang);
         btnGiaoThatBai = (Button) findViewById(R.id.btnGiaoThatBai);
@@ -155,15 +158,26 @@ public class ShipperXuLiDonHangActivity extends AppCompatActivity {
                             cbLayHangThanhCong.setChecked(false);
                             cbLayHangThanhCong.setEnabled(true);
                             cbDangGiaoHang.setChecked(false);
+                            txtHoTenNguoiMua.setVisibility(View.GONE);
+                            txtDiaChi.setVisibility(View.GONE);
+                            txtLienHe.setVisibility(View.GONE);
                         }
                         else if(snapshot.getValue(OrderData.class).getTinhTrang() < 6){
                             cbDangGiaoHang.setChecked(false);
                             cbDangGiaoHang.setEnabled(true);
+
+                            txtSellerLabel.setVisibility(View.GONE);
+                            txtSellerDiaChi.setVisibility(View.GONE);
+                            txtSellerSDT.setVisibility(View.GONE);
                         }
 
                         if(snapshot.getValue(OrderData.class).getTinhTrang() >= 6){
                             btnGiaoThanhCong.setVisibility(View.VISIBLE);
                             btnGiaoThatBai.setVisibility(View.VISIBLE);
+
+                            txtSellerLabel.setVisibility(View.GONE);
+                            txtSellerDiaChi.setVisibility(View.GONE);
+                            txtSellerSDT.setVisibility(View.GONE);
                         }
                     }
                 }

@@ -448,7 +448,6 @@ public class SettingsFragment extends Fragment {
             intent = new Intent(v.getContext(), UserCommentNeedsActivity.class);
             intent.putExtra("UserName", sUserName);
             intent.putExtra("UserID", userID);
-            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         }
     };

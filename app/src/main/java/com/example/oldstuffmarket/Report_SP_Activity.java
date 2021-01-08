@@ -41,7 +41,7 @@ public class Report_SP_Activity extends AppCompatActivity {
     private EditText edtReport;
     private TextView txtTenSP, txtMoney;
     private Intent intent;
-    private String sanPhamID;
+    private String sanPhamID, nguoiBanID;
     private String userName;
     private String userID = UserMainActivity.sUserID;
     private String navigate, donHangID;
@@ -74,6 +74,7 @@ public class Report_SP_Activity extends AppCompatActivity {
             userID = getIntent().getExtras().getString("UserID");
             navigate = getIntent().getExtras().getString("Navigate");
             donHangID = getIntent().getExtras().getString("DonHangID");
+            nguoiBanID = getIntent().getExtras().getString("NguoiBanID");
 
             databaseReference.child("SanPham").addChildEventListener(new ChildEventListener() {
                 @Override
@@ -192,6 +193,9 @@ public class Report_SP_Activity extends AppCompatActivity {
             intent.putExtra("UserName", userName);
             intent.putExtra("ProductID", sanPhamID);
             intent.putExtra("Navigate", navigate);
+            intent.putExtra("UserID", userID);
+            intent.putExtra("SellerID", nguoiBanID);
+            intent.putExtra("DonHangID", donHangID);
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         }
