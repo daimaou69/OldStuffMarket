@@ -7,36 +7,35 @@
     android:layout_height="match_parent"
     tools:context=".ThanhToanActivity"
     android:orientation="vertical"
-    android:padding="20dp"
-    android:background="@mipmap/app_background">
+    android:padding="10dp"
+    android:background="@mipmap/bg1">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/xac_nhan_don_hang"
+            android:textStyle="bold"
+            android:textSize="25sp"/>
+    </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="11">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/layout_bg"
             android:padding="15dp"
             android:gravity="center"
             android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/xac_nhan_don_hang"
-                    android:textStyle="bold"
-                    android:textSize="25sp"/>
-            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
                 android:orientation="vertical"
                 android:padding="10dp">
                 <LinearLayout
@@ -179,34 +178,41 @@
                         android:textColor="@color/red"
                         android:textStyle="bold" />
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
-                    <Button
-                        android:id="@+id/btnConfirm"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/xac_nhan"
-                        android:textAllCaps="false"
-                        android:layout_marginRight="30dp"/>
-                    <Button
-                        android:id="@+id/btnHome"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/home"
-                        android:textAllCaps="false"
-                        android:layout_marginRight="30dp"/>
-                    <Button
-                        android:id="@+id/btnBack"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/Back"
-                        android:textAllCaps="false"/>
-                </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center">
+        <Button
+            android:id="@+id/btnConfirm"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="@string/xac_nhan"
+            android:textAllCaps="false"
+            android:backgroundTint="#FF6E40"
+            android:textSize="11sp"
+            android:layout_marginRight="30dp"/>
+        <Button
+            android:id="@+id/btnHome"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="@string/home"
+            android:textAllCaps="false"
+            android:backgroundTint="#FF6E40"
+            android:textSize="11sp"
+            android:layout_marginRight="30dp"/>
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="@string/Back"
+            android:backgroundTint="#FF6E40"
+            android:textSize="11sp"
+            android:textAllCaps="false"/>
+    </LinearLayout>
 
 </LinearLayout>
