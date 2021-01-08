@@ -158,6 +158,8 @@ public class CommentActivity extends AppCompatActivity {
             intent.putExtra("UserName", userName);
             intent.putExtra("ProductID", productID);
             intent.putExtra("UserID", userID);
+            intent.putExtra("Navigate", navigateTo);
+            intent.putExtra("DonHangID", donHangID);
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         }

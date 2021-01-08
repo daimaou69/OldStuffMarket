@@ -343,7 +343,6 @@ public class AdminMainActivity extends AppCompatActivity {
         public void onClick(View v) {
             intent = new Intent(v.getContext(), AddEmployeeActivity.class);
             intent.putExtra("UserName", sUserName);
-            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         }
     };

@@ -44,6 +44,7 @@ public class Report_SP_Activity extends AppCompatActivity {
     private String sanPhamID;
     private String userName;
     private String userID = UserMainActivity.sUserID;
+    private String navigate, donHangID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +72,8 @@ public class Report_SP_Activity extends AppCompatActivity {
             userName = getIntent().getExtras().getString("UserName");
             sanPhamID = getIntent().getExtras().getString("ProductID");
             userID = getIntent().getExtras().getString("UserID");
+            navigate = getIntent().getExtras().getString("Navigate");
+            donHangID = getIntent().getExtras().getString("DonHangID");
 
             databaseReference.child("SanPham").addChildEventListener(new ChildEventListener() {
                 @Override
@@ -138,6 +141,7 @@ public class Report_SP_Activity extends AppCompatActivity {
                                                     snapshot.getValue(SanPham.class).getsDiaChiDang(), snapshot.getValue(SanPham.class).getlGiaTien(), snapshot.getValue(SanPham.class).getiSoLuong(), snapshot.getValue(SanPham.class).getiTinhTrang());
                                             String reportID = databaseReference.push().getKey();
                                             ProductReport productReport = new ProductReport(reportID, userID, edtReport.getText().toString(), sanPham);
+                                            databaseReference.child("CommentNeeds").child(donHangID).removeValue();
                                             databaseReference.child("ProductReport").child(reportID).setValue(productReport);
                                         }
                                     }
@@ -187,6 +191,7 @@ public class Report_SP_Activity extends AppCompatActivity {
             intent = new Intent(v.getContext(), CommentActivity.class);
             intent.putExtra("UserName", userName);
             intent.putExtra("ProductID", sanPhamID);
+            intent.putExtra("Navigate", navigate);
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         }

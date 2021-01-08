@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ProductDetailActivity"
-    android:background="@mipmap/app_background"
+    android:background="@mipmap/bg1"
     android:padding="20dp">
     <ScrollView
         android:layout_width="match_parent"
@@ -97,6 +97,7 @@
                         android:id="@+id/btnDecs"
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="#FF6E40"
                         android:text="-"/>
                     <EditText
                         android:id="@+id/edtQuantity"
@@ -110,6 +111,7 @@
                         android:id="@+id/btnInc"
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="#FF6E40"
                         android:text="+"
                         android:layout_marginRight="5dp"/>
                     <TextView
@@ -152,7 +154,9 @@
                     <Button
                         android:id="@+id/btnXemTrang"
                         android:layout_width="wrap_content"
-                        android:layout_height="40dp"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#FF6E40"
+                        android:textSize="11sp"
                         android:text="@string/go_to_shop"
                         android:textAllCaps="false"/>
                 </LinearLayout>
@@ -183,6 +187,7 @@
                     android:id="@+id/btnBuy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#FF6E40"
                     android:text="@string/buy_product"
                     android:textAllCaps="false"
                     android:layout_marginRight="60dp"/>
@@ -190,6 +195,7 @@
                     android:id="@+id/btnBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#FF6E40"
                     android:text="@string/Back"
                     android:textAllCaps="false"/>
             </LinearLayout>
@@ -218,6 +224,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="#FF6E40"
                         android:textSize="10sp"
                         android:text="@string/all_star"
                         android:textAllCaps="false"/>
@@ -226,6 +233,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="#FF6E40"
                         android:textAllCaps="false"
                         android:textSize="10sp"
                         android:text="@string/one_star"/>
@@ -234,6 +242,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="#FF6E40"
                         android:textAllCaps="false"
                         android:textSize="10sp"
                         android:text="@string/two_star"/>
@@ -242,6 +251,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="#FF6E40"
                         android:textAllCaps="false"
                         android:textSize="10sp"
                         android:text="@string/three_star"/>
@@ -250,6 +260,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="#FF6E40"
                         android:textAllCaps="false"
                         android:textSize="10sp"
                         android:text="@string/four_star"/>
@@ -258,6 +269,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:textSize="10sp"
+                        android:backgroundTint="#FF6E40"
                         android:layout_height="wrap_content"
                         android:textAllCaps="false"
                         android:text="@string/five_star"/>

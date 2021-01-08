@@ -1,36 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="@mipmap/bg1"
+
     tools:context=".RegistrationActivity">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/registry_label"
+        android:textSize="25sp"
+        android:gravity="center"
+        android:textStyle="bold"></TextView>
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9"
         android:orientation="vertical"
-        android:background="@mipmap/app_background"
-        android:padding="20dp">
+        android:padding="5dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="5"
             android:orientation="vertical"
             android:background="@drawable/layout_bg"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:padding="20dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/registry_label"
-                android:textSize="30dp"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:layout_marginBottom="20dp"></TextView>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/registry_username"
+                android:textStyle="bold"
                 android:textSize="20dp"></TextView>
             <EditText
                 android:id="@+id/edtUserName"
@@ -42,6 +48,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:text="@string/registry_name"
                 android:textSize="20dp"></TextView>
             <EditText
@@ -54,6 +61,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:text="@string/registry_phone"
                 android:textSize="20dp"></TextView>
             <EditText
@@ -72,6 +80,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textStyle="bold"
                     android:text="@string/registry_gender"
                     android:textSize="20dp"></TextView>
                 <androidx.appcompat.widget.AppCompatSpinner
@@ -85,6 +94,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:text="@string/registry_address"
                 android:textSize="20dp"></TextView>
             <EditText
@@ -97,6 +107,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:text="@string/registry_password"
                 android:textSize="20dp"></TextView>
             <EditText
@@ -110,6 +121,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:text="@string/registry_confirm_pass"
                 android:textSize="20dp"></TextView>
             <EditText
@@ -120,32 +132,49 @@
                 android:singleLine="true"
                 android:password="true"
                 android:layout_marginBottom="20dp"></EditText>
-            <Button
-                android:id="@+id/btnRegistry"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:text="@string/registry_btn"
-                android:textSize="20dp"
-                android:background="@drawable/login_button"></Button>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/registry_cancel"
-                    android:textSize="15dp"
-                    android:layout_marginRight="15dp"></TextView>
-                <TextView
-                    android:id="@+id/txtRegistryReturn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/registry_return"
-                    android:textSize="15dp"
-                    android:textColor="@android:color/black"></TextView>
-            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:layout_weight="2">
+            <Button
+                android:id="@+id/btnRegistry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/registry_btn"
+                android:backgroundTint="#FF6E40"
+                android:textSize="17sp"></Button>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="@string/registry_cancel"
+                android:textSize="15dp"
+                android:layout_marginRight="15dp"></TextView>
+            <TextView
+                android:id="@+id/txtRegistryReturn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/registry_return"
+                android:textSize="15dp"
+                android:textColor="@android:color/black"></TextView>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
