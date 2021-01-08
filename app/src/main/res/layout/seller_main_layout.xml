@@ -138,6 +138,8 @@
                     android:id="@+id/btnReportUser"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:backgroundTint="#FF6E40"
                     android:text="Report"/>
             </LinearLayout>
             <LinearLayout
@@ -150,6 +152,7 @@
                     android:layout_weight="1"
                     android:text="@string/all_star"
                     android:textAllCaps="false"
+                    android:backgroundTint="#FF6E40"
                     android:layout_height="wrap_content"/>
                 <Button
                     android:id="@+id/btnDoCu"
@@ -157,12 +160,14 @@
                     android:layout_weight="1"
                     android:text="@string/do_cu"
                     android:textAllCaps="false"
+                    android:backgroundTint="#FF6E40"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_height="wrap_content"/>
                 <Button
                     android:id="@+id/btnDoMoi"
                     android:layout_width="0dp"
+                    android:backgroundTint="#FF6E40"
                     android:layout_weight="1"
                     android:text="@string/do_moi"
                     android:textAllCaps="false"
@@ -176,9 +181,10 @@
                 android:layout_marginBottom="10dp"/>
             <Button
                 android:id="@+id/btnBack"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/login_button"
+                android:layout_gravity="center"
+                android:backgroundTint="#FF6E40"
                 android:text="@string/Back"
                 android:textSize="15sp"/>
         </LinearLayout>

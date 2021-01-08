@@ -43,6 +43,7 @@
                     android:id="@+id/imgDanhMuc"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
+                    android:scaleType="centerCrop"
                     android:src="@mipmap/no_image_icon"
                     android:layout_marginBottom="20dp"/>
                 <EditText
@@ -64,6 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="30dp"
+                    android:backgroundTint="#536DFE"
                     android:text="@string/choose_from_gallery"
                     android:textAllCaps="false" />
 
@@ -71,6 +73,7 @@
                     android:id="@+id/btnOpenCamera"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#536DFE"
                     android:text="@string/open_camera"
                     android:textAllCaps="false" />
             </LinearLayout>
@@ -86,12 +89,14 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#536DFE"
                 android:text="@string/them_danh_muc"
                 android:textAllCaps="false"/>
             <Button
                 android:id="@+id/btnXoaDanhMuc"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:backgroundTint="#536DFE"
                 android:layout_height="wrap_content"
                 android:text="@string/xoa_danh_muc"
                 android:textAllCaps="false"/>
@@ -100,6 +105,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#536DFE"
                 android:text="@string/sua_danh_muc"
                 android:textAllCaps="false"/>
             <Button
@@ -107,6 +113,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#536DFE"
                 android:text="@string/clear"
                 android:textAllCaps="false"/>
         </LinearLayout>
@@ -121,6 +128,7 @@
             android:textAllCaps="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="#536DFE"
             android:text="@string/Back"/>
     </LinearLayout>
 </LinearLayout>

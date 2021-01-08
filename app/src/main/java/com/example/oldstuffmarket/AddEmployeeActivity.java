@@ -111,6 +111,7 @@ public class AddEmployeeActivity extends AppCompatActivity {
             intent = new Intent(v.getContext(), AdminMainActivity.class);//quay trở lại trang đăng nhập
             intent.putExtra("UserName", admin);
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            finish();
             startActivity(intent);
         }
     };
