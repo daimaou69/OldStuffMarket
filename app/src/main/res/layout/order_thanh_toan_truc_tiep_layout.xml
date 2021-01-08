@@ -5,9 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".OrderThanhToanTrucTiepActivity"
-    android:padding="20dp"
     android:background="@mipmap/bg1"
+    tools:context=".OrderThanhToanTrucTiepActivity"
     android:orientation="vertical">
 
     <ScrollView

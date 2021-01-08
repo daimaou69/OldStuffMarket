@@ -127,7 +127,7 @@
                 android:text="Tạo lịch hẹn"
                 android:backgroundTint="#FF6E40"
                 android:textAllCaps="false"
-                android:layout_marginBottom="20dp"/>
+                android:layout_marginBottom="10dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -159,7 +159,7 @@
                 android:backgroundTint="#FF6E40"
                 android:text="@string/my_post"
                 android:textAllCaps="false"
-                android:layout_marginBottom="20dp"/>
+                android:layout_marginBottom="10dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -191,7 +191,7 @@
                 android:backgroundTint="#FF6E40"
                 android:text="@string/shop"
                 android:textAllCaps="false"
-                android:layout_marginBottom="20dp"/>
+                android:layout_marginBottom="10dp"/>
             <Button
                 android:id="@+id/btnWallet"
                 android:layout_width="wrap_content"
@@ -199,13 +199,13 @@
                 android:text="@string/wallet"
                 android:backgroundTint="#FF6E40"
                 android:textAllCaps="false"
-                android:layout_marginBottom="20dp"/>
+                android:layout_marginBottom="10dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="10dp">
                 <Button
                     android:id="@+id/btnDonMua"
                     android:layout_width="wrap_content"
@@ -232,13 +232,13 @@
                 android:backgroundTint="#FF6E40"
                 android:text="@string/lich_su_don_hang"
                 android:textAllCaps="false"
-                android:layout_marginBottom="20dp"/>
+                android:layout_marginBottom="10dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="10dp">
                 <Button
                     android:id="@+id/btnDanhGiaSP"
                     android:layout_width="wrap_content"
@@ -263,7 +263,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="10dp">
                 <Button
                     android:id="@+id/btnDonBan"
                     android:layout_width="wrap_content"
@@ -290,7 +290,7 @@
                 android:backgroundTint="#FF6E40"
                 android:text="@string/lich_su_don_ban"
                 android:textAllCaps="false"
-                android:layout_marginBottom="20dp"/>
+                android:layout_marginBottom="10dp"/>
             <Button
                 android:id="@+id/btnPassWordChange"
                 android:layout_width="wrap_content"
@@ -298,7 +298,7 @@
                 android:text="@string/user_password_change"
                 android:backgroundTint="#FF6E40"
                 android:textAllCaps="false"
-                android:layout_marginBottom="20dp"/>
+                android:layout_marginBottom="10dp"/>
         </LinearLayout>
     </ScrollView>
 
