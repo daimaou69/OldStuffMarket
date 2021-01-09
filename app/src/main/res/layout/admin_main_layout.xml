@@ -197,7 +197,7 @@
                 android:backgroundTint="#FF5252"
                 android:textSize="11sp"
                 android:layout_height="wrap_content"
-                android:text="Lịch sử đơn giao"
+                android:text="Tìm kiếm đơn hàng user"
                 android:textAllCaps="false"
                 android:layout_marginBottom="20dp"/>
             <Button

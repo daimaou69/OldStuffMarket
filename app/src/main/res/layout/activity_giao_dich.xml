@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".GiaoDichActivity"
-    android:background="@mipmap/app_background"
+    android:background="@mipmap/admin_background"
     android:padding="20dp">
 
     <LinearLayout
@@ -37,6 +37,7 @@
                 android:id="@+id/gridDonHang"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:verticalSpacing="5dp"
                 android:padding="10dp"/>
         </LinearLayout>
         <LinearLayout
@@ -74,7 +75,7 @@
                     android:id="@+id/btnBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#FF9800"
+                    android:backgroundTint="#536DFE"
                     android:text="@string/Back"/>
             </LinearLayout>
         </LinearLayout>

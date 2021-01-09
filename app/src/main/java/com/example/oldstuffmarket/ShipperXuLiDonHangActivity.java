@@ -336,6 +336,38 @@ public class ShipperXuLiDonHangActivity extends AppCompatActivity {
                                 @Override
                                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                                     if(snapshot.getValue(OrderData.class).getDonHangID().equals(donHangID) && snapshot.getValue(OrderData.class).getLoaiDonHang() == 2){
+
+                                        int soLuongSP = snapshot.getValue(OrderData.class).getSanPham().getiSoLuong();
+                                        databaseReference.child("User").addChildEventListener(new ChildEventListener() {
+                                            @Override
+                                            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                                if(snapshot.getValue(UserData.class).getsUserID().equals(nguoiBanID)){
+                                                    int newSL = snapshot.getValue(UserData.class).getiSoSPDaBan() + soLuongSP;
+                                                    databaseReference.child("User").child(nguoiBanID).child("iSoSPDaBan").setValue(newSL);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                            }
+
+                                            @Override
+                                            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                            }
+
+                                            @Override
+                                            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
+
                                         OrderData orderUpdate = new OrderData(snapshot.getValue(OrderData.class).getDonHangID(), snapshot.getValue(OrderData.class).getNguoiMuaID(),
                                                 snapshot.getValue(OrderData.class).getNguoiBanID(), snapshot.getValue(OrderData.class).getNgayTaoDonHang(), snapshot.getValue(OrderData.class).getSoDienThoai(),
                                                 snapshot.getValue(OrderData.class).getDiaChi(), snapshot.getValue(OrderData.class).getSanPham(),
@@ -344,6 +376,8 @@ public class ShipperXuLiDonHangActivity extends AppCompatActivity {
                                         databaseReference.child("MoneyIncome").child(donHangID).setValue(orderUpdate);
                                         databaseReference.child("Shipper").child(userID).child(donHangID).removeValue();
                                         databaseReference.child("DonHang").child(donHangID).setValue(orderUpdate);
+
+
 
                                         finish();
                                         intent = new Intent(v.getContext(), ShipperDonDangGiaoActivity.class);

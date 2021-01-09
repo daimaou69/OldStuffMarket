@@ -4,14 +4,16 @@ public class Commission {
     private String id;
     private int userCommission;
     private int shopCommission;
+    private int shipperCommission;
 
     public Commission() {
     }
 
-    public Commission(String id, int userCommission, int shopCommission) {
+    public Commission(String id, int userCommission, int shopCommission, int shipperCommission) {
         this.id = id;
         this.userCommission = userCommission;
         this.shopCommission = shopCommission;
+        this.shipperCommission = shipperCommission;
     }
 
     public String getId() {
@@ -36,5 +38,13 @@ public class Commission {
 
     public void setShopCommission(int shopCommission) {
         this.shopCommission = shopCommission;
+    }
+
+    public int getShipperCommission() {
+        return shipperCommission;
+    }
+
+    public void setShipperCommission(int shipperCommission) {
+        this.shipperCommission = shipperCommission;
     }
 }

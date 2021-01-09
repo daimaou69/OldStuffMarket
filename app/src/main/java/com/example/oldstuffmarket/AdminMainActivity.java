@@ -237,6 +237,7 @@ public class AdminMainActivity extends AppCompatActivity {
                             btnQuanLyDanhMuc.setVisibility(View.GONE);
                             btnWallet.setVisibility(View.GONE);
                             btnUserDepositMoney.setVisibility(View.GONE);
+                            btnThongKe.setVisibility(View.GONE);
                             txtAdminAccountName.setText("Employee - " + snapshot.getValue(UserData.class).getsFullName());
                         }
                         else{

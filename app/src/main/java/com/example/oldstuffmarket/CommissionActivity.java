@@ -69,6 +69,7 @@ public class CommissionActivity extends AppCompatActivity {
                 {
                     edtCommissionShop.setText(String.valueOf(snapshot.getValue(Commission.class).getShopCommission()));
                     edtCommissionUser.setText(String.valueOf(snapshot.getValue(Commission.class).getUserCommission()));
+                    edtCommissionShipper.setText(String.valueOf(snapshot.getValue(Commission.class).getShipperCommission()));
                 }
             }
 
