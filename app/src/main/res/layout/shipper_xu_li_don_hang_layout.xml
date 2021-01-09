@@ -86,14 +86,12 @@
                     android:layout_height="wrap_content"
                     android:text="@string/ho_ten_nguoi_ban"
                     android:textSize="20dp"
-                    android:textColor="@color/red"
                     android:layout_marginBottom="10dp"/>
                 <TextView
                     android:id="@+id/txtSellerDiaChi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Địa chỉ lấy hàng:"
-                    android:textStyle="bold"
                     android:textSize="20dp"
                     android:layout_marginBottom="10dp"/>
 
@@ -101,7 +99,6 @@
                     android:id="@+id/txtSellerSDT"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
                     android:text="@string/sdt"
                     android:textSize="20dp"/>
 
@@ -116,7 +113,6 @@
                     android:id="@+id/txtHoTenNguoiMua"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/red"
                     android:text="@string/ho_ten_nguoi_mua"
                     android:textSize="20dp"
                     android:layout_marginBottom="10dp"/>

@@ -130,6 +130,9 @@ public class ShipperXuLiDonHangActivity extends AppCompatActivity {
                                 }
                                 else if(snapshot.getValue(UserData.class).getsUserID().equals(nguoiBanID)){
                                     commission = snapshot.getValue(UserData.class).getiCommission();
+                                    txtSellerLabel.setText("Họ tên người bán: " + snapshot.getValue(UserData.class).getsFullName());
+                                    txtSellerDiaChi.setText("Địa chỉ lấy hàng: " + snapshot.getValue(UserData.class).getsDiaChi());
+                                    txtSellerSDT.setText("Liên hệ: " + snapshot.getValue(UserData.class).getsSdt());
                                 }
                             }
 
