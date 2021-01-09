@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ListView;
 
 import com.example.oldstuffmarket.adapter.DonMuaAdapter;
@@ -27,7 +28,7 @@ public class UserTransactionHistoryActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private ArrayList<OrderData> orderDataArrayList;
-    private ListView lstOrderHistory;
+    private GridView lstOrderHistory;
     private Button btnBack;
     private Intent intent;
     private String userName, userID;
@@ -39,7 +40,7 @@ public class UserTransactionHistoryActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
         setContentView(R.layout.user_transaction_history_layout);
 
-        lstOrderHistory = (ListView) findViewById(R.id.lstOrderHistory);
+        lstOrderHistory = (GridView) findViewById(R.id.lstOrderHistory);
         btnBack = (Button) findViewById(R.id.btnBack);
 
         orderDataArrayList = new ArrayList<>();

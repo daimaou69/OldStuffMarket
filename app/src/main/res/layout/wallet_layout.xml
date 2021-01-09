@@ -54,6 +54,7 @@
                     android:id="@+id/btnBack"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#448AFF"
                     android:text="@string/Back"
                     android:textAllCaps="false"/>
             </LinearLayout>

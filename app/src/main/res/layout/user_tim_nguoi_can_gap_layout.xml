@@ -24,6 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tìm user"
+                android:textStyle="bold"
                 android:textSize="30sp"/>
         </LinearLayout>
         <LinearLayout
@@ -53,7 +54,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:verticalSpacing="5dp"
-                android:background="@mipmap/shipper"
                 android:padding="10dp"/>
         </LinearLayout>
         <LinearLayout
@@ -66,6 +66,7 @@
                 android:id="@+id/btnBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#FF6E40"
                 android:text="@string/Back"/>
         </LinearLayout>
     </LinearLayout>

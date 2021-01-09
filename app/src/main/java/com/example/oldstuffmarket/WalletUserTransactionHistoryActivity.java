@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ListView;
 
 import com.example.oldstuffmarket.adapter.YeuCauChuyenKhoanAdapter;
@@ -26,7 +27,7 @@ public class WalletUserTransactionHistoryActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private ArrayList<UserDepositData> userDepositDataArrayList;
-    private ListView lstDepositRequest;
+    private GridView lstDepositRequest;
     private Button btnBack;
     private Intent intent;
     private String userName, userID;
@@ -38,7 +39,7 @@ public class WalletUserTransactionHistoryActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
         setContentView(R.layout.wallet_user_transaction_history_layout);
 
-        lstDepositRequest = (ListView) findViewById(R.id.lstDepositRequest);
+        lstDepositRequest = (GridView) findViewById(R.id.lstDepositRequest);
         btnBack = (Button) findViewById(R.id.btnBack);
 
         userDepositDataArrayList = new ArrayList<>();

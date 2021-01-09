@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".WalletUserActivity"
     android:orientation="vertical"
-    android:background="@mipmap/app_background"
+    android:background="@mipmap/bg1"
     android:padding="30dp">
 
     <ScrollView
@@ -53,6 +53,7 @@
                     android:id="@+id/btnNapTien"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#FF6E40"
                     android:text="@string/nap_tien"
                     android:textAllCaps="false"/>
 
@@ -69,6 +70,7 @@
                             android:id="@+id/btnTransactionHistory"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:backgroundTint="#FF6E40"
                             android:text="@string/lich_su_giao_dich"
                             android:textAllCaps="false"/>
                     </LinearLayout>
@@ -94,6 +96,7 @@
                     android:id="@+id/btnBack"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#FF6E40"
                     android:text="@string/Back"
                     android:textAllCaps="false"/>
             </LinearLayout>

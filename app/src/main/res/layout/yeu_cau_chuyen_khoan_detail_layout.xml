@@ -57,6 +57,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/user_name"
                     android:textSize="20sp"
+                    android:textStyle="bold"
                     android:layout_marginTop="6dp"
                     android:layout_marginBottom="5dp"/>
 
@@ -70,9 +71,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textStyle="bold"
                     android:text="@string/full_name"
                     android:textSize="20sp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="5dp"/>
 
                 <TextView
@@ -93,6 +95,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textStyle="bold"
                     android:text="@string/sdt"
                     android:textSize="20sp"
                     android:layout_marginBottom="5dp"/>
@@ -109,6 +112,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/yeu_cau_chuyen_khoan_user"
+                    android:textStyle="bold"
                     android:textSize="20sp"
                     android:layout_marginBottom="6dp"/>
 
@@ -117,8 +121,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/mo_ta_shop"
-                    android:textSize="17sp"
-                    android:textStyle="bold"/>
+                    android:textSize="17sp"/>
 
 
             </LinearLayout>
@@ -131,7 +134,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/chuyen_so_tien"
+                    android:textStyle="bold"
+                    android:text="Số tiền cần chuyển:"
                     android:textSize="20sp"
                     android:layout_marginBottom="6dp"/>
 
@@ -139,7 +143,7 @@
                     android:id="@+id/edtSoTienCanChuyen"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"/>
+                    android:editable="false"/>
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
@@ -151,6 +155,7 @@
                 android:id="@+id/btnAccept"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#448AFF"
                 android:text="@string/accepted"
                 android:textAllCaps="false"
                 android:layout_marginRight="80dp"/>
@@ -158,6 +163,7 @@
                 android:id="@+id/btnBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#448AFF"
                 android:textAllCaps="false"
                 android:text="@string/Back"/>
         </LinearLayout>

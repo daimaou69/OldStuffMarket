@@ -83,6 +83,8 @@
                         android:id="@+id/btnChonNgay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="#FF6E40"
+                        android:textSize="11sp"
                         android:text="Chọn ngày"
                         android:textAllCaps="false"/>
                 </LinearLayout>
@@ -110,7 +112,9 @@
                         android:id="@+id/btnTimUser"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="11sp"
                         android:text="Tìm user"
+                        android:backgroundTint="#FF6E40"
                         android:textAllCaps="false"/>
                 </LinearLayout>
 
@@ -141,23 +145,29 @@
                 android:layout_marginBottom="10dp">
                 <Button
                     android:id="@+id/btnCreate"
-                    android:layout_width="wrap_content"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#FF6E40"
+                    android:textSize="11sp"
                     android:textAllCaps="false"
                     android:text="Lên lịch"/>
                 <Button
                     android:id="@+id/btnBack"
-                    android:layout_width="wrap_content"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:text="@string/Back"
+                    android:backgroundTint="#FF6E40"
                     android:layout_marginLeft="10dp"
+                    android:textSize="11sp"
                     android:textAllCaps="false"
                     android:layout_marginRight="10dp"/>
                 <Button
                     android:id="@+id/btnClear"
-                    android:layout_width="wrap_content"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#FF6E40"
                     android:textAllCaps="false"
+                    android:textSize="11sp"
                     android:text="@string/huy_bai"/>
             </LinearLayout>
         </LinearLayout>
