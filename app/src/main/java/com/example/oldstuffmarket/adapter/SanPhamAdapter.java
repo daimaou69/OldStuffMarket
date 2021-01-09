@@ -89,7 +89,7 @@ public class SanPhamAdapter extends BaseAdapter {
             }
         });
 
-        viewHolder.txtNgayDang.setText("Ngày đăng: " + sanPham.getsNgayDang());
+        viewHolder.txtNgayDang.setText("Ngày: " + sanPham.getsNgayDang());
 
         if(sanPham.getiTinhTrang() == 0){
 

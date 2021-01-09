@@ -80,7 +80,7 @@ public class DanhMucAdapter extends BaseAdapter {
 //            }
 //        }, delay);
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-        storageReference.child(danhMucData.getsDanhMucIMG()+ ".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storageReference.child(danhMucData.getsDanhMucIMG() + ".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 Glide.with(context).load(uri).into(viewHolder.imgDanhMuc);

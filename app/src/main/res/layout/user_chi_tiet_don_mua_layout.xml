@@ -7,11 +7,22 @@
     android:layout_height="match_parent"
     tools:context=".UserChiTietDonMuaActivity"
     android:padding="10dp"
-    android:background="@mipmap/app_background">
+    android:orientation="vertical"
+    android:background="@mipmap/bg1">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chi tiết đơn hàng"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:layout_marginBottom="10dp"/>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="11">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,12 +35,7 @@
                 android:layout_marginBottom="10dp"
                 android:orientation="vertical"
                 android:gravity="center">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Chi tiết đơn hàng"
-                    android:textSize="25sp"
-                    android:layout_marginBottom="10dp"/>
+
                 <ImageView
                     android:id="@+id/imgSP"
                     android:layout_width="match_parent"
@@ -189,19 +195,21 @@
                     android:textColor="@color/red"
                     android:textStyle="bold" />
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center">
-
-                <Button
-                    android:id="@+id/btnBack"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/Back"
-                    android:textAllCaps="false"/>
-            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Back"
+            android:backgroundTint="#FF6E40"
+            android:textAllCaps="false"/>
+    </LinearLayout>
 </LinearLayout>
