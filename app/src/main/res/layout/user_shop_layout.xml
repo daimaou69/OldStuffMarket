@@ -7,30 +7,32 @@
     android:layout_height="match_parent"
     tools:context=".UserShopActivity"
     android:padding="10dp"
-    android:background="@mipmap/app_background">
+    android:orientation="vertical"
+    android:background="@mipmap/bg1">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/thong_tin_nguoi_ban"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:textStyle="bold"/>
+    </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="11">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/layout_bg"
             android:orientation="vertical"
             android:padding="20dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:gravity="center"
-                    android:text="@string/thong_tin_nguoi_ban"
-                    android:textSize="30dp"
-                    android:textStyle="bold"/>
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -86,6 +88,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/edit_shop"
+                                android:textSize="11sp"
+                                android:backgroundTint="#FF6E40"
                                 android:textAllCaps="false"/>
                         </LinearLayout>
                     </LinearLayout>
@@ -133,6 +137,8 @@
                     android:layout_weight="1"
                     android:text="@string/all_star"
                     android:textAllCaps="false"
+                    android:textSize="11sp"
+                    android:backgroundTint="#FF6E40"
                     android:layout_height="wrap_content"/>
                 <Button
                     android:id="@+id/btnDoCu"
@@ -141,12 +147,16 @@
                     android:text="@string/do_cu"
                     android:textAllCaps="false"
                     android:layout_marginLeft="5dp"
+                    android:textSize="11sp"
+                    android:backgroundTint="#FF6E40"
                     android:layout_marginRight="5dp"
                     android:layout_height="wrap_content"/>
                 <Button
                     android:id="@+id/btnDoMoi"
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:textSize="11sp"
+                    android:backgroundTint="#FF6E40"
                     android:text="@string/do_moi"
                     android:textAllCaps="false"
                     android:layout_height="wrap_content"/>
@@ -158,27 +168,29 @@
                 android:layout_height="300dp"
                 android:nestedScrollingEnabled="true"
                 android:layout_marginBottom="10dp" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center">
-                <Button
-                    android:id="@+id/btnPost"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/login_button"
-                    android:text="@string/dang_bai"
-                    android:textSize="15sp"
-                    android:layout_marginRight="60dp"/>
-                <Button
-                    android:id="@+id/btnBack"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/login_button"
-                    android:text="@string/Back"
-                    android:textSize="15sp"/>
-            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center">
+        <Button
+            android:id="@+id/btnPost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dang_bai"
+            android:textSize="11sp"
+            android:backgroundTint="#FF6E40"
+            android:layout_marginRight="60dp"/>
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:backgroundTint="#FF6E40"
+            android:text="@string/Back"/>
+    </LinearLayout>
 </LinearLayout>

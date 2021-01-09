@@ -95,6 +95,7 @@
                 android:id="@+id/gridDonMua"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:verticalSpacing="5dp"
                 android:padding="10dp"/>
         </LinearLayout>
         <LinearLayout

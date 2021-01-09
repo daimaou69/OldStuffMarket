@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".UserTaoLichHenActivity"
     android:padding="10dp"
-    android:background="@mipmap/app_background">
+    android:background="@mipmap/bg1">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

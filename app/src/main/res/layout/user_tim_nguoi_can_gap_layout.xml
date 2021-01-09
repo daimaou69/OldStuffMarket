@@ -7,12 +7,11 @@
     android:layout_height="match_parent"
     tools:context=".UserTimNguoiCanGapActivity"
     android:padding="10dp"
-    android:background="@mipmap/app_background">
+    android:background="@mipmap/bg1">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/layout_bg"
         android:gravity="center"
         android:orientation="vertical">
         <LinearLayout
