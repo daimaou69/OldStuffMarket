@@ -105,6 +105,7 @@ public class UserWaitingForMoneyActivity extends AppCompatActivity {
             Intent intent = new Intent(v.getContext(), UserMainActivity.class);
             intent.putExtra("UserName", userName);
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            finish();
             startActivity(intent);
         }
     };

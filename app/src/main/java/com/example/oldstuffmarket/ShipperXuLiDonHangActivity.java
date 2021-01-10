@@ -220,6 +220,15 @@ public class ShipperXuLiDonHangActivity extends AppCompatActivity {
                             case DialogInterface.BUTTON_POSITIVE:
                                 cbLayHangThanhCong.setEnabled(false);
                                 cbDangGiaoHang.setEnabled(true);
+
+                                txtSellerLabel.setVisibility(View.GONE);
+                                txtSellerDiaChi.setVisibility(View.GONE);
+                                txtSellerSDT.setVisibility(View.GONE);
+
+                                txtHoTenNguoiMua.setVisibility(View.VISIBLE);
+                                txtDiaChi.setVisibility(View.VISIBLE);
+                                txtLienHe.setVisibility(View.VISIBLE);
+
                                 databaseReference.child("DonHang").addChildEventListener(new ChildEventListener() {
                                     @Override
                                     public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -425,7 +434,7 @@ public class ShipperXuLiDonHangActivity extends AppCompatActivity {
                                                 snapshot.getValue(OrderData.class).getGiaTien(), snapshot.getValue(OrderData.class).getShipperID());
                                         databaseReference.child("LichSuGiaoDich").child(donHangID).setValue(orderUpdate);
                                         databaseReference.child("CommentNeeds").child(donHangID).setValue(orderUpdate);
-                                        databaseReference.child("Shipper").child(userID).child(donHangID).setValue(orderUpdate);
+                                        databaseReference.child("Shipper").child(userID).child(donHangID).removeValue();
                                         databaseReference.child("DonHang").child(donHangID).removeValue();
 
                                         databaseReference.child("User").addChildEventListener(new ChildEventListener() {

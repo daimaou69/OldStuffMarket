@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.oldstuffmarket.data_models.OrderData;
@@ -203,6 +204,8 @@ public class WaitingDetailActivity extends AppCompatActivity {
                                                             snapshot.getValue(OrderData.class).getDiaChi(), snapshot.getValue(OrderData.class).getSanPham(),
                                                             snapshot.getValue(OrderData.class).getLoaiDonHang(), snapshot.getValue(OrderData.class).getTinhTrang(), snapshot.getValue(OrderData.class).getSellerCommission(),
                                                             snapshot.getValue(OrderData.class).getGiaTien(), snapshot.getValue(OrderData.class).getShipperID());
+
+                                                    databaseReference.child("Shipper").child(orderUpdate.getShipperID()).child(orderUpdate.getDonHangID()).removeValue();
                                                     databaseReference.child("LichSuGiaoDich").child(donHangID).setValue(orderUpdate);
                                                     databaseReference.child("CommentNeeds").child(donHangID).setValue(orderUpdate);
                                                     databaseReference.child("MoneyIncome").child(donHangID).removeValue();
@@ -257,6 +260,7 @@ public class WaitingDetailActivity extends AppCompatActivity {
                                                     OrderData orderData = new OrderData(donHangID, snapshot.getValue(OrderData.class).getNguoiMuaID(), snapshot.getValue(OrderData.class).getNguoiBanID(),
                                                             snapshot.getValue(OrderData.class).getNgayTaoDonHang(), snapshot.getValue(OrderData.class).getSoDienThoai(), snapshot.getValue(OrderData.class).getDiaChi(),
                                                             snapshot.getValue(OrderData.class).getSanPham(), snapshot.getValue(OrderData.class).getLoaiDonHang(), 8, snapshot.getValue(OrderData.class).getSellerCommission(), snapshot.getValue(OrderData.class).getGiaTien(), snapshot.getValue(OrderData.class).getShipperID());
+                                                    databaseReference.child("Shipper").child(orderData.getShipperID()).child(orderData.getDonHangID()).removeValue();
                                                     databaseReference.child("LichSuGiaoDich").child(donHangID).setValue(orderData);
                                                     databaseReference.child("CommentNeeds").child(donHangID).setValue(orderData);
                                                     databaseReference.child("DonHang").child(donHangID).removeValue();

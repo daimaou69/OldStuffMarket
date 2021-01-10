@@ -51,7 +51,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Mã vận đơn:"
-                    android:textSize="20sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"/>
             </LinearLayout>
             <LinearLayout
@@ -63,7 +63,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/ten_sp"
-                    android:textSize="20sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"/>
             </LinearLayout>
             <LinearLayout
@@ -80,7 +80,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/product_quantity"
-                        android:textSize="20sp"
+                        android:textSize="15sp"
                         android:textStyle="bold"/>
                 </LinearLayout>
                 <LinearLayout
@@ -93,17 +93,23 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/product_price"
-                        android:textSize="20sp"
+                        android:textSize="15sp"
                         android:textColor="@color/red"
                         android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thông tin người bán:"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginBottom="10dp">
-
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -113,7 +119,8 @@
                     <ImageView
                         android:id="@+id/imgSellerUser"
                         android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_height="80dp"
+                        android:scaleType="centerCrop"
                         android:src="@mipmap/no_image_icon" />
                 </LinearLayout>
 

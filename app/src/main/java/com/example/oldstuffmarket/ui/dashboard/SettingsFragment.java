@@ -301,7 +301,7 @@ public class SettingsFragment extends Fragment {
                                     txtMoneyNotify.setText(String.valueOf(waitingList.size()));
                                 }
                                 else {
-                                    txtMoneyNotify.setVisibility(View.VISIBLE);
+                                    txtMoneyNotify.setVisibility(View.GONE);
                                 }
                             }
 
