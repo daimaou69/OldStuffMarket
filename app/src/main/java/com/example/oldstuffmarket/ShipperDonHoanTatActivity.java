@@ -22,11 +22,12 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class ShipperDonDangGiaoActivity extends AppCompatActivity {
+public class ShipperDonHoanTatActivity extends AppCompatActivity {
+
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private ArrayList<OrderData> orderDataArrayList;
     private Button btnBack;
-    private GridView gridDonDangGiao;
+    private GridView gridDonHoanThanh;
     private Intent intent;
     private String userName, userID;
 
@@ -35,19 +36,19 @@ public class ShipperDonDangGiaoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
-        setContentView(R.layout.shipper_don_dang_giao_layout);
+        setContentView(R.layout.shipper_don_hoan_tat_layout);
 
         orderDataArrayList = new ArrayList<>();
 
-        gridDonDangGiao = (GridView) findViewById(R.id.gridDonDangGiao);
+        gridDonHoanThanh = (GridView) findViewById(R.id.gridDonHoanThanh);
         btnBack = (Button) findViewById(R.id.btnBack);
 
         btnBack.setOnClickListener(backClick);
 
-        gridDonDangGiao.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        gridDonHoanThanh.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                intent = new Intent(view.getContext(), ShipperXuLiDonHangActivity.class);
+                intent = new Intent(view.getContext(), ShipperDonHoanTatDetailActivity.class);
                 intent.putExtra("UserName", userName);
                 intent.putExtra("UserID", userID);
                 intent.putExtra("DonHangID", orderDataArrayList.get(position).getDonHangID());
@@ -71,11 +72,10 @@ public class ShipperDonDangGiaoActivity extends AppCompatActivity {
             databaseReference.child("Shipper").child(userID).addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    if(snapshot.getValue(OrderData.class).getTinhTrang() != 7 && snapshot.getValue(OrderData.class).getTinhTrang() != -1){
+                    if(snapshot.getValue(OrderData.class).getTinhTrang() == 7 || snapshot.getValue(OrderData.class).getTinhTrang() == -1){
                         orderDataArrayList.add(snapshot.getValue(OrderData.class));
                     }
                     donHangLoad();
-                    
                 }
 
                 @Override
@@ -113,7 +113,7 @@ public class ShipperDonDangGiaoActivity extends AppCompatActivity {
     };
 
     public void donHangLoad(){
-        DonMuaAdapter donMuaAdapter = new DonMuaAdapter(ShipperDonDangGiaoActivity.this, R.layout.don_mua_adapter_layout, orderDataArrayList);
-        gridDonDangGiao.setAdapter(donMuaAdapter);
+        DonMuaAdapter donMuaAdapter = new DonMuaAdapter(ShipperDonHoanTatActivity.this, R.layout.don_mua_adapter_layout, orderDataArrayList);
+        gridDonHoanThanh.setAdapter(donMuaAdapter);
     }
 }

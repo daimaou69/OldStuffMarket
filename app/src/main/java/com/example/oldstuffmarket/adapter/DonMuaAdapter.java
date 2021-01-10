@@ -122,7 +122,7 @@ public class DonMuaAdapter extends BaseAdapter {
             viewHolder.txtTinhTrang.setTextColor(Color.GREEN);
         }
         else if(orderData.getTinhTrang() == -1){
-            viewHolder.txtTinhTrang.setText("Hủy");
+            viewHolder.txtTinhTrang.setText("Hủy đơn");
             viewHolder.txtTinhTrang.setTextColor(Color.RED);
         }
 

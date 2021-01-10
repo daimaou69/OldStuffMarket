@@ -5,9 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/bg4"
     android:padding="10dp"
-    tools:context=".ShipperDonDangGiaoActivity">
+    android:background="@mipmap/bg4"
+    tools:context=".ShipperDonHoanTatActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,9 +24,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Đơn đang xử lí"
+                android:text="Đơn hoàn tất"
                 android:textSize="30sp"/>
         </LinearLayout>
+
         <!--        <LinearLayout-->
         <!--            android:layout_width="match_parent"-->
         <!--            android:layout_height="0dp"-->
@@ -105,7 +106,7 @@
             android:gravity="center">
 
             <GridView
-                android:id="@+id/gridDonDangGiao"
+                android:id="@+id/gridDonHoanThanh"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:verticalSpacing="5dp"

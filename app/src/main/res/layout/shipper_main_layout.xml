@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".ShipperMainActivity"
     android:orientation="vertical"
-    android:background="@mipmap/shipper">
+    android:background="@mipmap/bg4">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -20,8 +20,9 @@
             android:padding="10dp">
             <ImageView
                 android:id="@+id/imgAccount"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="150dp"
+                android:layout_height="120dp"
+                android:scaleType="centerCrop"
                 android:src="@mipmap/no_image_icon"/>
         </LinearLayout>
         <LinearLayout
@@ -37,18 +38,21 @@
                 android:text="Shipper"
                 android:gravity="center"
                 android:textStyle="bold"
+                android:textColor="#64FFDA"
                 android:textSize="15sp"/>
             <Button
                 android:id="@+id/btnAccountInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/account_info"
+                android:backgroundTint="#536DFE"
                 android:textAllCaps="false" />
             <Button
                 android:id="@+id/btnPassWordChange"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/user_password_change"
+                android:backgroundTint="#536DFE"
                 android:textAllCaps="false"/>
         </LinearLayout>
     </LinearLayout>
@@ -115,12 +119,37 @@
                     android:id="@+id/btnCacDonDangGiao"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="#536DFE"
                     android:text="@string/cac_don_dang_giao"
-                    android:visibility="gone"
                     android:textAllCaps="false"/>
 
                 <TextView
                     android:id="@+id/txtCacDonDangGiaoNotify"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="x"
+                    android:textColor="#FFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    android:background="@drawable/shop_request_notification"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="20dp">
+                <Button
+                    android:id="@+id/btnCacDonHoanTat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#536DFE"
+                    android:text="Các đơn hoàn tất"
+                    android:textAllCaps="false"/>
+
+                <TextView
+                    android:id="@+id/txtCacDonHoanTatNotify"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="x"
@@ -143,6 +172,7 @@
             android:id="@+id/btnLogout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="#536DFE"
             android:text="@string/logout_text"
             android:textAllCaps="false"/>
     </LinearLayout>

@@ -119,9 +119,9 @@ public class HomeFragment extends Fragment{
         databaseReference.child("SanPham").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                sanPhamArrayList.add(snapshot.getValue(SanPham.class));
+//                sanPhamArrayList.add(snapshot.getValue(SanPham.class));
                 findArr.add(snapshot.getValue(SanPham.class).getsTenSP());
-                sanPhamLoad(view);
+//                sanPhamLoad(view);
                 findLoad(view);
             }
 

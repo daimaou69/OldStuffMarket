@@ -62,7 +62,6 @@ public class SettingsFragment extends Fragment {
     private Intent intent;
     private TextView txtAccountName, txtSpDaBan, txtDiemThanhVien, txtNotification, txtDonMuaNotify, txtDonBanNotify, txtDanhGiaSP, txtMoneyNotify, txtLichHen;
     private String sUserName = UserMainActivity.sUserName, userID = "";
-    private ArrayList<UserData> userDataArrayList = UserMainActivity.userDataArrayList;
     private ArrayList<ShopData> shopDataArrayList;
     private ArrayList<OrderData> donMuaArrayList;
     private ArrayList<OrderData> donBanArrayList;
@@ -179,6 +178,14 @@ public class SettingsFragment extends Fragment {
                                 if (snapshot.getValue(RemoveProductData.class).getSanPham().getsUserID().equals(userID)) {
                                     removeProductDataArrayList.add(snapshot.getValue(RemoveProductData.class));
                                 }
+
+                                if (removeProductDataArrayList.size() != 0) {
+                                    txtNotification.setVisibility(View.VISIBLE);
+                                    txtNotification.setText(String.valueOf(removeProductDataArrayList.size()));
+                                }
+                                else {
+                                    txtNotification.setVisibility(View.GONE);
+                                }
                             }
 
                             @Override
@@ -207,6 +214,14 @@ public class SettingsFragment extends Fragment {
                                 if (snapshot.getValue(OrderData.class).getNguoiMuaID().equals(userID)) {
                                     danhGiaSPList.add(snapshot.getValue(OrderData.class));
                                 }
+
+                                if (danhGiaSPList.size() != 0) {
+                                    txtDanhGiaSP.setVisibility(View.VISIBLE);
+                                    txtDanhGiaSP.setText(String.valueOf(danhGiaSPList.size()));
+                                }
+                                else{
+                                    txtDanhGiaSP.setVisibility(View.GONE);
+                                }
                             }
 
                             @Override
@@ -232,10 +247,26 @@ public class SettingsFragment extends Fragment {
                         databaseReference.child("DonHang").addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                                if (snapshot.getValue(OrderData.class).getNguoiMuaID().equals(userID)) {
+                                if (snapshot.getValue(OrderData.class).getNguoiMuaID().equals(userID) && snapshot.getValue(OrderData.class).getTinhTrang() != 7) {
                                     donMuaArrayList.add(snapshot.getValue(OrderData.class));
                                 } else if (snapshot.getValue(OrderData.class).getNguoiBanID().equals(userID) && snapshot.getValue(OrderData.class).getTinhTrang() < 7) {
                                     donBanArrayList.add(snapshot.getValue(OrderData.class));
+                                }
+
+                                if (donMuaArrayList.size() != 0) {
+                                    txtDonMuaNotify.setVisibility(View.VISIBLE);
+                                    txtDonMuaNotify.setText(String.valueOf(donMuaArrayList.size()));
+                                }
+                                else{
+                                    txtDonMuaNotify.setVisibility(View.GONE);
+                                }
+
+                                if (donBanArrayList.size() != 0) {
+                                    txtDonBanNotify.setVisibility(View.VISIBLE);
+                                    txtDonBanNotify.setText(String.valueOf(donBanArrayList.size()));
+                                }
+                                else{
+                                    txtDonBanNotify.setVisibility(View.GONE);
                                 }
                             }
 
@@ -264,6 +295,13 @@ public class SettingsFragment extends Fragment {
                             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                                 if (snapshot.getValue(OrderData.class).getNguoiBanID().equals(userID)) {
                                     waitingList.add(snapshot.getValue(OrderData.class));
+                                }
+                                if (waitingList.size() != 0) {
+                                    txtMoneyNotify.setVisibility(View.VISIBLE);
+                                    txtMoneyNotify.setText(String.valueOf(waitingList.size()));
+                                }
+                                else {
+                                    txtMoneyNotify.setVisibility(View.VISIBLE);
                                 }
                             }
 
@@ -316,6 +354,14 @@ public class SettingsFragment extends Fragment {
                     if ((snapshot.getValue(Appointment.class).getNguoiDuocHenID().equals(userID) && snapshot.getValue(Appointment.class).isActive()) || snapshot.getValue(Appointment.class).getNguoiHenID().equals(userID)) {
                         appointmentArrayList.add(snapshot.getValue(Appointment.class));
                     }
+
+                    if (appointmentArrayList.size() != 0) {
+                        txtLichHen.setVisibility(View.VISIBLE);
+                        txtLichHen.setText(String.valueOf(appointmentArrayList.size()));
+                    }
+                    else{
+                        txtLichHen.setVisibility(View.GONE);
+                    }
                 }
 
                 @Override
@@ -358,37 +404,19 @@ public class SettingsFragment extends Fragment {
         btnLichHen.setOnClickListener(lichHenClick);
         btnNotification.setOnClickListener(notificationClick);
 
-        Handler handler = new Handler();
-        int delay = 1000;
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (donMuaArrayList.size() != 0) {
-                    txtDonMuaNotify.setVisibility(View.VISIBLE);
-                    txtDonMuaNotify.setText(String.valueOf(donMuaArrayList.size()));
-                }
-                if (donBanArrayList.size() != 0) {
-                    txtDonBanNotify.setVisibility(View.VISIBLE);
-                    txtDonBanNotify.setText(String.valueOf(donBanArrayList.size()));
-                }
-                if (danhGiaSPList.size() != 0) {
-                    txtDanhGiaSP.setVisibility(View.VISIBLE);
-                    txtDanhGiaSP.setText(String.valueOf(danhGiaSPList.size()));
-                }
-                if (waitingList.size() != 0) {
-                    txtMoneyNotify.setVisibility(View.VISIBLE);
-                    txtMoneyNotify.setText(String.valueOf(waitingList.size()));
-                }
-                if (appointmentArrayList.size() != 0) {
-                    txtLichHen.setVisibility(View.VISIBLE);
-                    txtLichHen.setText(String.valueOf(appointmentArrayList.size()));
-                }
-                if (removeProductDataArrayList.size() != 0) {
-                    txtNotification.setVisibility(View.VISIBLE);
-                    txtNotification.setText(String.valueOf(removeProductDataArrayList.size()));
-                }
-            }
-        }, delay);
+//        Handler handler = new Handler();
+//        int delay = 1000;
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//
+
+
+
+
+//            }
+//        }, delay);
 
         return view;
     }

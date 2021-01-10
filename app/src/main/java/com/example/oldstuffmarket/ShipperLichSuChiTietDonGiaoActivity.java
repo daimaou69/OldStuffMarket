@@ -106,6 +106,7 @@ public class ShipperLichSuChiTietDonGiaoActivity extends AppCompatActivity {
                         }
                         txtTongGiaTriDonHang.setText("Tổng tiền: " + snapshot.getValue(OrderData.class).getGiaTien() + "vnd");
                         txtSoLuongSP.setText("Số lượng: " + snapshot.getValue(OrderData.class).getSanPham().getiSoLuong() + " x ");
+                        txtGiaSP.setText(snapshot.getValue(OrderData.class).getSanPham().getlGiaTien() + "vnd");
                         String nguoiMuaID = snapshot.getValue(OrderData.class).getNguoiMuaID();
                         String shipperID = snapshot.getValue(OrderData.class).getShipperID();
                         databaseReference.child("User").addChildEventListener(new ChildEventListener() {

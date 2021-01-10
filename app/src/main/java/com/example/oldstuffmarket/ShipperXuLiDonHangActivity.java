@@ -374,7 +374,7 @@ public class ShipperXuLiDonHangActivity extends AppCompatActivity {
                                                 snapshot.getValue(OrderData.class).getLoaiDonHang(), 7, commission,
                                                 snapshot.getValue(OrderData.class).getGiaTien(), snapshot.getValue(OrderData.class).getShipperID());
                                         databaseReference.child("MoneyIncome").child(donHangID).setValue(orderUpdate);
-                                        databaseReference.child("Shipper").child(userID).child(donHangID).removeValue();
+                                        databaseReference.child("Shipper").child(userID).child(donHangID).setValue(orderUpdate);
                                         databaseReference.child("DonHang").child(donHangID).setValue(orderUpdate);
 
 
@@ -425,7 +425,7 @@ public class ShipperXuLiDonHangActivity extends AppCompatActivity {
                                                 snapshot.getValue(OrderData.class).getGiaTien(), snapshot.getValue(OrderData.class).getShipperID());
                                         databaseReference.child("LichSuGiaoDich").child(donHangID).setValue(orderUpdate);
                                         databaseReference.child("CommentNeeds").child(donHangID).setValue(orderUpdate);
-                                        databaseReference.child("Shipper").child(userID).child(donHangID).removeValue();
+                                        databaseReference.child("Shipper").child(userID).child(donHangID).setValue(orderUpdate);
                                         databaseReference.child("DonHang").child(donHangID).removeValue();
 
                                         databaseReference.child("User").addChildEventListener(new ChildEventListener() {
@@ -539,7 +539,7 @@ public class ShipperXuLiDonHangActivity extends AppCompatActivity {
                                                 snapshot.getValue(OrderData.class).getLoaiDonHang(), -1, commission,
                                                 snapshot.getValue(OrderData.class).getGiaTien(), snapshot.getValue(OrderData.class).getShipperID());
                                         databaseReference.child("MoneyIncome").child(donHangID).setValue(orderUpdate);
-                                        databaseReference.child("Shipper").child(userID).child(donHangID).removeValue();
+                                        databaseReference.child("Shipper").child(userID).child(donHangID).setValue(orderUpdate);
                                         databaseReference.child("DonHang").child(donHangID).removeValue();
 
                                         finish();
@@ -557,7 +557,8 @@ public class ShipperXuLiDonHangActivity extends AppCompatActivity {
                                                 snapshot.getValue(OrderData.class).getGiaTien(), snapshot.getValue(OrderData.class).getShipperID());
                                         databaseReference.child("LichSuGiaoDich").child(donHangID).setValue(orderUpdate);
                                         databaseReference.child("CommentNeeds").child(donHangID).setValue(orderUpdate);
-                                        databaseReference.child("Shipper").child(userID).child(donHangID).removeValue();
+                                        databaseReference.child("MoneyIncome").child(donHangID).setValue(orderUpdate);
+                                        databaseReference.child("Shipper").child(userID).child(donHangID).setValue(orderUpdate);
                                         databaseReference.child("DonHang").child(donHangID).removeValue();
 
                                         databaseReference.child("User").addChildEventListener(new ChildEventListener() {

@@ -34,10 +34,11 @@ import java.util.ArrayList;
 public class ShipperMainActivity extends AppCompatActivity {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-    private Button btnLogout, btnAccountInfo, btnPassWordChange, btnDanhSachDonHang, btnCacDonDangGiao, btnDanhSachShipper, btnLichSuDonHangShipper;
-    private TextView txtCacDonDangGiaoNotify, txtShipperAccountName, txtDanhSachDonHang;
+    private Button btnLogout, btnAccountInfo, btnPassWordChange, btnDanhSachDonHang, btnCacDonDangGiao, btnDanhSachShipper, btnLichSuDonHangShipper, btnCacDonHoanTat;
+    private TextView txtCacDonDangGiaoNotify, txtCacDonHoanTatNotify, txtShipperAccountName, txtDanhSachDonHang;
     private ArrayList<OrderData> donDangGiao;
     private ArrayList<OrderData> donDaDongGoi;
+    private ArrayList<OrderData> donHoanTat;
     private ImageView imgAccount;
     private String sUserName, userID;
     private Intent intent;
@@ -54,6 +55,7 @@ public class ShipperMainActivity extends AppCompatActivity {
         txtCacDonDangGiaoNotify = (TextView) findViewById(R.id.txtCacDonDangGiaoNotify);
         txtShipperAccountName = (TextView) findViewById(R.id.txtShipperAccountName);
         txtDanhSachDonHang = (TextView) findViewById(R.id.txtDanhSachDonHang);
+        txtCacDonHoanTatNotify = (TextView) findViewById(R.id.txtCacDonHoanTatNotify);
         imgAccount = (ImageView) findViewById(R.id.imgAccount);
         btnLogout = (Button) findViewById(R.id.btnLogout);
         btnPassWordChange = (Button) findViewById(R.id.btnPassWordChange);
@@ -62,9 +64,11 @@ public class ShipperMainActivity extends AppCompatActivity {
         btnCacDonDangGiao =(Button) findViewById(R.id.btnCacDonDangGiao);
         btnDanhSachShipper = (Button) findViewById(R.id.btnDanhSachShipper);
         btnLichSuDonHangShipper = (Button) findViewById(R.id.btnLichSuDonHangShipper);
+        btnCacDonHoanTat = (Button) findViewById(R.id.btnCacDonHoanTat);
 
         donDangGiao = new ArrayList<>();
         shipperList = new ArrayList<>();
+        donHoanTat = new ArrayList<>();
 
         btnLogout.setOnClickListener(logoutClick);
         btnAccountInfo.setOnClickListener(accountInfoClick);
@@ -73,6 +77,7 @@ public class ShipperMainActivity extends AppCompatActivity {
         btnCacDonDangGiao.setOnClickListener(cacDonDangGiaoClick);
         btnDanhSachShipper.setOnClickListener(danhSachShipperClick);
         btnLichSuDonHangShipper.setOnClickListener(lichSuDonGiaoShipperClick);
+        btnCacDonHoanTat.setOnClickListener(donHoanTatClick);
 
     }
 
@@ -81,6 +86,7 @@ public class ShipperMainActivity extends AppCompatActivity {
         super.onResume();
         shipperList.clear();
         donDangGiao.clear();
+        donHoanTat.clear();
         donDaDongGoi = new ArrayList<>();
         databaseReference.child("User").addChildEventListener(new ChildEventListener() {
             @Override
@@ -165,7 +171,12 @@ public class ShipperMainActivity extends AppCompatActivity {
                         databaseReference.child("Shipper").child(userID).addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                                donDangGiao.add(snapshot.getValue(OrderData.class));
+                                if(snapshot.getValue(OrderData.class).getTinhTrang() != 7 && snapshot.getValue(OrderData.class).getTinhTrang() != -1){
+                                    donDangGiao.add(snapshot.getValue(OrderData.class));
+                                }
+                                else if(snapshot.getValue(OrderData.class).getTinhTrang() == 7 || snapshot.getValue(OrderData.class).getTinhTrang() == -1){
+                                    donHoanTat.add(snapshot.getValue(OrderData.class));
+                                }
                             }
 
                             @Override
@@ -237,6 +248,15 @@ public class ShipperMainActivity extends AppCompatActivity {
                 else{
                     txtCacDonDangGiaoNotify.setVisibility(View.GONE);
                 }
+
+                if(donHoanTat.size() != 0){
+                    txtCacDonHoanTatNotify.setVisibility(View.VISIBLE);
+                    txtCacDonHoanTatNotify.setText(String.valueOf(donHoanTat.size()));
+                }
+                else{
+                    txtCacDonHoanTatNotify.setVisibility(View.GONE);
+                }
+
                 if(donDaDongGoi.size() != 0 && permission == 4){
                     txtDanhSachDonHang.setVisibility(View.VISIBLE);
                     txtDanhSachDonHang.setText(String.valueOf(donDaDongGoi.size()));
@@ -247,6 +267,17 @@ public class ShipperMainActivity extends AppCompatActivity {
             }
         }, delay);
     }
+
+    View.OnClickListener donHoanTatClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            intent = new Intent(v.getContext(), ShipperDonHoanTatActivity.class);
+            intent.putExtra("UserName", sUserName);
+            intent.putExtra("UserID", userID);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+        }
+    };
 
     View.OnClickListener lichSuDonGiaoShipperClick = new View.OnClickListener() {
         @Override
