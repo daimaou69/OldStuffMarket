@@ -182,8 +182,7 @@ public class SettingsFragment extends Fragment {
                                 if (removeProductDataArrayList.size() != 0) {
                                     txtNotification.setVisibility(View.VISIBLE);
                                     txtNotification.setText(String.valueOf(removeProductDataArrayList.size()));
-                                }
-                                else {
+                                } else {
                                     txtNotification.setVisibility(View.GONE);
                                 }
                             }
@@ -218,8 +217,7 @@ public class SettingsFragment extends Fragment {
                                 if (danhGiaSPList.size() != 0) {
                                     txtDanhGiaSP.setVisibility(View.VISIBLE);
                                     txtDanhGiaSP.setText(String.valueOf(danhGiaSPList.size()));
-                                }
-                                else{
+                                } else {
                                     txtDanhGiaSP.setVisibility(View.GONE);
                                 }
                             }
@@ -256,16 +254,14 @@ public class SettingsFragment extends Fragment {
                                 if (donMuaArrayList.size() != 0) {
                                     txtDonMuaNotify.setVisibility(View.VISIBLE);
                                     txtDonMuaNotify.setText(String.valueOf(donMuaArrayList.size()));
-                                }
-                                else{
+                                } else {
                                     txtDonMuaNotify.setVisibility(View.GONE);
                                 }
 
                                 if (donBanArrayList.size() != 0) {
                                     txtDonBanNotify.setVisibility(View.VISIBLE);
                                     txtDonBanNotify.setText(String.valueOf(donBanArrayList.size()));
-                                }
-                                else{
+                                } else {
                                     txtDonBanNotify.setVisibility(View.GONE);
                                 }
                             }
@@ -299,8 +295,7 @@ public class SettingsFragment extends Fragment {
                                 if (waitingList.size() != 0) {
                                     txtMoneyNotify.setVisibility(View.VISIBLE);
                                     txtMoneyNotify.setText(String.valueOf(waitingList.size()));
-                                }
-                                else {
+                                } else {
                                     txtMoneyNotify.setVisibility(View.GONE);
                                 }
                             }
@@ -358,8 +353,7 @@ public class SettingsFragment extends Fragment {
                     if (appointmentArrayList.size() != 0) {
                         txtLichHen.setVisibility(View.VISIBLE);
                         txtLichHen.setText(String.valueOf(appointmentArrayList.size()));
-                    }
-                    else{
+                    } else {
                         txtLichHen.setVisibility(View.GONE);
                     }
                 }
@@ -409,12 +403,6 @@ public class SettingsFragment extends Fragment {
 //        handler.postDelayed(new Runnable() {
 //            @Override
 //            public void run() {
-//
-//
-
-
-
-
 //            }
 //        }, delay);
 

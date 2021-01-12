@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 
@@ -51,7 +52,7 @@ public class DanhSachUserActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        if(getIntent().getExtras() != null) {
+        if (getIntent().getExtras() != null) {
             userName = getIntent().getExtras().getString("UserName");
             lockUserArrayList.clear();
             databaseReference.child("LockUser").addChildEventListener(new ChildEventListener() {
@@ -62,7 +63,6 @@ public class DanhSachUserActivity extends AppCompatActivity {
 
                 @Override
                 public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
                 }
 
                 @Override
@@ -82,8 +82,8 @@ public class DanhSachUserActivity extends AppCompatActivity {
             });
             final Handler handler = new Handler();
             final int delay = 500; //milliseconds
-            handler.postDelayed(new Runnable(){
-                public void run(){
+            handler.postDelayed(new Runnable() {
+                public void run() {
                     userLoad();
                 }
             }, delay);
@@ -99,6 +99,7 @@ public class DanhSachUserActivity extends AppCompatActivity {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                     lockUserArrayList.add(snapshot.getValue(LockUser.class));
+                    userLoad();
                 }
 
                 @Override
@@ -124,10 +125,10 @@ public class DanhSachUserActivity extends AppCompatActivity {
 
             final Handler handler = new Handler();
             final int delay = 500; //milliseconds
-            handler.postDelayed(new Runnable(){
-                public void run(){
+            handler.postDelayed(new Runnable() {
+                public void run() {
                     userLoad();
-//                handler.postDelayed(this, delay);
+
                 }
             }, delay);
         }
@@ -144,9 +145,8 @@ public class DanhSachUserActivity extends AppCompatActivity {
         }
     };
 
-    public void userLoad(){
+    public void userLoad() {
         lockUserAdapter = new LockUserAdapter(DanhSachUserActivity.this, R.layout.activity_lock_user_adapter, lockUserArrayList);
         gridUser.setAdapter(lockUserAdapter);
     }
-
 }

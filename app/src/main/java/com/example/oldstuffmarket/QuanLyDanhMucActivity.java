@@ -48,7 +48,7 @@ public class QuanLyDanhMucActivity extends AppCompatActivity {
     private int PICK_IMAGE = 123;
     private int CAMERA_IMAGE = 123;
     private ImageView imgDanhMuc;
-    private Button btnChooseFromGallery, btnOpenCamera, btnBack, btnAddDanhMuc, btnXoaDanhMuc, btnSuaDanhMuc, btnClear;
+    private Button btnChooseFromGallery, btnOpenCamera, btnBack, btnAddDanhMuc, btnXoaDanhMuc, btnSuaDanhMuc;
     private String sUserName, sDanhMucID = "", sDanhMucIMG = "", sTenDanhMuc = "";
     private EditText edtTenDanhMuc;
     private GridView danhMucGrid;
@@ -68,7 +68,6 @@ public class QuanLyDanhMucActivity extends AppCompatActivity {
         btnXoaDanhMuc = (Button) findViewById(R.id.btnXoaDanhMuc);
         btnChooseFromGallery = (Button) findViewById(R.id.btnChooseFromGallery);
         btnOpenCamera = (Button) findViewById(R.id.btnOpenCamera);
-        btnClear = (Button) findViewById(R.id.btnClear);
         imgDanhMuc = (ImageView) findViewById(R.id.imgDanhMuc);
         edtTenDanhMuc = (EditText) findViewById(R.id.edtTenDanhMuc);
         danhMucGrid = (GridView) findViewById(R.id.danhMucGrid);
@@ -79,7 +78,6 @@ public class QuanLyDanhMucActivity extends AppCompatActivity {
         btnOpenCamera.setOnClickListener(openCameraClick);
         btnBack.setOnClickListener(backClick);
         btnAddDanhMuc.setOnClickListener(addDanhMucClick);
-        btnClear.setOnClickListener(clearClick);
         btnSuaDanhMuc.setOnClickListener(suaClick);
         btnXoaDanhMuc.setOnClickListener(xoaClick);
 
@@ -89,7 +87,7 @@ public class QuanLyDanhMucActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        if(getIntent().getExtras() != null){
+        if (getIntent().getExtras() != null) {
             sUserName = getIntent().getExtras().getString("UserName");
 
             danhMucDataArrayList.clear();
@@ -98,7 +96,6 @@ public class QuanLyDanhMucActivity extends AppCompatActivity {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                     danhMucDataArrayList.add(snapshot.getValue(DanhMucData.class));
-                    danhMucLoad();
                 }
 
                 @Override
@@ -125,10 +122,9 @@ public class QuanLyDanhMucActivity extends AppCompatActivity {
 
         final Handler handler = new Handler();
         final int delay = 500; //milliseconds
-        handler.postDelayed(new Runnable(){
-            public void run(){
+        handler.postDelayed(new Runnable() {
+            public void run() {
                 danhMucLoad();
-//                handler.postDelayed(this, delay);
             }
         }, delay);
 
@@ -137,7 +133,7 @@ public class QuanLyDanhMucActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 DanhMucData danhMucData = danhMucDataArrayList.get(position);
                 StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-                storageReference.child(danhMucData.getsDanhMucIMG()+ ".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                storageReference.child(danhMucData.getsDanhMucIMG() + ".png").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
                         Glide.with(view.getContext()).load(uri).into(imgDanhMuc);
@@ -160,7 +156,7 @@ public class QuanLyDanhMucActivity extends AppCompatActivity {
     View.OnClickListener xoaClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(sTenDanhMuc.equals("")){
+            if (sTenDanhMuc.equals("")) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
                 alert.setMessage("Bạn chưa chọn danh mục cần xóa!").setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
@@ -168,14 +164,12 @@ public class QuanLyDanhMucActivity extends AppCompatActivity {
 
                     }
                 }).show();
-            }
-            else {
+            } else {
                 DialogInterface.OnClickListener dialogClick = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        switch (which){
+                        switch (which) {
                             case DialogInterface.BUTTON_POSITIVE:
-
                                 storageReference.child(sDanhMucIMG + ".png").delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
@@ -194,7 +188,42 @@ public class QuanLyDanhMucActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Toast.makeText(QuanLyDanhMucActivity.this, "Xóa danh mục thành công!", Toast.LENGTH_SHORT).show();
+                                        danhMucDataArrayList.clear();
+                                        databaseReference.child("DanhMuc").addChildEventListener(new ChildEventListener() {
+                                            @Override
+                                            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                                danhMucDataArrayList.add(snapshot.getValue(DanhMucData.class));
+                                            }
 
+                                            @Override
+                                            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                            }
+
+                                            @Override
+                                            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                            }
+
+                                            @Override
+                                            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
+                                        final Handler handler = new Handler();
+                                        final int delay = 500; //milliseconds
+                                        handler.postDelayed(new Runnable() {
+                                            public void run() {
+                                                danhMucLoad();
+                                            }
+                                        }, delay);
+                                        edtTenDanhMuc.setText("");
+                                        imgDanhMuc.setImageResource(R.mipmap.no_image_icon);
                                     }
                                 });
                                 databaseReference.child("SanPham").addChildEventListener(new ChildEventListener() {
@@ -235,7 +264,7 @@ public class QuanLyDanhMucActivity extends AppCompatActivity {
                     }
                 };
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                builder.setMessage("Bạn chắc chắn muốn xóa danh mục " + sTenDanhMuc + "?").setNegativeButton("No",dialogClick).setPositiveButton("Yes",dialogClick).show();
+                builder.setMessage("Bạn chắc chắn muốn xóa danh mục " + sTenDanhMuc + "?").setNegativeButton("No", dialogClick).setPositiveButton("Yes", dialogClick).show();
             }
         }
     };
@@ -243,10 +272,9 @@ public class QuanLyDanhMucActivity extends AppCompatActivity {
     View.OnClickListener suaClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(edtTenDanhMuc.getText().toString().isEmpty()){
+            if (edtTenDanhMuc.getText().toString().isEmpty()) {
                 edtTenDanhMuc.setError("Bạn chưa nhập tên danh mục!");
-            }
-            else if(danhMucCheck(danhMucDataArrayList, sDanhMucID, edtTenDanhMuc.getText().toString())){
+            } else if (danhMucCheck(danhMucDataArrayList, sDanhMucID, edtTenDanhMuc.getText().toString())) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
                 alert.setMessage("Tên danh mục đã tồn tại!").setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
@@ -254,7 +282,7 @@ public class QuanLyDanhMucActivity extends AppCompatActivity {
 
                     }
                 }).show();
-            }else if(sTenDanhMuc.equals("")){
+            } else if (sTenDanhMuc.equals("")) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
                 alert.setMessage("Bạn chưa chọn danh mục cần sửa!").setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
@@ -262,12 +290,11 @@ public class QuanLyDanhMucActivity extends AppCompatActivity {
 
                     }
                 }).show();
-            }
-            else {
+            } else {
                 DialogInterface.OnClickListener dialogClick = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        switch (which){
+                        switch (which) {
                             case DialogInterface.BUTTON_POSITIVE:
 
                                 storageReference.child(sDanhMucIMG + ".png").delete().addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -300,8 +327,40 @@ public class QuanLyDanhMucActivity extends AppCompatActivity {
                                 }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                     @Override
                                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        danhMucDataArrayList.clear();
+                                        databaseReference.child("DanhMuc").addChildEventListener(new ChildEventListener() {
+                                            @Override
+                                            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                                danhMucDataArrayList.add(snapshot.getValue(DanhMucData.class));
+                                            }
 
+                                            @Override
+                                            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
+                                            }
+
+                                            @Override
+                                            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                            }
+
+                                            @Override
+                                            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
+                                        final Handler handler = new Handler();
+                                        final int delay = 500; //milliseconds
+                                        handler.postDelayed(new Runnable() {
+                                            public void run() {
+                                                danhMucLoad();
+                                            }
+                                        }, delay);
                                     }
                                 });
 
@@ -338,6 +397,8 @@ public class QuanLyDanhMucActivity extends AppCompatActivity {
 
                                     }
                                 });
+                                edtTenDanhMuc.setText("");
+                                imgDanhMuc.setImageResource(R.mipmap.no_image_icon);
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
                                 return;
@@ -345,74 +406,29 @@ public class QuanLyDanhMucActivity extends AppCompatActivity {
                     }
                 };
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                builder.setMessage("Bạn chắc chắn muốn sửa danh mục " + sTenDanhMuc + " thành " + edtTenDanhMuc.getText().toString() + "?").setNegativeButton("No",dialogClick).setPositiveButton("Yes",dialogClick).show();
+                builder.setMessage("Bạn chắc chắn muốn sửa danh mục " + sTenDanhMuc + " thành " + edtTenDanhMuc.getText().toString() + "?").setNegativeButton("No", dialogClick).setPositiveButton("Yes", dialogClick).show();
             }
         }
     };
 
-    View.OnClickListener clearClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            danhMucDataArrayList.clear();
-
-            databaseReference.child("DanhMuc").addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    danhMucDataArrayList.add(snapshot.getValue(DanhMucData.class));
-                }
-
-                @Override
-                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                }
-
-                @Override
-                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
-            final Handler handler = new Handler();
-            final int delay = 500; //milliseconds
-            handler.postDelayed(new Runnable(){
-                public void run(){
-                    danhMucLoad();
-//                handler.postDelayed(this, delay);
-                }
-            }, delay);
-            edtTenDanhMuc.setText("");
-            imgDanhMuc.setImageResource(R.mipmap.no_image_icon);
-        }
-    };
-
-    public void danhMucLoad(){
+    public void danhMucLoad() {
 
         danhMucAdapter = new DanhMucAdapter(QuanLyDanhMucActivity.this, R.layout.danh_muc_adapter_layout, danhMucDataArrayList);
         danhMucGrid.setAdapter(danhMucAdapter);
     }
 
-    public Boolean danhMucCheck(ArrayList<DanhMucData> danhMucDataArrayList, String sDanhMucID, String sDanhMucName){
-        for(DanhMucData danhMucData : danhMucDataArrayList){
-            if(!danhMucData.getsDanhMucID().equals(sDanhMucID) && danhMucData.getsTenDanhMuc().equals(sDanhMucName)){
+    public Boolean danhMucCheck(ArrayList<DanhMucData> danhMucDataArrayList, String sDanhMucID, String sDanhMucName) {
+        for (DanhMucData danhMucData : danhMucDataArrayList) {
+            if (!danhMucData.getsDanhMucID().equals(sDanhMucID) && danhMucData.getsTenDanhMuc().equals(sDanhMucName)) {
                 return true;
             }
         }
         return false;
     }
 
-    public Boolean addDanhMucCheck(ArrayList<DanhMucData> danhMucDataArrayList, String sDanhMucName){
-        for(DanhMucData danhMucData : danhMucDataArrayList){
-            if(danhMucData.getsTenDanhMuc().equals(sDanhMucName)){
+    public Boolean addDanhMucCheck(ArrayList<DanhMucData> danhMucDataArrayList, String sDanhMucName) {
+        for (DanhMucData danhMucData : danhMucDataArrayList) {
+            if (danhMucData.getsTenDanhMuc().equals(sDanhMucName)) {
                 return true;
             }
         }
@@ -422,10 +438,9 @@ public class QuanLyDanhMucActivity extends AppCompatActivity {
     View.OnClickListener addDanhMucClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(edtTenDanhMuc.getText().toString().isEmpty()){
+            if (edtTenDanhMuc.getText().toString().isEmpty()) {
                 edtTenDanhMuc.setError("Bạn chưa nhập tên danh mục!");
-            }
-            else if(addDanhMucCheck(danhMucDataArrayList, edtTenDanhMuc.getText().toString())){
+            } else if (addDanhMucCheck(danhMucDataArrayList, edtTenDanhMuc.getText().toString())) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
                 alert.setMessage("Tên danh mục đã tồn tại!").setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
@@ -433,12 +448,11 @@ public class QuanLyDanhMucActivity extends AppCompatActivity {
 
                     }
                 }).show();
-            }
-            else {
+            } else {
                 DialogInterface.OnClickListener dialogClick = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        switch (which){
+                        switch (which) {
                             case DialogInterface.BUTTON_POSITIVE:
                                 String sDanhMucID = databaseReference.push().getKey();
                                 String sDanhMucIMG = databaseReference.push().getKey();
@@ -460,19 +474,48 @@ public class QuanLyDanhMucActivity extends AppCompatActivity {
                                 }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                     @Override
                                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        Toast.makeText(v.getContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
+                                        danhMucDataArrayList.clear();
+                                        databaseReference.child("DanhMuc").addChildEventListener(new ChildEventListener() {
+                                            @Override
+                                            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                                danhMucDataArrayList.add(snapshot.getValue(DanhMucData.class));
+                                            }
 
+                                            @Override
+                                            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
+                                            }
+
+                                            @Override
+                                            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                            }
+
+                                            @Override
+                                            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
+                                        final Handler handler = new Handler();
+                                        final int delay = 500; //milliseconds
+                                        handler.postDelayed(new Runnable() {
+                                            public void run() {
+                                                danhMucLoad();
+                                            }
+                                        }, delay);
                                     }
                                 });
 
                                 DanhMucData danhMucData = new DanhMucData(sDanhMucID, edtTenDanhMuc.getText().toString(), sDanhMucIMG);
                                 databaseReference.child("DanhMuc").child(sDanhMucID).setValue(danhMucData);
-
-
-
                                 edtTenDanhMuc.setText("");
                                 imgDanhMuc.setImageResource(R.mipmap.no_image_icon);
-
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
                                 return;
@@ -481,7 +524,7 @@ public class QuanLyDanhMucActivity extends AppCompatActivity {
                     }
                 };
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                builder.setMessage("Bạn muốn thêm danh mục " + edtTenDanhMuc.getText().toString() + "?").setNegativeButton("No",dialogClick).setPositiveButton("Yes",dialogClick).show();
+                builder.setMessage("Bạn muốn thêm danh mục " + edtTenDanhMuc.getText().toString() + "?").setNegativeButton("No", dialogClick).setPositiveButton("Yes", dialogClick).show();
             }
 
         }
@@ -519,15 +562,15 @@ public class QuanLyDanhMucActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
-        if(PICK_IMAGE != 123){
+        if (PICK_IMAGE != 123) {
             if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null) {
                 Uri imageUri = data.getData();
                 imgDanhMuc.setImageURI(imageUri);
             }
             PICK_IMAGE = 123;
         }
-        if(CAMERA_IMAGE != 123){
-            if(requestCode == CAMERA_IMAGE && resultCode == RESULT_OK){
+        if (CAMERA_IMAGE != 123) {
+            if (requestCode == CAMERA_IMAGE && resultCode == RESULT_OK) {
                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                 imgDanhMuc.setImageBitmap(bitmap);
             }
