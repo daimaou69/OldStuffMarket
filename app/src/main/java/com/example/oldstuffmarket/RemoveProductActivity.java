@@ -26,7 +26,7 @@ import java.util.ArrayList;
 public class RemoveProductActivity extends AppCompatActivity {
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private GridView gridNotification;
-    private Button btnBack, btnClear;
+    private Button btnBack;
     private String userID, userName;
     private ArrayList<RemoveProductData> removeProductDataArrayList;
     private NotificationAdapter notificationAdapter;
@@ -40,12 +40,11 @@ public class RemoveProductActivity extends AppCompatActivity {
 
         gridNotification = (GridView) findViewById(R.id.gridNotification);
         btnBack = (Button) findViewById(R.id.btnBack);
-        btnClear = (Button) findViewById(R.id.btnClear);
 
         removeProductDataArrayList = new ArrayList<>();
 
         btnBack.setOnClickListener(backClick);
-        btnClear.setOnClickListener(clearClick);
+
     }
 
     @Override
@@ -97,45 +96,7 @@ public class RemoveProductActivity extends AppCompatActivity {
         gridNotification.setAdapter(notificationAdapter);
     }
 
-    View.OnClickListener clearClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            removeProductDataArrayList.clear();
-            databaseReference.child("DeletedProduct").addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    removeProductDataArrayList.add(snapshot.getValue(RemoveProductData.class));
-                }
 
-                @Override
-                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                }
-
-                @Override
-                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-            final Handler handler = new Handler();
-            final int delay = 500; //milliseconds
-            handler.postDelayed(new Runnable() {
-                public void run() {
-                    userLoad();
-                }
-            }, delay);
-        }
-    };
 
     View.OnClickListener backClick = new View.OnClickListener() {
         @Override

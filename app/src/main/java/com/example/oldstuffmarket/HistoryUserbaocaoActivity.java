@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.GridView;
 
+import com.example.oldstuffmarket.adapter.DonMuaAdapter;
 import com.example.oldstuffmarket.adapter.GiaoDichAdapter;
 import com.example.oldstuffmarket.data_models.OrderData;
 import com.google.firebase.database.ChildEventListener;
@@ -31,7 +32,6 @@ public class HistoryUserbaocaoActivity extends AppCompatActivity {
     private Button btnBack;
     private String userName, reportID, userID, sUserID;
     private ArrayList<OrderData> orderDataArrayList;
-    private GiaoDichAdapter giaoDichAdapter;
     private GridView gridHistory1;
 
     @Override
@@ -99,8 +99,8 @@ public class HistoryUserbaocaoActivity extends AppCompatActivity {
     }
 
     public void userLoad(){
-        giaoDichAdapter = new GiaoDichAdapter(HistoryUserbaocaoActivity.this, R.layout.giaodich_adapter_layout, orderDataArrayList);
-        gridHistory1.setAdapter(giaoDichAdapter);
+        DonMuaAdapter donMuaAdapter = new DonMuaAdapter(HistoryUserbaocaoActivity.this, R.layout.don_mua_adapter_layout, orderDataArrayList);
+        gridHistory1.setAdapter(donMuaAdapter);
     }
 
     View.OnClickListener backClick = new View.OnClickListener() {

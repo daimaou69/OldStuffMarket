@@ -288,36 +288,7 @@ public class WaitingDetailActivity extends AppCompatActivity {
 
                                             }
                                         });
-                                        databaseReference.child("User").addChildEventListener(new ChildEventListener() {
-                                            @Override
-                                            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                                                if (snapshot.getValue(UserData.class).getsUserID().equals("-MMR0F6xxKcg9TXwvTfX")) {
-                                                    long giaTri = (tongGiaTri * sellerCommission) / 100;
-                                                    long money = snapshot.getValue(UserData.class).getlMoney() + giaTri;
-                                                    databaseReference.child("User").child("-MMR0F6xxKcg9TXwvTfX").child("lMoney").setValue(money);
-                                                }
-                                            }
 
-                                            @Override
-                                            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                                            }
-
-                                            @Override
-                                            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-                                            }
-
-                                            @Override
-                                            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                                            }
-
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError error) {
-
-                                            }
-                                        });
                                         finish();
                                         intent = new Intent(v.getContext(), UserWaitingForMoneyActivity.class);
                                         intent.putExtra("UserName", userName);

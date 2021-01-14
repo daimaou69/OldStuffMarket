@@ -92,10 +92,12 @@
         android:layout_height="0dp"
         android:layout_weight="6">
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="230dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:gravity="center">
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:layout_marginLeft="9dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -104,30 +106,53 @@
                 android:layout_marginBottom="10dp">
                 <Button
                     android:id="@+id/btnNotification"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="10"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#FF6E40"
                     android:text="Thông báo"
                     android:textAllCaps="false" />
                 <TextView
                     android:id="@+id/txtNotification"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="x"
                     android:textColor="#FFF"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:visibility="gone"
+                    android:visibility="invisible"
                     android:background="@drawable/shop_request_notification"/>
             </LinearLayout>
-            <Button
-                android:id="@+id/btnTaoLichHen"
-                android:layout_width="wrap_content"
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tạo lịch hẹn"
-                android:backgroundTint="#FF6E40"
-                android:textAllCaps="false"
-                android:layout_marginBottom="10dp"/>
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="10dp">
+                <Button
+                    android:id="@+id/btnTaoLichHen"
+                    android:layout_width="0dp"
+                    android:layout_weight="10"
+                    android:layout_height="wrap_content"
+                    android:text="Tạo lịch hẹn"
+                    android:backgroundTint="#FF6E40"
+                    android:textAllCaps="false"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="x"
+                    android:textColor="#FFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="invisible"
+                    android:background="@drawable/shop_request_notification"/>
+            </LinearLayout>
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -136,30 +161,53 @@
                 android:layout_marginBottom="10dp">
                 <Button
                     android:id="@+id/btnLichHen"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="10"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#FF6E40"
                     android:text="Lịch hẹn"
                     android:textAllCaps="false" />
                 <TextView
                     android:id="@+id/txtLichHen"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="x"
                     android:textColor="#FFF"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:visibility="gone"
+                    android:visibility="invisible"
                     android:background="@drawable/shop_request_notification"/>
             </LinearLayout>
-            <Button
-                android:id="@+id/btnUploadPost"
-                android:layout_width="wrap_content"
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#FF6E40"
-                android:text="@string/my_post"
-                android:textAllCaps="false"
-                android:layout_marginBottom="10dp"/>
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="10dp">
+                <Button
+                    android:id="@+id/btnUploadPost"
+                    android:layout_width="0dp"
+                    android:layout_weight="10"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#FF6E40"
+                    android:text="@string/my_post"
+                    android:textAllCaps="false"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="x"
+                    android:textColor="#FFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="invisible"
+                    android:background="@drawable/shop_request_notification"/>
+            </LinearLayout>
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -168,38 +216,81 @@
                 android:layout_marginBottom="10dp">
                 <Button
                     android:id="@+id/btnReceiveMoney"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="10"
                     android:backgroundTint="#FF6E40"
                     android:layout_height="wrap_content"
                     android:text="Đơn hàng chờ nhận tiền"
                     android:textAllCaps="false" />
                 <TextView
                     android:id="@+id/txtMoneyNotify"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="x"
                     android:textColor="#FFF"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:visibility="gone"
+                    android:visibility="invisible"
                     android:background="@drawable/shop_request_notification"/>
             </LinearLayout>
-            <Button
-                android:id="@+id/btnShop"
-                android:layout_width="wrap_content"
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#FF6E40"
-                android:text="@string/shop"
-                android:textAllCaps="false"
-                android:layout_marginBottom="10dp"/>
-            <Button
-                android:id="@+id/btnWallet"
-                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="10dp">
+                <Button
+                    android:id="@+id/btnShop"
+                    android:layout_width="0dp"
+                    android:layout_weight="10"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#FF6E40"
+                    android:text="@string/shop"
+                    android:textAllCaps="false"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="x"
+                    android:textColor="#FFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="invisible"
+                    android:background="@drawable/shop_request_notification"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/wallet"
-                android:backgroundTint="#FF6E40"
-                android:textAllCaps="false"
-                android:layout_marginBottom="10dp"/>
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="10dp">
+                <Button
+                    android:id="@+id/btnWallet"
+                    android:layout_width="0dp"
+                    android:layout_weight="10"
+                    android:layout_height="wrap_content"
+                    android:text="@string/wallet"
+                    android:backgroundTint="#FF6E40"
+                    android:textAllCaps="false"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="x"
+                    android:textColor="#FFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="invisible"
+                    android:background="@drawable/shop_request_notification"/>
+            </LinearLayout>
+
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -208,7 +299,8 @@
                 android:layout_marginBottom="10dp">
                 <Button
                     android:id="@+id/btnDonMua"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="10"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#FF6E40"
                     android:text="@string/don_mua"
@@ -216,23 +308,46 @@
 
                 <TextView
                     android:id="@+id/txtDonMuaNotify"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="x"
                     android:textColor="#FFF"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:visibility="gone"
+                    android:visibility="invisible"
                     android:background="@drawable/shop_request_notification"/>
             </LinearLayout>
-            <Button
-                android:id="@+id/btnLichSuDonHang"
-                android:layout_width="wrap_content"
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#FF6E40"
-                android:text="@string/lich_su_don_hang"
-                android:textAllCaps="false"
-                android:layout_marginBottom="10dp"/>
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="10dp">
+                <Button
+                    android:id="@+id/btnLichSuDonHang"
+                    android:layout_width="0dp"
+                    android:layout_weight="10"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#FF6E40"
+                    android:text="@string/lich_su_don_hang"
+                    android:textAllCaps="false"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="x"
+                    android:textColor="#FFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="invisible"
+                    android:background="@drawable/shop_request_notification"/>
+            </LinearLayout>
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -241,7 +356,8 @@
                 android:layout_marginBottom="10dp">
                 <Button
                     android:id="@+id/btnDanhGiaSP"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="10"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#FF6E40"
                     android:text="@string/danh_gia_sp"
@@ -249,13 +365,14 @@
 
                 <TextView
                     android:id="@+id/txtDanhGiaSP"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="x"
                     android:textColor="#FFF"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:visibility="gone"
+                    android:visibility="invisible"
                     android:background="@drawable/shop_request_notification"/>
             </LinearLayout>
             <LinearLayout
@@ -266,7 +383,8 @@
                 android:layout_marginBottom="10dp">
                 <Button
                     android:id="@+id/btnDonBan"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="10"
                     android:backgroundTint="#FF6E40"
                     android:layout_height="wrap_content"
                     android:text="@string/don_ban"
@@ -274,31 +392,73 @@
 
                 <TextView
                     android:id="@+id/txtDonBanNotify"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="x"
                     android:textColor="#FFF"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:visibility="gone"
+                    android:visibility="invisible"
                     android:background="@drawable/shop_request_notification"/>
             </LinearLayout>
-            <Button
-                android:id="@+id/btnLichSuDonBan"
-                android:layout_width="wrap_content"
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#FF6E40"
-                android:text="@string/lich_su_don_ban"
-                android:textAllCaps="false"
-                android:layout_marginBottom="10dp"/>
-            <Button
-                android:id="@+id/btnPassWordChange"
-                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="10dp">
+                <Button
+                    android:id="@+id/btnLichSuDonBan"
+                    android:layout_width="0dp"
+                    android:layout_weight="10"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#FF6E40"
+                    android:text="@string/lich_su_don_ban"
+                    android:textAllCaps="false"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="x"
+                    android:textColor="#FFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="invisible"
+                    android:background="@drawable/shop_request_notification"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/user_password_change"
-                android:backgroundTint="#FF6E40"
-                android:textAllCaps="false"
-                android:layout_marginBottom="10dp"/>
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="10dp">
+                <Button
+                    android:id="@+id/btnPassWordChange"
+                    android:layout_width="0dp"
+                    android:layout_weight="10"
+                    android:layout_height="wrap_content"
+                    android:text="@string/user_password_change"
+                    android:backgroundTint="#FF6E40"
+                    android:textAllCaps="false"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="x"
+                    android:textColor="#FFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="invisible"
+                    android:background="@drawable/shop_request_notification"/>
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 

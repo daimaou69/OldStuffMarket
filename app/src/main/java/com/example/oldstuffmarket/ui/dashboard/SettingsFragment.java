@@ -183,7 +183,7 @@ public class SettingsFragment extends Fragment {
                                     txtNotification.setVisibility(View.VISIBLE);
                                     txtNotification.setText(String.valueOf(removeProductDataArrayList.size()));
                                 } else {
-                                    txtNotification.setVisibility(View.GONE);
+                                    txtNotification.setVisibility(View.INVISIBLE);
                                 }
                             }
 
@@ -218,7 +218,7 @@ public class SettingsFragment extends Fragment {
                                     txtDanhGiaSP.setVisibility(View.VISIBLE);
                                     txtDanhGiaSP.setText(String.valueOf(danhGiaSPList.size()));
                                 } else {
-                                    txtDanhGiaSP.setVisibility(View.GONE);
+                                    txtDanhGiaSP.setVisibility(View.INVISIBLE);
                                 }
                             }
 
@@ -229,6 +229,12 @@ public class SettingsFragment extends Fragment {
 
                             @Override
                             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                                OrderData orderRemove = null;
+                                for (OrderData orderData : waitingList){
+                                    if(orderData.getDonHangID().equals(snapshot.getValue(OrderData.class).getDonHangID())){
+                                        orderRemove = orderData;
+                                    }
+                                }
 
                             }
 
@@ -255,14 +261,14 @@ public class SettingsFragment extends Fragment {
                                     txtDonMuaNotify.setVisibility(View.VISIBLE);
                                     txtDonMuaNotify.setText(String.valueOf(donMuaArrayList.size()));
                                 } else {
-                                    txtDonMuaNotify.setVisibility(View.GONE);
+                                    txtDonMuaNotify.setVisibility(View.INVISIBLE);
                                 }
 
                                 if (donBanArrayList.size() != 0) {
                                     txtDonBanNotify.setVisibility(View.VISIBLE);
                                     txtDonBanNotify.setText(String.valueOf(donBanArrayList.size()));
                                 } else {
-                                    txtDonBanNotify.setVisibility(View.GONE);
+                                    txtDonBanNotify.setVisibility(View.INVISIBLE);
                                 }
                             }
 
@@ -273,12 +279,42 @@ public class SettingsFragment extends Fragment {
 
                             @Override
                             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
+                                OrderData orderRemove = null;
+                                for(OrderData orderData : danhGiaSPList){
+                                    if(orderData.getDonHangID().equals(snapshot.getValue(OrderData.class).getDonHangID())){
+                                        orderRemove = orderData;
+                                    }
+                                }
+                                if(orderRemove != null){
+                                    danhGiaSPList.remove(orderRemove);
+                                }
+                                if (danhGiaSPList.size() != 0) {
+                                    txtDanhGiaSP.setVisibility(View.VISIBLE);
+                                    txtDanhGiaSP.setText(String.valueOf(danhGiaSPList.size()));
+                                }
+                                else{
+                                    txtDanhGiaSP.setVisibility(View.INVISIBLE);
+                                }
                             }
 
                             @Override
                             public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
+                                if (donMuaArrayList.size() != 0) {
+                                    txtDonMuaNotify.setVisibility(View.VISIBLE);
+                                    txtDonMuaNotify.setText(String.valueOf(donMuaArrayList.size()));
+                                }
+                                else{
+                                    txtDonMuaNotify.setVisibility(View.INVISIBLE);
+                                }
+
+                                if (donBanArrayList.size() != 0) {
+                                    txtDonBanNotify.setVisibility(View.VISIBLE);
+                                    txtDonBanNotify.setText(String.valueOf(donBanArrayList.size()));
+                                }
+                                else{
+                                    txtDonBanNotify.setVisibility(View.INVISIBLE);
+                                }
                             }
 
                             @Override
@@ -296,18 +332,52 @@ public class SettingsFragment extends Fragment {
                                     txtMoneyNotify.setVisibility(View.VISIBLE);
                                     txtMoneyNotify.setText(String.valueOf(waitingList.size()));
                                 } else {
-                                    txtMoneyNotify.setVisibility(View.GONE);
+                                    txtMoneyNotify.setVisibility(View.INVISIBLE);
                                 }
                             }
 
                             @Override
                             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                OrderData orderRemove = null;
+                                for (OrderData orderData : donMuaArrayList){
+                                    if(orderData.getDonHangID().equals(snapshot.getValue(OrderData.class).getDonHangID()) && snapshot.getValue(OrderData.class).getTinhTrang() == 7){
+                                        orderRemove = orderData;
+                                    }
+                                }
+                                if(orderRemove != null){
+                                    donMuaArrayList.remove(orderRemove);
+                                    donBanArrayList.remove(orderRemove);
+                                }
 
+                                if (donMuaArrayList.size() != 0) {
+                                    txtDonMuaNotify.setVisibility(View.VISIBLE);
+                                    txtDonMuaNotify.setText(String.valueOf(donMuaArrayList.size()));
+                                }
+                                else{
+                                    txtDonMuaNotify.setVisibility(View.INVISIBLE);
+                                }
+
+                                if (donBanArrayList.size() != 0) {
+                                    txtDonBanNotify.setVisibility(View.VISIBLE);
+                                    txtDonBanNotify.setText(String.valueOf(donBanArrayList.size()));
+                                }
+                                else{
+                                    txtDonBanNotify.setVisibility(View.INVISIBLE);
+                                }
                             }
 
                             @Override
                             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
+                                OrderData orderRemove = null;
+                                for (OrderData orderData : donMuaArrayList){
+                                    if(orderData.getDonHangID().equals(snapshot.getValue(OrderData.class).getDonHangID())){
+                                        orderRemove = orderData;
+                                    }
+                                }
+                                if(orderRemove != null){
+                                    donMuaArrayList.remove(orderRemove);
+                                    donBanArrayList.remove(orderRemove);
+                                }
                             }
 
                             @Override
@@ -354,18 +424,48 @@ public class SettingsFragment extends Fragment {
                         txtLichHen.setVisibility(View.VISIBLE);
                         txtLichHen.setText(String.valueOf(appointmentArrayList.size()));
                     } else {
-                        txtLichHen.setVisibility(View.GONE);
+                        txtLichHen.setVisibility(View.INVISIBLE);
                     }
                 }
 
                 @Override
                 public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
+                    Appointment appointmentRemove = null;
+                    for(Appointment appointment : appointmentArrayList){
+                        if(appointment.getAppointmentID().equals(snapshot.getValue(Appointment.class).getAppointmentID()) && snapshot.getValue(Appointment.class).isActive() == false){
+                            appointmentRemove = appointment;
+                        }
+                    }
+                    if(appointmentRemove != null){
+                        appointmentArrayList.remove(appointmentRemove);
+                    }
+                    if (appointmentArrayList.size() != 0) {
+                        txtLichHen.setVisibility(View.VISIBLE);
+                        txtLichHen.setText(String.valueOf(appointmentArrayList.size()));
+                    }
+                    else{
+                        txtLichHen.setVisibility(View.INVISIBLE);
+                    }
                 }
 
                 @Override
                 public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
+                    Appointment appointmentRemove = null;
+                    for(Appointment appointment : appointmentArrayList){
+                        if(appointment.getAppointmentID().equals(snapshot.getValue(Appointment.class).getAppointmentID())){
+                            appointmentRemove = appointment;
+                        }
+                    }
+                    if(appointmentRemove != null){
+                        appointmentArrayList.remove(appointmentRemove);
+                    }
+                    if (appointmentArrayList.size() != 0) {
+                        txtLichHen.setVisibility(View.VISIBLE);
+                        txtLichHen.setText(String.valueOf(appointmentArrayList.size()));
+                    }
+                    else{
+                        txtLichHen.setVisibility(View.INVISIBLE);
+                    }
                 }
 
                 @Override

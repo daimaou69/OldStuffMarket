@@ -47,7 +47,7 @@
                 android:layout_marginBottom="10dp">
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_weight="2"
+                    android:layout_weight="3"
                     android:layout_height="match_parent">
 
                     <TextView
@@ -55,12 +55,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/product_quantity"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textStyle="bold"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_weight="3"
+                    android:layout_weight="4"
                     android:layout_height="match_parent">
 
                     <TextView
@@ -68,7 +68,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/product_price"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textColor="@color/red"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -78,7 +78,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/thong_tin_nguoi_ban"
                 android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -95,6 +96,7 @@
                         android:id="@+id/imgSellerUser"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
+                        android:scaleType="centerCrop"
                         android:src="@mipmap/no_image_icon" />
                 </LinearLayout>
 
@@ -203,6 +205,7 @@
             android:text="@string/dat_hang"
             android:textAllCaps="false"
             android:backgroundTint="#FF6E40"
+            android:textSize="12sp"
             android:layout_marginRight="30dp"/>
         <Button
             android:id="@+id/btnHome"
@@ -211,6 +214,7 @@
             android:text="@string/home"
             android:textAllCaps="false"
             android:backgroundTint="#FF6E40"
+            android:textSize="12sp"
             android:layout_marginRight="30dp"/>
         <Button
             android:id="@+id/btnBack"
@@ -218,6 +222,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#FF6E40"
             android:text="@string/Back"
+            android:textSize="12sp"
             android:textAllCaps="false"/>
     </LinearLayout>
 </LinearLayout>

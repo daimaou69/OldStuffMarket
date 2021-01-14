@@ -120,6 +120,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="#FF9800"
                 android:text="lock"
+                android:textSize="11sp"
                 android:layout_marginBottom="20dp"/>
 
             <Button
@@ -127,6 +128,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#FF9800"
+                android:textSize="11sp"
                 android:text="history"/>
         </LinearLayout>
 
@@ -252,6 +254,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="#FF9800"
                 android:text="lock"
+                android:textSize="11sp"
                 android:layout_marginBottom="20dp"/>
 
             <Button
@@ -260,12 +263,14 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="#FF9800"
                 android:text="history"
+                android:textSize="11sp"
                 android:layout_marginBottom="20dp"/>
             <Button
                 android:id="@+id/btnBack"
                 android:layout_width="wrap_content"
                 android:backgroundTint="#FF9800"
                 android:layout_height="wrap_content"
+                android:textSize="11sp"
                 android:text="Back" />
         </LinearLayout>
     </LinearLayout>

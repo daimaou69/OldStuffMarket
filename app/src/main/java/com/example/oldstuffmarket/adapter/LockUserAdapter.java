@@ -75,6 +75,7 @@ public class LockUserAdapter extends BaseAdapter {
         ImageView imgUser;
         TextView txtUserName;
         RadioGroup radGroup;
+        RadioButton radDisable;
     }
 
     @Override
@@ -87,6 +88,7 @@ public class LockUserAdapter extends BaseAdapter {
             viewHolder.imgUser = (ImageView) convertView.findViewById(R.id.imgUser);
             viewHolder.txtUserName = (TextView) convertView.findViewById(R.id.txtUserName);
             viewHolder.radGroup = (RadioGroup) convertView.findViewById(R.id.radGroup);
+            viewHolder.radDisable = (RadioButton) convertView.findViewById(R.id.radDisable);
             convertView.setTag(viewHolder);
         }
         else {
@@ -156,6 +158,8 @@ public class LockUserAdapter extends BaseAdapter {
                                                     });
                                                     break;
                                                 case DialogInterface.BUTTON_NEGATIVE:
+
+                                                    viewHolder.radDisable.setChecked(true);
                                                     return;
                                             }
                                         }
@@ -293,6 +297,7 @@ public class LockUserAdapter extends BaseAdapter {
                                                     });
                                                     break;
                                                 case DialogInterface.BUTTON_NEGATIVE:
+                                                    viewHolder.radDisable.setChecked(true);
                                                     return;
                                             }
                                         }

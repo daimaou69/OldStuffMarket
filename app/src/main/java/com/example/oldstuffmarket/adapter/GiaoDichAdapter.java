@@ -1,6 +1,7 @@
 package com.example.oldstuffmarket.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,7 +57,7 @@ public class GiaoDichAdapter extends BaseAdapter {
 
     class ViewHolder {
         ImageView imgSP;
-        TextView txtTenSP, txtMoney, txtSoLuongSP, txtTinhTrang;
+        TextView txtTenSP, txtMoney, txtSoLuongSP, txtTinhTrang, txtThuNhap, txtLoaiDonHang;
     }
 
     @Override
@@ -72,7 +73,9 @@ public class GiaoDichAdapter extends BaseAdapter {
             viewHolder.txtTenSP = (TextView) convertView.findViewById(R.id.txtTenSP);
             viewHolder.txtMoney = (TextView) convertView.findViewById(R.id.txtMoney);
             viewHolder.txtTinhTrang = (TextView) convertView.findViewById(R.id.txtTinhTrang);
+            viewHolder.txtThuNhap = (TextView) convertView.findViewById(R.id.txtThuNhap);
             viewHolder.txtSoLuongSP = (TextView) convertView.findViewById(R.id.txtSoLuongSP);
+            viewHolder.txtLoaiDonHang = (TextView) convertView.findViewById(R.id.txtLoaiDonHang);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -92,14 +95,57 @@ public class GiaoDichAdapter extends BaseAdapter {
             public void onFailure(@NonNull Exception e) {
             }
         });
+
+        if(orderData.getLoaiDonHang() == 1){
+            viewHolder.txtLoaiDonHang.setText("Loại đơn: Trực tiếp");
+        }
+        else if(orderData.getLoaiDonHang() == 2){
+            viewHolder.txtLoaiDonHang.setText("Loại đơn: Giao hàng COD");
+        }
+        else if(orderData.getLoaiDonHang() == 3){
+            viewHolder.txtLoaiDonHang.setText("Loại đơn: Thanh toán E-Wallet");
+        }
+        databaseReference.child("LichSuGiaoDich").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                if(orderData.getDonHangID().equals(snapshot.getValue(OrderData.class).getDonHangID()) && orderData.getTinhTrang() != -1 && orderData.getLoaiDonHang() != 1){
+                    long money = orderData.getGiaTien() * orderData.getSellerCommission() / 100;
+                    viewHolder.txtThuNhap.setText(String.valueOf(money) + "vnd");
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         viewHolder.txtTenSP.setText(orderData.getSanPham().getsTenSP());
         viewHolder.txtSoLuongSP.setText(String.valueOf(orderData.getSanPham().getiSoLuong()));
-        viewHolder.txtMoney.setText(String.valueOf(orderData.getGiaTien()));
+        viewHolder.txtMoney.setText(String.valueOf(orderData.getGiaTien() + "vnd"));
         if (orderData.getTinhTrang() == -1) {
+            viewHolder.txtThuNhap.setText("0vnd");
             viewHolder.txtTinhTrang.setText("Thất bại");
+            viewHolder.txtTinhTrang.setTextColor(Color.RED);
         }
         else if (orderData.getTinhTrang() == 8) {
             viewHolder.txtTinhTrang.setText("Thành công");
+            viewHolder.txtTinhTrang.setTextColor(Color.GREEN);
         }
         return convertView;
     }

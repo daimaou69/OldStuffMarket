@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".RemoveProductActivity"
     android:background="@mipmap/app_background"
-    android:padding="20dp">
+    android:padding="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
         android:background="@color/white"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="5dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_weight="1"
@@ -53,13 +53,6 @@
                 android:backgroundTint="#FF9800"
                 android:text="@string/Back"/>
 
-            <Button
-                android:layout_marginLeft="40dp"
-                android:id="@+id/btnClear"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#FF9800"
-                android:text="Refesh"/>
         </LinearLayout>
     </LinearLayout>
 

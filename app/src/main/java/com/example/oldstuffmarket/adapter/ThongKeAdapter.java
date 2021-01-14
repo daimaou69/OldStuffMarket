@@ -25,6 +25,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -34,13 +35,13 @@ public class ThongKeAdapter extends BaseAdapter {
     private Context context;
     private int layout;
     private ArrayList<UserData> userDataArrayList;
-    private long tong;
-    private long commission;
+    private ArrayList<OrderData> orderDataArrayList;
 
-    public ThongKeAdapter(Context context, int layout, ArrayList<UserData> userDataArrayList) {
+    public ThongKeAdapter(Context context, int layout, ArrayList<UserData> userDataArrayList, ArrayList<OrderData> orderDataArrayList) {
         this.context = context;
         this.layout = layout;
         this.userDataArrayList = userDataArrayList;
+        this.orderDataArrayList = orderDataArrayList;
     }
 
     @Override
@@ -65,7 +66,6 @@ public class ThongKeAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
         final ViewHolder viewHolder;
 
         if(convertView == null){
@@ -99,7 +99,7 @@ public class ThongKeAdapter extends BaseAdapter {
                 public void onFailure(@NonNull Exception e) {
                 }
             });
-            viewHolder.txtUserName.setText("Tên User: " + userData.getsUserName() + " - " + userData.getsFullName());
+            viewHolder.txtUserName.setText("User: " + userData.getsUserName() + " - " + userData.getsFullName());
             viewHolder.txtSanPhamDaBan.setText("Số sản phẩm đã bán: " + String.valueOf(userData.getiSoSPDaBan()));
             viewHolder.txtDiemThanhVien.setText("Điểm thành viên: " + String.valueOf(userData.getiAccPoint()));
         }
@@ -118,7 +118,7 @@ public class ThongKeAdapter extends BaseAdapter {
                             public void onFailure(@NonNull Exception e) {
                             }
                         });
-                        viewHolder.txtUserName.setText("Tên Shop: " + snapshot.getValue(ShopData.class).getShopName());
+                        viewHolder.txtUserName.setText("Shop: " + snapshot.getValue(ShopData.class).getShopName());
                         viewHolder.txtSanPhamDaBan.setText("Số sản phẩm đã bán: " + String.valueOf(userData.getiSoSPDaBan()));
                         viewHolder.txtDiemThanhVien.setText("Điểm thành viên: " + String.valueOf(userData.getiAccPoint()));
                     }
@@ -145,36 +145,15 @@ public class ThongKeAdapter extends BaseAdapter {
                 }
             });
         }
-        databaseReference.child("LichSuGiaoDich").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                if (snapshot.getValue(OrderData.class).getNguoiBanID().equals(userData.getsUserID()) && snapshot.getValue(OrderData.class).getTinhTrang() == 8) {
-                    commission = snapshot.getValue(OrderData.class).getGiaTien() * snapshot.getValue(OrderData.class).getSellerCommission() / 100;
-                    tong += commission;
-                    viewHolder.txtDoanhThu.setText(String.valueOf(tong) + "VNĐ");
-                }
+        long commission = 0;
+        for(OrderData orderData : orderDataArrayList){
+            if (orderData.getNguoiBanID().equals(userData.getsUserID()) && orderData.getTinhTrang() == 8 && orderData.getLoaiDonHang() != 1) {
+                commission += orderData.getGiaTien() * orderData.getSellerCommission() / 100;
+
+                viewHolder.txtDoanhThu.setText(String.valueOf(commission) + "VNĐ");
             }
+        }
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
         return convertView;
     }
 }

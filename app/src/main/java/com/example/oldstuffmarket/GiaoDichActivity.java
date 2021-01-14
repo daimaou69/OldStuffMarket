@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.example.oldstuffmarket.adapter.GiaoDichAdapter;
 import com.example.oldstuffmarket.data_models.OrderData;
+import com.example.oldstuffmarket.data_models.ShopData;
+import com.example.oldstuffmarket.data_models.UserData;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,7 +31,7 @@ public class GiaoDichActivity extends AppCompatActivity {
     private Button btnBack;
     private GridView gridDonHang;
     private String userName, userID;
-    private TextView txtDoanhThu;
+    private TextView txtDoanhThu, txtGiaoDichUser;
     private ArrayList<OrderData> orderDataArrayList;
     private GiaoDichAdapter giaoDichAdapter;
     private long commission, tong;
@@ -44,6 +46,7 @@ public class GiaoDichActivity extends AppCompatActivity {
         btnBack = (Button) findViewById(R.id.btnBack);
         gridDonHang = (GridView) findViewById(R.id.gridDonHang);
         txtDoanhThu = (TextView) findViewById(R.id.txtDoanhThu);
+        txtGiaoDichUser = (TextView) findViewById(R.id.txtGiaoDichUser);
 
         orderDataArrayList = new ArrayList<>();
 
@@ -57,6 +60,67 @@ public class GiaoDichActivity extends AppCompatActivity {
             userName = getIntent().getExtras().getString("UserName");
             userID = getIntent().getExtras().getString("UserID");
             orderDataArrayList.clear();
+            databaseReference.child("User").addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    if(snapshot.getValue(UserData.class).getsUserID().equals(userID)){
+                        if(snapshot.getValue(UserData.class).getsShopID().isEmpty()){
+                            txtGiaoDichUser.setText("Giao dịch của user: " + snapshot.getValue(UserData.class).getsFullName());
+                        }
+                        else{
+                            String shopID = snapshot.getValue(UserData.class).getsShopID();
+                            databaseReference.child("Shop").addChildEventListener(new ChildEventListener() {
+                                @Override
+                                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                    if(snapshot.getValue(ShopData.class).getShopID().equals(shopID)){
+                                        txtGiaoDichUser.setText("Giao dịch của shop: " + snapshot.getValue(ShopData.class).getShopName());
+                                    }
+                                }
+
+                                @Override
+                                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                }
+
+                                @Override
+                                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                                }
+
+                                @Override
+                                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        }
+                    }
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
             databaseReference.child("LichSuGiaoDich").addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {

@@ -36,6 +36,7 @@ public class ThongKeActivity extends AppCompatActivity {
     private GridView gridThongke;
     private TextView txtDoanhThu;
     private ArrayList<UserData> userDataArrayList;
+    private ArrayList<OrderData> orderDataArrayList;
     private ThongKeAdapter thongKeAdapter;
     private long tong, commission;
 
@@ -51,6 +52,7 @@ public class ThongKeActivity extends AppCompatActivity {
         txtDoanhThu = (TextView) findViewById(R.id.txtDoanhThu);
 
         userDataArrayList = new ArrayList<>();
+        orderDataArrayList = new ArrayList<>();
 
         btnBack.setOnClickListener(backClick);
         gridThongke.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -67,16 +69,18 @@ public class ThongKeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        userDataArrayList.clear();
+        orderDataArrayList.clear();
 
         if(getIntent().getExtras() != null){
             userName = getIntent().getExtras().getString("UserName");
-            userDataArrayList.clear();
             databaseReference.child("User").addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                     if (snapshot.getValue(UserData.class).getiPermission() == 1) {
                         userDataArrayList.add(snapshot.getValue(UserData.class));
                     }
+                    userLoad();
                 }
 
                 @Override
@@ -102,11 +106,13 @@ public class ThongKeActivity extends AppCompatActivity {
             databaseReference.child("LichSuGiaoDich").addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    orderDataArrayList.add(snapshot.getValue(OrderData.class));
                     if (snapshot.getValue(OrderData.class).getTinhTrang() == 8 && snapshot.getValue(OrderData.class).getLoaiDonHang() != 1) {
                         commission = snapshot.getValue(OrderData.class).getGiaTien() * snapshot.getValue(OrderData.class).getSellerCommission() / 100;
                         tong = tong + commission;
                         txtDoanhThu.setText(String.valueOf(tong) + "VNĐ");
                     }
+                    userLoad();
                 }
 
                 @Override
@@ -129,14 +135,6 @@ public class ThongKeActivity extends AppCompatActivity {
 
                 }
             });
-
-            final Handler handler = new Handler();
-            final int delay = 500; //milliseconds
-            handler.postDelayed(new Runnable(){
-                public void run(){
-                    userLoad();
-                }
-            }, delay);
         }
     }
 
@@ -151,7 +149,7 @@ public class ThongKeActivity extends AppCompatActivity {
         }
     };
     public void userLoad(){
-        thongKeAdapter = new ThongKeAdapter(ThongKeActivity.this, R.layout.thongke_adapter_layout, userDataArrayList);
+        thongKeAdapter = new ThongKeAdapter(ThongKeActivity.this, R.layout.thongke_adapter_layout, userDataArrayList, orderDataArrayList);
         gridThongke.setAdapter(thongKeAdapter);
     }
 }

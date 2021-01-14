@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HistoryUserbaocaoActivity"
-    android:padding="20dp"
+    android:padding="10dp"
     android:background="@mipmap/app_background">
 
     <LinearLayout
@@ -37,7 +37,7 @@
                 android:id="@+id/gridHistory1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="10dp"/>
+                android:padding="5dp"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"

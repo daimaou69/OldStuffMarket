@@ -345,7 +345,7 @@ public class ShipperXuLiDonHangActivity extends AppCompatActivity {
                                 @Override
                                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                                     if(snapshot.getValue(OrderData.class).getDonHangID().equals(donHangID) && snapshot.getValue(OrderData.class).getLoaiDonHang() == 2){
-
+                                        long orderMoney = snapshot.getValue(OrderData.class).getGiaTien();
                                         int soLuongSP = snapshot.getValue(OrderData.class).getSanPham().getiSoLuong();
                                         databaseReference.child("User").addChildEventListener(new ChildEventListener() {
                                             @Override
@@ -353,6 +353,10 @@ public class ShipperXuLiDonHangActivity extends AppCompatActivity {
                                                 if(snapshot.getValue(UserData.class).getsUserID().equals(nguoiBanID)){
                                                     int newSL = snapshot.getValue(UserData.class).getiSoSPDaBan() + soLuongSP;
                                                     databaseReference.child("User").child(nguoiBanID).child("iSoSPDaBan").setValue(newSL);
+                                                }
+                                                else if(snapshot.getValue(UserData.class).getsUserID().equals("-MMR0F6xxKcg9TXwvTfX")){
+                                                    long newMoney = snapshot.getValue(UserData.class).getlMoney() + (orderMoney * commission / 100);
+                                                    databaseReference.child("User").child("-MMR0F6xxKcg9TXwvTfX").child("lMoney").setValue(newMoney);
                                                 }
                                             }
 
@@ -382,6 +386,7 @@ public class ShipperXuLiDonHangActivity extends AppCompatActivity {
                                                 snapshot.getValue(OrderData.class).getDiaChi(), snapshot.getValue(OrderData.class).getSanPham(),
                                                 snapshot.getValue(OrderData.class).getLoaiDonHang(), 7, commission,
                                                 snapshot.getValue(OrderData.class).getGiaTien(), snapshot.getValue(OrderData.class).getShipperID());
+
                                         databaseReference.child("MoneyIncome").child(donHangID).setValue(orderUpdate);
                                         databaseReference.child("Shipper").child(userID).child(donHangID).setValue(orderUpdate);
                                         databaseReference.child("DonHang").child(donHangID).setValue(orderUpdate);
