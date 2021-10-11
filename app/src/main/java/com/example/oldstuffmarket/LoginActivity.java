@@ -64,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+
 //        databaseReference = FirebaseDatabase.getInstance().getReference();
 //        String sUserID = databaseReference.push().getKey();
 //        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
