@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         edtLoginName = findViewById(R.id.edtLoginName);
         edtLoginPass = findViewById(R.id.edtLoginPass);
 
-        userDataArrayList = new ArrayList<>();//
+        //userDataArrayList = new ArrayList<>();
 
         txtRegistry.setOnClickListener(new View.OnClickListener() {// click vào link đăng ký tài khoản mới
             @Override
