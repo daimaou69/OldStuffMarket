@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     private ArrayList<UserData> userDataArrayList; // khai bao list User
     private TextView txtRegistry; //link đăng ký tài khoản mới
     private Button btnLogin; //nút login
-    private EditText edtLoginName, edtLoginPass; // EditText user name, password
+    private EditText edtLoginName, edtLoginPass; // EditText user name
     static public Intent intent;
     private int iCount = 0;
     @Override
